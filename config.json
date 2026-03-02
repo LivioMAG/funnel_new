@@ -61,7 +61,11 @@
         "title": "Arbeitsmodell",
         "question": "Wie möchtest du arbeiten?",
         "type": "singleChoice",
-        "options": ["Remote", "Hybrid", "Vor Ort"],
+        "options": [
+          "Remote",
+          "Hybrid",
+          "Vor Ort"
+        ],
         "fieldKey": "work_model",
         "required": true,
         "helperText": "Wähle die Form, in der du am besten performst."
@@ -83,7 +87,10 @@
       "emailLabel": "E-Mail-Adresse",
       "emailPlaceholder": "name@beispiel.de",
       "submitText": "Jetzt bewerben",
-      "successToast": "Danke! Bewerbung wurde erfasst (Demo)."
+      "successToast": "Danke! Bewerbung wurde erfasst (Demo).",
+      "thankYouTitle": "Danke für deine Bewerbung!",
+      "thankYouText": "Wir haben deine Angaben erhalten und melden uns in Kürze bei dir mit den nächsten Schritten.",
+      "thankYouButtonText": "Zur Startseite"
     },
     "nav": {
       "backText": "Zurück",
