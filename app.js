@@ -46,7 +46,11 @@ const FALLBACK_CONFIG = {
       nameLabel: 'Dein Name',
       emailLabel: 'E-Mail-Adresse',
       submitText: 'Jetzt bewerben',
-      successToast: 'Danke! Bewerbung wurde erfasst (Demo).'
+      successToast: 'Danke! Bewerbung wurde erfasst (Demo).',
+      thankYouTitle: 'Danke für deine Bewerbung!',
+      thankYouText:
+        'Wir haben deine Angaben erhalten und melden uns in Kürze bei dir mit den nächsten Schritten.',
+      thankYouButtonText: 'Zur Startseite'
     },
     nav: {
       backText: 'Zurück',
@@ -353,6 +357,32 @@ function renderFinalForm() {
     console.log('Recruiting Funnel Submission:', payload);
     showToast(final.successToast);
     state.answers = {};
+    state.view = 'thankyou';
+    renderThankYou();
+  });
+}
+
+function renderThankYou() {
+  const { final } = state.config.funnel;
+
+  app.innerHTML = `
+    <section class="container">
+      <article class="card stack">
+        <h2 class="section-title">${final.thankYouTitle ?? 'Danke für deine Bewerbung!'}</h2>
+        <p class="copy">${
+          final.thankYouText ??
+          'Wir haben deine Angaben erhalten und melden uns in Kürze bei dir mit den nächsten Schritten.'
+        }</p>
+        <div class="actions">
+          <button type="button" class="btn btn-primary" id="back-home-btn">${
+            final.thankYouButtonText ?? 'Zur Startseite'
+          }</button>
+        </div>
+      </article>
+    </section>
+  `;
+
+  document.getElementById('back-home-btn').addEventListener('click', () => {
     state.view = 'landing';
     renderLanding();
   });
