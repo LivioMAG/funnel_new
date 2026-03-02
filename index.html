@@ -1,1 +1,40 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recruiting Experience Funnel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <header class="brand" id="brand"></header>
 
+      <section class="card" aria-live="polite">
+        <div class="progress-wrap">
+          <span class="progress-label" id="progress-label"></span>
+          <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <span class="progress-fill" id="progress-fill"></span>
+          </div>
+        </div>
+
+        <h1 class="title" id="title"></h1>
+        <p class="subtitle" id="subtitle"></p>
+
+        <div class="options" id="options"></div>
+
+        <button type="button" class="next-btn" id="next-btn"></button>
+      </section>
+
+      <footer class="note" id="footer-note"></footer>
+    </main>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
