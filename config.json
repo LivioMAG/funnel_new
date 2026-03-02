@@ -1,0 +1,98 @@
+{
+  "theme": {
+    "primaryColor": "#2F6FED",
+    "primaryButtonTextColor": "#FFFFFF",
+    "secondaryColor": "#111827",
+    "backgroundColor": "#F7F8FA",
+    "cardBackgroundColor": "#FFFFFF",
+    "successColor": "#16A34A",
+    "dangerColor": "#DC2626",
+    "textColor": "#0F172A",
+    "mutedTextColor": "#475569",
+    "borderColor": "#DBE2EA"
+  },
+  "landing": {
+    "companyName": "Musterfirma AG",
+    "jobTitle": "Sales Development Representative (m/w/d)",
+    "shortPitch": "Du liebst ehrliche Gespräche und willst sichtbar etwas bewegen? Bei uns baust du echte Kundenbeziehungen auf statt nur Leads abzuhaken. Du arbeitest mit klaren Zielen, smarten Tools und einem Team, das dich stärkt. Wenn du Wirkung statt Stillstand suchst, passt das hier.",
+    "aboutTitle": "Über uns",
+    "aboutText": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum. Bei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
+    "expectationsTitle": "Was wir von dir erwarten",
+    "expectationsBullets": [
+      "Du gehst aktiv auf Menschen zu und hörst genauso gut zu, wie du argumentierst.",
+      "Du denkst in Lösungen, nicht in Ausreden, und bleibst freundlich verbindlich.",
+      "Du willst lernen, Feedback nutzen und jeden Monat spürbar besser werden."
+    ],
+    "benefitsTitle": "Was du bekommst",
+    "benefitsBullets": [
+      "Onboarding mit klarer Struktur und persönlichem Sparring.",
+      "Flexibles Arbeitsmodell mit modernem Setup.",
+      "Faire Vergütung plus Entwicklungspfad in Richtung Account Executive."
+    ],
+    "primaryCtaText": "Jetzt bewerben",
+    "secondaryCtaEnabled": true,
+    "secondaryCtaText": "Passt das zu mir?",
+    "secondaryCtaInfo": "Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja."
+  },
+  "funnel": {
+    "introText": "Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.",
+    "steps": [
+      {
+        "id": "q1",
+        "title": "Kurz zu dir",
+        "question": "Woran erkennst du, dass du in einem Job richtig gut bist?",
+        "type": "textarea",
+        "fieldKey": "strength_signal",
+        "required": true,
+        "helperText": "2–3 Sätze reichen.",
+        "placeholder": "Ich merke es daran, dass ..."
+      },
+      {
+        "id": "q2",
+        "title": "Verfügbarkeit",
+        "question": "Ab wann könntest du starten?",
+        "type": "text",
+        "fieldKey": "start_date",
+        "required": true,
+        "placeholder": "z.B. ab sofort / 01.05.2026"
+      },
+      {
+        "id": "q3",
+        "title": "Arbeitsmodell",
+        "question": "Wie möchtest du arbeiten?",
+        "type": "singleChoice",
+        "options": ["Remote", "Hybrid", "Vor Ort"],
+        "fieldKey": "work_model",
+        "required": true,
+        "helperText": "Wähle die Form, in der du am besten performst."
+      },
+      {
+        "id": "q4",
+        "title": "Sprachen",
+        "question": "Sprichst du fliessend Deutsch?",
+        "type": "yesNo",
+        "fieldKey": "german_fluent",
+        "required": true
+      }
+    ],
+    "final": {
+      "title": "Fast geschafft",
+      "description": "Trag noch kurz deine Kontaktdaten ein, damit wir uns direkt melden können.",
+      "nameLabel": "Dein Name",
+      "namePlaceholder": "Vor- und Nachname",
+      "emailLabel": "E-Mail-Adresse",
+      "emailPlaceholder": "name@beispiel.de",
+      "submitText": "Jetzt bewerben",
+      "successToast": "Danke! Bewerbung wurde erfasst (Demo)."
+    },
+    "nav": {
+      "backText": "Zurück",
+      "nextText": "Weiter",
+      "stepLabel": "Schritt {current} von {total}"
+    },
+    "validation": {
+      "requiredText": "Bitte fülle dieses Feld aus.",
+      "emailText": "Bitte gib eine gültige E-Mail-Adresse ein."
+    }
+  }
+}
