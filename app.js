@@ -470,7 +470,7 @@ function renderLanding() {
     .join('');
 
   app.innerHTML = `
-    <section class="container stack">
+    <section class="container stack landing-sections">
       ${sectionsMarkup}
     </section>
   `;
