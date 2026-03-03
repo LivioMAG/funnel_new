@@ -253,6 +253,16 @@ function attachStepEvents(step, totalSteps) {
           : [...selectedChoices, choice];
       } else {
         state.answers[step.fieldKey] = choice;
+
+        if (state.stepIndex < totalSteps - 1) {
+          state.stepIndex += 1;
+          renderQuestionStep(state.stepIndex);
+          return;
+        }
+
+        state.view = 'final';
+        renderFinalForm();
+        return;
       }
 
       renderQuestionStep(state.stepIndex);
