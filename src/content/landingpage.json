@@ -20,15 +20,18 @@
       "columns": 3,
       "items": [
         {
-          "title": "100% Stellenprozent",
+          "key": "Pensum",
+          "value": "100%",
           "icon": "🕒"
         },
         {
-          "title": "Altingen-Zwil · Region Zürich",
+          "key": "Standort",
+          "value": "Standort Adligenswil, Zürich",
           "icon": "📍"
         },
         {
-          "title": "Start: ab sofort",
+          "key": "Start",
+          "value": "ab sofort",
           "icon": "🚀"
         }
       ]

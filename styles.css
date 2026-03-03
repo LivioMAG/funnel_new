@@ -591,8 +591,24 @@ textarea {
   padding-left: 0;
 }
 
+[data-section-id="job-facts"] .landing-list-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem 1.25rem;
+}
+
 [data-section-id="job-facts"] .list li {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  border: 0;
+  padding: 0;
+  background: transparent;
+}
+
+[data-section-id="job-facts"] .list li:first-child {
+  grid-column: 1 / -1;
+}
+
+[data-section-id="job-facts"] .list li p {
+  margin: 0;
 }

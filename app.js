@@ -362,8 +362,8 @@ function ListSection(section) {
           .map(
             (item) => `
               <li>
-                <strong>${item.icon ? `${escapeHtml(item.icon)} ` : ''}${escapeHtml(item.title)}</strong>
-                ${item.text ? `<p class="copy">${escapeHtml(item.text)}</p>` : ''}
+                <strong>${item.icon ? `${escapeHtml(item.icon)} ` : ''}${escapeHtml(item.value ?? item.title)}</strong>
+                ${item.key ? `<p class="copy">${escapeHtml(item.key)}</p>` : item.text ? `<p class="copy">${escapeHtml(item.text)}</p>` : ''}
               </li>
             `
           )
