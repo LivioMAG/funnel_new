@@ -352,11 +352,13 @@ function TextSection(section) {
 function ListSection(section) {
   const layout = section.layout === 'grid' ? 'landing-list-grid' : 'landing-list-stack';
   const columns = [1, 2, 3].includes(section.columns) ? section.columns : 1;
+  const titleMarkup = section.title ? `<h2 class="section-title">${escapeHtml(section.title)}</h2>` : '';
+  const subtitleMarkup = section.subtitle ? `<p class="copy">${escapeHtml(section.subtitle)}</p>` : '';
 
   return `
     <article class="card stack" data-section-id="${escapeHtml(section.id)}">
-      <h2 class="section-title">${escapeHtml(section.title)}</h2>
-      ${section.subtitle ? `<p class="copy">${escapeHtml(section.subtitle)}</p>` : ''}
+      ${titleMarkup}
+      ${subtitleMarkup}
       <ul class="list ${layout} landing-list-columns-${columns}">
         ${(Array.isArray(section.items) ? section.items : [])
           .map(
@@ -407,7 +409,7 @@ function LandingSection(section, headingLevel = 'h2') {
 
   if (section.type === 'heading' && section.title) return HeadingSection(section, headingLevel);
   if (section.type === 'text' && section.body) return TextSection(section);
-  if (section.type === 'list' && section.title) return ListSection(section);
+  if (section.type === 'list' && Array.isArray(section.items) && section.items.length > 0) return ListSection(section);
   if (section.type === 'assets' && Array.isArray(section.assets)) return AssetsSection(section);
   if (section.type === 'spacer') return SpacerSection(section);
   if (section.type === 'cta' && section.buttonText && section.action) return CtaSection(section);
