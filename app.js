@@ -239,6 +239,8 @@ function validateStep(step) {
 }
 
 function attachStepEvents(step, totalSteps) {
+  let isSingleChoiceAdvancing = false;
+
   const input = document.getElementById('field-input');
   if (input) {
     input.addEventListener('input', (event) => {
@@ -263,6 +265,14 @@ function attachStepEvents(step, totalSteps) {
         state.answers[step.fieldKey] = choice;
 
         if (step.type === 'singleChoice') {
+          if (isSingleChoiceAdvancing) {
+            return;
+          }
+
+          isSingleChoiceAdvancing = true;
+          document
+            .querySelectorAll('.single-choice-options .choice-btn')
+            .forEach((choiceButton) => choiceButton.classList.remove('choice-btn-confirm'));
           button.classList.add('choice-btn-confirm');
         }
 
@@ -278,7 +288,7 @@ function attachStepEvents(step, totalSteps) {
         };
 
         if (step.type === 'singleChoice') {
-          window.setTimeout(proceedToNext, 220);
+          window.setTimeout(proceedToNext, 760);
           return;
         }
 
