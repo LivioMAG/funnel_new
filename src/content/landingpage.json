@@ -12,13 +12,36 @@
       "size": "xl"
     },
     {
+      "type": "list",
+      "id": "job-facts",
+      "enabled": true,
+      "title": "Stelleninfos auf einen Blick",
+      "layout": "grid",
+      "columns": 3,
+      "items": [
+        {
+          "title": "100% Stellenprozent",
+          "icon": "🕒"
+        },
+        {
+          "title": "Altingen-Zwil · Region Zürich",
+          "icon": "📍"
+        },
+        {
+          "title": "Start: ab sofort",
+          "icon": "🚀"
+        }
+      ]
+    },
+    {
       "type": "cta",
       "id": "cta-apply-hero",
       "enabled": true,
       "buttonText": "Jetzt bewerben",
       "buttonVariant": "primary",
       "action": "start-funnel",
-      "align": "left"
+      "align": "left",
+      "animate": true
     },
     {
       "type": "cta",
@@ -28,7 +51,8 @@
       "buttonVariant": "secondary",
       "action": "link",
       "href": "./extended1.html",
-      "align": "left"
+      "align": "left",
+      "buttonStyle": "inverse"
     },
     {
       "type": "cta",
@@ -38,7 +62,8 @@
       "buttonVariant": "secondary",
       "action": "link",
       "href": "./extended2.html",
-      "align": "left"
+      "align": "left",
+      "buttonStyle": "inverse"
     },
     {
       "type": "cta",
