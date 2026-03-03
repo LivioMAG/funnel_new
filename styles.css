@@ -269,6 +269,32 @@ textarea {
   gap: 0.65rem;
 }
 
+.choice-checkbox {
+  width: 1.1rem;
+  height: 1.1rem;
+  border: 2px solid color-mix(in srgb, #fff 82%, var(--primary-color));
+  border-radius: 0.25rem;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.single-choice-options .choice-btn.active .choice-checkbox {
+  background: #fff;
+  border-color: #fff;
+}
+
+.single-choice-options .choice-btn.active .choice-checkbox::after {
+  content: "";
+  width: 0.34rem;
+  height: 0.6rem;
+  border: solid var(--primary-color);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
 .choice-icon {
   display: inline-flex;
   width: 1.25rem;
@@ -316,6 +342,11 @@ textarea {
 
 .single-choice-nav-actions {
   margin-top: 0.65rem;
+  justify-content: center;
+}
+
+.single-choice-nav-actions .btn-primary {
+  min-width: 10.5rem;
 }
 
 .single-choice-image-wrap {
