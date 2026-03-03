@@ -18,3 +18,9 @@ Alle sichtbaren Texte und Theme-Werte liegen in `config.json` (inklusive `landin
 Zusätzliche Seiten:
 - `landing.html` (Landingpage, JSON-gesteuert)
 - `warum-bei-uns.html` ("Warum bei uns arbeiten", JSON-gesteuert mit separater CSS-Datei)
+
+### Landingpage-Sections
+
+In `src/content/landingpage.json` steuerst du die Reihenfolge der Abschnitte über `sections`.
+
+Neu: CTAs können als eigene Section vom Typ `cta` angelegt werden (ein Button pro Section), z. B. mit `action: "start-funnel"`, `"show-info"` oder `"link"`.

@@ -11,15 +11,44 @@
       "align": "left",
       "size": "xl"
     },
-        {
-      "type": "heading",
-      "id": "hero",
+    {
+      "type": "cta",
+      "id": "cta-apply-hero",
       "enabled": true,
-      "kicker": "Musterfirma AG",
-      "title": "Sales Development Representative (m/w/d)",
-      "subtitle": "Du liebst ehrliche Gespräche und willst sichtbar etwas bewegen? Bei uns baust du echte Kundenbeziehungen auf statt nur Leads abzuhaken.",
-      "align": "left",
-      "size": "xl"
+      "buttonText": "Jetzt bewerben",
+      "buttonVariant": "primary",
+      "action": "start-funnel",
+      "align": "left"
+    },
+    {
+      "type": "cta",
+      "id": "cta-why-us",
+      "enabled": true,
+      "buttonText": "Warum bei uns arbeiten?",
+      "buttonVariant": "secondary",
+      "action": "link",
+      "href": "./extended1.html",
+      "align": "left"
+    },
+    {
+      "type": "cta",
+      "id": "cta-who-we-are",
+      "enabled": true,
+      "buttonText": "Wer sind wir?",
+      "buttonVariant": "secondary",
+      "action": "link",
+      "href": "./extended2.html",
+      "align": "left"
+    },
+    {
+      "type": "cta",
+      "id": "cta-fit-check",
+      "enabled": true,
+      "buttonText": "Passt das zu mir?",
+      "buttonVariant": "secondary",
+      "action": "show-info",
+      "infoText": "Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja.",
+      "align": "left"
     },
     {
       "type": "text",
