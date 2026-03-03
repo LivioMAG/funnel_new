@@ -77,6 +77,22 @@
         "type": "yesNo",
         "fieldKey": "german_fluent",
         "required": true
+      },
+      {
+        "id": "q5",
+        "title": "Stärken im Vertrieb",
+        "question": "Welche Aufgaben machen dir am meisten Spaß? (Mehrfachauswahl möglich)",
+        "type": "multiChoice",
+        "options": [
+          "Kaltakquise",
+          "Bedarfsanalyse",
+          "Produkt-Demos",
+          "Angebote & Verhandlung",
+          "Kundenpflege"
+        ],
+        "fieldKey": "sales_strengths",
+        "required": true,
+        "helperText": "Du kannst mehrere Antworten auswählen."
       }
     ],
     "final": {
