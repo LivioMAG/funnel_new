@@ -313,6 +313,11 @@ textarea {
   }
 }
 
+
+.single-choice-nav-actions {
+  margin-top: 0.65rem;
+}
+
 .single-choice-image-wrap {
   width: 100%;
   aspect-ratio: 16 / 9;

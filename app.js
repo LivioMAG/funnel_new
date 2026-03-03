@@ -199,7 +199,8 @@ function renderQuestionInput(step) {
 
   const isMultiChoice = step.type === 'multiChoice';
 
-  const singleChoiceClass = step.type === 'singleChoice' ? ' single-choice-mobile single-choice-options' : '';
+  const styledChoiceStep = ['singleChoice', 'yesNo', 'multiChoice'].includes(step.type);
+  const singleChoiceClass = styledChoiceStep ? ' single-choice-mobile single-choice-options' : '';
 
   const choicesMarkup = `
     <div class="choice-grid${singleChoiceClass}">
@@ -222,7 +223,7 @@ function renderQuestionInput(step) {
               data-choice="${normalizedOption.value}"
             >
               ${
-                step.type === 'singleChoice'
+                styledChoiceStep
                   ? `<span class="choice-icon" aria-hidden="true">${normalizedOption.icon}</span><span class="choice-text">${normalizedOption.text}</span>`
                   : normalizedOption.text
               }
@@ -234,7 +235,7 @@ function renderQuestionInput(step) {
     </div>
   `;
 
-  if (step.type === 'singleChoice') {
+  if (['singleChoice', 'yesNo', 'multiChoice'].includes(step.type)) {
     return choicesMarkup;
   }
 
@@ -367,9 +368,10 @@ function renderQuestionStep(index) {
   const total = funnel.steps.length;
   const step = funnel.steps[index];
   const progress = ((index + 1) / total) * 100;
-  const isSingleChoiceStep = step.type === 'singleChoice';
+  const isStyledChoiceStep = ['singleChoice', 'yesNo', 'multiChoice'].includes(step.type);
+  const needsManualNavigation = step.type === 'multiChoice';
 
-  app.innerHTML = isSingleChoiceStep
+  app.innerHTML = isStyledChoiceStep
     ? `
       <section class="container">
         <article class="card single-choice-layout">
@@ -380,7 +382,18 @@ function renderQuestionStep(index) {
           <div class="single-choice-content">
             <h2 class="section-title single-choice-question">${step.question}</h2>
             ${renderQuestionInput(step)}
+            ${step.helperText ? `<p class="helper">${step.helperText}</p>` : ''}
             <p class="error" id="error-text"></p>
+            ${
+              needsManualNavigation
+                ? `
+                  <div class="nav-actions single-choice-nav-actions">
+                    <button type="button" class="btn btn-ghost" id="back-btn">${funnel.nav.backText}</button>
+                    <button type="button" class="btn btn-primary" id="next-btn">${funnel.nav.nextText}</button>
+                  </div>
+                `
+                : ''
+            }
           </div>
           <div class="single-choice-image-wrap">
             ${
