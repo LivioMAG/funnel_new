@@ -93,7 +93,7 @@
       {
         "id": "q5",
         "title": "Stärken im Vertrieb",
-        "question": "Welche Aufgaben machen dir am meisten Spaß? (Mehrfachauswahl möglich)",
+        "question": "Welche Aufgaben machen dir am meisten Spaß?",
         "type": "multiChoice",
         "options": [
           "Kaltakquise",

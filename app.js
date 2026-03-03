@@ -224,7 +224,11 @@ function renderQuestionInput(step) {
             >
               ${
                 styledChoiceStep
-                  ? `<span class="choice-icon" aria-hidden="true">${normalizedOption.icon}</span><span class="choice-text">${normalizedOption.text}</span>`
+                  ? `${
+                      isMultiChoice
+                        ? '<span class="choice-checkbox" aria-hidden="true"></span>'
+                        : `<span class="choice-icon" aria-hidden="true">${normalizedOption.icon}</span>`
+                    }<span class="choice-text">${normalizedOption.text}</span>`
                   : normalizedOption.text
               }
             </button>
@@ -388,7 +392,6 @@ function renderQuestionStep(index) {
               needsManualNavigation
                 ? `
                   <div class="nav-actions single-choice-nav-actions">
-                    <button type="button" class="btn btn-ghost" id="back-btn">${funnel.nav.backText}</button>
                     <button type="button" class="btn btn-primary" id="next-btn">${funnel.nav.nextText}</button>
                   </div>
                 `
