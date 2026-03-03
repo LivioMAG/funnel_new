@@ -32,7 +32,8 @@
     "primaryCtaText": "Jetzt bewerben",
     "secondaryCtaEnabled": true,
     "secondaryCtaText": "Passt das zu mir?",
-    "secondaryCtaInfo": "Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja."
+    "secondaryCtaInfo": "Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja.",
+    "whyUsLinkText": "Warum bei uns arbeiten?"
   },
   "funnel": {
     "introText": "Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.",
@@ -132,5 +133,21 @@
       "emailText": "Bitte gib eine gültige E-Mail-Adresse ein."
     },
     "choiceImageAsset": "dummy.jpg"
+  },
+  "whyUs": {
+    "pageTitle": "Warum bei uns arbeiten",
+    "heroTitle": "Warum du bei uns arbeiten solltest",
+    "heroText": "Wir verbinden Leistung mit echter Entwicklung: Du bekommst Verantwortung, Vertrauen und ein Team, das gemeinsam wachsen will.",
+    "reasonsTitle": "Deine Vorteile bei uns",
+    "reasons": [
+      "Verantwortung ab Tag 1 statt endloser Beobachterrolle.",
+      "Klare Ziele, transparente KPIs und ehrliches Feedback.",
+      "Modernes Setup mit Tools, die dir wirklich Arbeit abnehmen.",
+      "Persönliche Entwicklung durch Sparring, Training und Lernbudget."
+    ],
+    "cultureTitle": "So arbeiten wir",
+    "cultureText": "Offen, direkt und respektvoll. Wir feiern Ergebnisse, lernen aus Fehlern und treffen Entscheidungen schnell.",
+    "ctaText": "Jetzt zur Bewerbung",
+    "backText": "Zur Landingpage"
   }
 }

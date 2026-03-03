@@ -35,7 +35,26 @@ const FALLBACK_CONFIG = {
     secondaryCtaEnabled: true,
     secondaryCtaText: 'Passt das zu mir?',
     secondaryCtaInfo:
-      'Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja.'
+      'Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja.',
+    whyUsLinkText: 'Warum bei uns arbeiten?'
+  },
+  whyUs: {
+    pageTitle: 'Warum bei uns arbeiten',
+    heroTitle: 'Warum du bei uns arbeiten solltest',
+    heroText:
+      'Wir verbinden Leistung mit echter Entwicklung: Du bekommst Verantwortung, Vertrauen und ein Team, das gemeinsam wachsen will.',
+    reasonsTitle: 'Deine Vorteile bei uns',
+    reasons: [
+      'Verantwortung ab Tag 1 statt endloser Beobachterrolle.',
+      'Klare Ziele, transparente KPIs und ehrliches Feedback.',
+      'Modernes Setup mit Tools, die dir wirklich Arbeit abnehmen.',
+      'Persönliche Entwicklung durch Sparring, Training und Lernbudget.'
+    ],
+    cultureTitle: 'So arbeiten wir',
+    cultureText:
+      'Offen, direkt und respektvoll. Wir feiern Ergebnisse, lernen aus Fehlern und treffen Entscheidungen schnell.',
+    ctaText: 'Jetzt zur Bewerbung',
+    backText: 'Zur Landingpage'
   },
   funnel: {
     introText:
@@ -138,6 +157,7 @@ function renderLanding() {
         <p class="hero-copy">${landing.shortPitch}</p>
         <div class="actions">
           <button type="button" class="btn btn-primary" id="start-funnel">${landing.primaryCtaText}</button>
+          <a class="btn btn-secondary" href="./warum-bei-uns.html">${landing.whyUsLinkText ?? 'Warum bei uns arbeiten?'}</a>
           ${
             landing.secondaryCtaEnabled
               ? `<button type="button" class="btn btn-secondary" id="secondary-cta">${landing.secondaryCtaText}</button>`
@@ -178,6 +198,38 @@ function renderLanding() {
   if (secondaryCta) {
     secondaryCta.addEventListener('click', () => showToast(landing.secondaryCtaInfo));
   }
+}
+
+
+function renderWhyUsPage() {
+  const { whyUs } = state.config;
+
+  if (whyUs?.pageTitle) {
+    document.title = whyUs.pageTitle;
+  }
+
+  app.innerHTML = `
+    <section class="container stack why-us-page">
+      <article class="card stack">
+        <h1 class="hero-title">${whyUs.heroTitle}</h1>
+        <p class="hero-copy">${whyUs.heroText}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="${getFunnelStartHref()}">${whyUs.ctaText}</a>
+          <a class="btn btn-ghost" href="./landing.html">${whyUs.backText}</a>
+        </div>
+      </article>
+
+      <article class="card stack">
+        <h2 class="section-title">${whyUs.reasonsTitle}</h2>
+        ${createList(whyUs.reasons)}
+      </article>
+
+      <article class="card stack">
+        <h2 class="section-title">${whyUs.cultureTitle}</h2>
+        <p class="copy">${whyUs.cultureText}</p>
+      </article>
+    </section>
+  `;
 }
 
 function renderQuestionInput(step) {
@@ -569,6 +621,11 @@ async function loadConfig() {
 async function init() {
   state.config = await loadConfig();
   setThemeVariables(state.config.theme);
+
+  if (pageMode === 'why-us') {
+    renderWhyUsPage();
+    return;
+  }
 
   const shouldStartInFunnel = pageMode === 'funnel' && window.location.hash === '#funnel-start';
   if (shouldStartInFunnel) {
