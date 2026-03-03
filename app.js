@@ -74,6 +74,13 @@ const state = {
 
 const app = document.getElementById('app');
 const toast = document.getElementById('toast');
+const pageMode = document.body.dataset.page ?? 'funnel';
+
+const getFunnelStartHref = () => {
+  const currentUrl = new URL(window.location.href);
+  const basePath = currentUrl.pathname.replace(/[^/]*$/, '');
+  return `${basePath}index.html#funnel-start`;
+};
 
 const interpolate = (template, values) =>
   template.replace(/\{(\w+)\}/g, (_, token) => values[token] ?? '');
@@ -157,6 +164,11 @@ function renderLanding() {
   `;
 
   document.getElementById('start-funnel').addEventListener('click', () => {
+    if (pageMode === 'landing-only') {
+      window.location.href = getFunnelStartHref();
+      return;
+    }
+
     state.view = 'funnel';
     state.stepIndex = 0;
     renderQuestionStep(state.stepIndex);
@@ -557,6 +569,15 @@ async function loadConfig() {
 async function init() {
   state.config = await loadConfig();
   setThemeVariables(state.config.theme);
+
+  const shouldStartInFunnel = pageMode === 'funnel' && window.location.hash === '#funnel-start';
+  if (shouldStartInFunnel) {
+    state.view = 'funnel';
+    state.stepIndex = 0;
+    renderQuestionStep(state.stepIndex);
+    return;
+  }
+
   renderLanding();
 }
 
