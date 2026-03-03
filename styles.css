@@ -599,10 +599,12 @@ textarea {
 [data-section-id="job-facts"] .list li {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   border: 0;
   padding: 0;
   background: transparent;
+  text-align: center;
 }
 
 [data-section-id="job-facts"] .list li:first-child {
@@ -611,4 +613,10 @@ textarea {
 
 [data-section-id="job-facts"] .list li p {
   margin: 0;
+}
+
+[data-section-id="job-facts"] .section-title,
+[data-section-id="job-facts"] .copy,
+[data-section-id="job-facts"] .list {
+  text-align: center;
 }
