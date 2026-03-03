@@ -123,6 +123,36 @@ textarea:focus-visible {
   background: transparent;
 }
 
+
+.btn-inverse {
+  background: var(--secondary-color);
+  color: var(--card-background-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-inverse:hover {
+  filter: brightness(1.08);
+}
+
+.btn-animated {
+  animation: cta-float 2.2s ease-in-out infinite;
+}
+
+.btn-animated:hover {
+  animation-play-state: paused;
+  transform: translateY(-1px);
+}
+
+@keyframes cta-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
 .progress-wrap {
   margin-bottom: 1rem;
 }
@@ -553,4 +583,16 @@ textarea {
 
 .landing-spacer-lg {
   height: 2rem;
+}
+
+
+[data-section-id="job-facts"] .list {
+  list-style: none;
+  padding-left: 0;
+}
+
+[data-section-id="job-facts"] .list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

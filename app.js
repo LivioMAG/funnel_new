@@ -419,13 +419,16 @@ function CtaSection(section) {
   const variantClass =
     section.buttonVariant === 'ghost' ? 'btn-ghost' : section.buttonVariant === 'secondary' ? 'btn-secondary' : 'btn-primary';
   const alignmentClass = section.align === 'center' ? 'landing-align-center' : '';
+  const inverseClass = section.buttonStyle === 'inverse' ? 'btn-inverse' : '';
+  const animatedClass = section.animate === true ? 'btn-animated' : '';
   const buttonLabel = escapeHtml(section.buttonText);
   const action = escapeHtml(section.action);
+  const buttonClasses = ['btn', variantClass, inverseClass, animatedClass].filter(Boolean).join(' ');
 
   const buttonMarkup =
     section.action === 'link'
-      ? `<a class="btn ${variantClass}" href="${escapeHtml(section.href ?? '#')}">${buttonLabel}</a>`
-      : `<button type="button" class="btn ${variantClass}" data-cta-action="${action}" data-cta-info="${escapeHtml(section.infoText ?? '')}">${buttonLabel}</button>`;
+      ? `<a class="${buttonClasses}" href="${escapeHtml(section.href ?? '#')}">${buttonLabel}</a>`
+      : `<button type="button" class="${buttonClasses}" data-cta-action="${action}" data-cta-info="${escapeHtml(section.infoText ?? '')}">${buttonLabel}</button>`;
 
   return `
     <article class="card stack ${alignmentClass}" data-section-id="${escapeHtml(section.id)}">
