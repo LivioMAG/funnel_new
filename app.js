@@ -179,10 +179,12 @@ function renderQuestionInput(step) {
 
   const isMultiChoice = step.type === 'multiChoice';
 
+  const singleChoiceClass = step.type === 'singleChoice' ? ' single-choice-mobile single-choice-options' : '';
+
   return `
     <fieldset class="field">
       <legend>${step.question}</legend>
-      <div class="choice-grid">
+      <div class="choice-grid${singleChoiceClass}">
         ${options
           .map(
             (option) => `
@@ -291,30 +293,53 @@ function renderQuestionStep(index) {
   const total = funnel.steps.length;
   const step = funnel.steps[index];
   const progress = ((index + 1) / total) * 100;
+  const isSingleChoiceStep = step.type === 'singleChoice';
 
-  app.innerHTML = `
-    <section class="container">
-      <article class="card stack">
-        <p class="copy">${funnel.introText}</p>
-        <div class="progress-wrap">
-          <span class="progress-label">${interpolate(funnel.nav.stepLabel, { current: index + 1, total })}</span>
-          <div class="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="${index + 1}">
-            <div class="progress-fill" style="width:${progress}%"></div>
+  app.innerHTML = isSingleChoiceStep
+    ? `
+      <section class="container">
+        <article class="card single-choice-layout">
+          <div class="single-choice-logo">
+            <div class="single-choice-logo-mark">Renggli Holzbau</div>
           </div>
-        </div>
+          <div class="single-choice-step-bar">${interpolate(funnel.nav.stepLabel, { current: index + 1, total })}</div>
+          <div class="single-choice-content">
+            <h2 class="section-title single-choice-question">${step.question}</h2>
+            ${renderQuestionInput(step)}
+            ${step.helperText ? `<p class="helper">${step.helperText}</p>` : ''}
+            <p class="error" id="error-text"></p>
+            <div class="nav-actions">
+              <button type="button" class="btn btn-ghost" id="back-btn">${funnel.nav.backText}</button>
+              <button type="button" class="btn btn-primary" id="next-btn">${funnel.nav.nextText}</button>
+            </div>
+          </div>
+          <div class="single-choice-image-placeholder" aria-hidden="true">Bild Platzhalter</div>
+        </article>
+      </section>
+    `
+    : `
+      <section class="container">
+        <article class="card stack">
+          <p class="copy">${funnel.introText}</p>
+          <div class="progress-wrap">
+            <span class="progress-label">${interpolate(funnel.nav.stepLabel, { current: index + 1, total })}</span>
+            <div class="progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="${total}" aria-valuenow="${index + 1}">
+              <div class="progress-fill" style="width:${progress}%"></div>
+            </div>
+          </div>
 
-        <h2 class="section-title">${step.title}</h2>
-        ${renderQuestionInput(step)}
-        ${step.helperText ? `<p class="helper">${step.helperText}</p>` : ''}
-        <p class="error" id="error-text"></p>
+          <h2 class="section-title">${step.title}</h2>
+          ${renderQuestionInput(step)}
+          ${step.helperText ? `<p class="helper">${step.helperText}</p>` : ''}
+          <p class="error" id="error-text"></p>
 
-        <div class="nav-actions">
-          <button type="button" class="btn btn-ghost" id="back-btn">${funnel.nav.backText}</button>
-          <button type="button" class="btn btn-primary" id="next-btn">${funnel.nav.nextText}</button>
-        </div>
-      </article>
-    </section>
-  `;
+          <div class="nav-actions">
+            <button type="button" class="btn btn-ghost" id="back-btn">${funnel.nav.backText}</button>
+            <button type="button" class="btn btn-primary" id="next-btn">${funnel.nav.nextText}</button>
+          </div>
+        </article>
+      </section>
+    `;
 
   attachStepEvents(step, total);
 }
