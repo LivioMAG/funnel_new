@@ -181,32 +181,40 @@ function renderQuestionInput(step) {
 
   const singleChoiceClass = step.type === 'singleChoice' ? ' single-choice-mobile single-choice-options' : '';
 
+  const choicesMarkup = `
+    <div class="choice-grid${singleChoiceClass}">
+      ${options
+        .map(
+          (option) => `
+            <button
+              type="button"
+              class="choice-btn ${
+                isMultiChoice
+                  ? Array.isArray(value) && value.includes(option)
+                    ? 'active'
+                    : ''
+                  : value === option
+                    ? 'active'
+                    : ''
+              }"
+              data-choice="${option}"
+            >
+              ${option}
+            </button>
+          `
+        )
+        .join('')}
+    </div>
+  `;
+
+  if (step.type === 'singleChoice') {
+    return choicesMarkup;
+  }
+
   return `
     <fieldset class="field">
       <legend>${step.question}</legend>
-      <div class="choice-grid${singleChoiceClass}">
-        ${options
-          .map(
-            (option) => `
-              <button
-                type="button"
-                class="choice-btn ${
-                  isMultiChoice
-                    ? Array.isArray(value) && value.includes(option)
-                      ? 'active'
-                      : ''
-                    : value === option
-                      ? 'active'
-                      : ''
-                }"
-                data-choice="${option}"
-              >
-                ${option}
-              </button>
-            `
-          )
-          .join('')}
-      </div>
+      ${choicesMarkup}
     </fieldset>
   `;
 }
@@ -254,14 +262,27 @@ function attachStepEvents(step, totalSteps) {
       } else {
         state.answers[step.fieldKey] = choice;
 
-        if (state.stepIndex < totalSteps - 1) {
-          state.stepIndex += 1;
-          renderQuestionStep(state.stepIndex);
+        if (step.type === 'singleChoice') {
+          button.classList.add('choice-btn-confirm');
+        }
+
+        const proceedToNext = () => {
+          if (state.stepIndex < totalSteps - 1) {
+            state.stepIndex += 1;
+            renderQuestionStep(state.stepIndex);
+            return;
+          }
+
+          state.view = 'final';
+          renderFinalForm();
+        };
+
+        if (step.type === 'singleChoice') {
+          window.setTimeout(proceedToNext, 220);
           return;
         }
 
-        state.view = 'final';
-        renderFinalForm();
+        proceedToNext();
         return;
       }
 
@@ -269,33 +290,39 @@ function attachStepEvents(step, totalSteps) {
     });
   });
 
-  document.getElementById('next-btn').addEventListener('click', () => {
-    const result = validateStep(step);
-    if (!result.valid) {
-      document.getElementById('error-text').textContent = result.message;
-      return;
-    }
+  const nextButton = document.getElementById('next-btn');
+  if (nextButton) {
+    nextButton.addEventListener('click', () => {
+      const result = validateStep(step);
+      if (!result.valid) {
+        document.getElementById('error-text').textContent = result.message;
+        return;
+      }
 
-    if (state.stepIndex < totalSteps - 1) {
-      state.stepIndex += 1;
+      if (state.stepIndex < totalSteps - 1) {
+        state.stepIndex += 1;
+        renderQuestionStep(state.stepIndex);
+        return;
+      }
+
+      state.view = 'final';
+      renderFinalForm();
+    });
+  }
+
+  const backButton = document.getElementById('back-btn');
+  if (backButton) {
+    backButton.addEventListener('click', () => {
+      if (state.stepIndex === 0) {
+        state.view = 'landing';
+        renderLanding();
+        return;
+      }
+
+      state.stepIndex -= 1;
       renderQuestionStep(state.stepIndex);
-      return;
-    }
-
-    state.view = 'final';
-    renderFinalForm();
-  });
-
-  document.getElementById('back-btn').addEventListener('click', () => {
-    if (state.stepIndex === 0) {
-      state.view = 'landing';
-      renderLanding();
-      return;
-    }
-
-    state.stepIndex -= 1;
-    renderQuestionStep(state.stepIndex);
-  });
+    });
+  }
 }
 
 function renderQuestionStep(index) {
@@ -316,12 +343,7 @@ function renderQuestionStep(index) {
           <div class="single-choice-content">
             <h2 class="section-title single-choice-question">${step.question}</h2>
             ${renderQuestionInput(step)}
-            ${step.helperText ? `<p class="helper">${step.helperText}</p>` : ''}
             <p class="error" id="error-text"></p>
-            <div class="nav-actions">
-              <button type="button" class="btn btn-ghost" id="back-btn">${funnel.nav.backText}</button>
-              <button type="button" class="btn btn-primary" id="next-btn">${funnel.nav.nextText}</button>
-            </div>
           </div>
           <div class="single-choice-image-placeholder" aria-hidden="true">Bild Platzhalter</div>
         </article>
