@@ -40,6 +40,7 @@ const FALLBACK_CONFIG = {
   funnel: {
     introText:
       'Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.',
+    singleChoiceImageAsset: 'dummy.jpg',
     steps: [],
     final: {
       title: 'Fast geschafft',
@@ -355,7 +356,13 @@ function renderQuestionStep(index) {
             ${renderQuestionInput(step)}
             <p class="error" id="error-text"></p>
           </div>
-          <div class="single-choice-image-placeholder" aria-hidden="true">Bild Platzhalter</div>
+          <div class="single-choice-image-wrap">
+            ${
+              funnel.singleChoiceImageAsset
+                ? `<img class="single-choice-image" src="./${funnel.singleChoiceImageAsset}" alt="" loading="lazy" />`
+                : '<div class="single-choice-image-placeholder" aria-hidden="true">Bild Platzhalter</div>'
+            }
+          </div>
         </article>
       </section>
     `

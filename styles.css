@@ -294,12 +294,24 @@ textarea {
   }
 }
 
-.single-choice-image-placeholder {
+.single-choice-image-wrap {
   width: 100%;
   aspect-ratio: 16 / 9;
+  border-top: 1px solid var(--border-color);
+}
+
+.single-choice-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.single-choice-image-placeholder {
+  width: 100%;
+  height: 100%;
   border-radius: 0;
   border: 0;
-  border-top: 1px solid var(--border-color);
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--primary-color) 16%, #d9dee8), #eef2f7),
     repeating-linear-gradient(
