@@ -63,9 +63,20 @@
         "question": "Wie möchtest du arbeiten?",
         "type": "singleChoice",
         "options": [
-          "Remote",
-          "Hybrid",
-          "Vor Ort"
+          {
+            "text": "Remote",
+            "value": "Remote",
+            "icon": "🏠"
+          },
+          {
+            "text": "Hybrid",
+            "value": "Hybrid",
+            "icon": "🔁"
+          },
+          {
+            "text": "Vor Ort",
+            "value": "Vor Ort"
+          }
         ],
         "fieldKey": "work_model",
         "required": true,
