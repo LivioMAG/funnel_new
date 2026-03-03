@@ -254,6 +254,12 @@ textarea {
   border-radius: 13px;
   font-weight: 700;
   min-height: 56px;
+  transition:
+    transform 460ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 320ms ease,
+    box-shadow 320ms ease,
+    filter 240ms ease;
+  transform-origin: center;
 }
 
 .single-choice-options .choice-btn.active {
@@ -262,18 +268,29 @@ textarea {
 }
 
 .single-choice-options .choice-btn.choice-btn-confirm {
-  animation: single-choice-confirm 220ms ease;
+  animation: single-choice-confirm 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 @keyframes single-choice-confirm {
   0% {
     transform: scale(1);
+    background: color-mix(in srgb, var(--primary-color) 38%, #b5a86e);
   }
-  45% {
-    transform: scale(0.97);
+  32% {
+    transform: scale(0.965);
+    background: color-mix(in srgb, var(--primary-color) 62%, #b5a86e);
+  }
+  58% {
+    transform: scale(1.03);
+    background: var(--primary-color);
+  }
+  78% {
+    transform: scale(1.03);
+    background: var(--primary-color);
   }
   100% {
-    transform: scale(1.02);
+    transform: scale(1);
+    background: var(--primary-color);
   }
 }
 
