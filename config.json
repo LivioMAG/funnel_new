@@ -36,6 +36,7 @@
   },
   "funnel": {
     "introText": "Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.",
+    "singleChoiceImageAsset": "dummy.jpg",
     "steps": [
       {
         "id": "q1",
