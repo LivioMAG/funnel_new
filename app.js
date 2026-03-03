@@ -102,6 +102,24 @@ const showToast = (message) => {
   window.setTimeout(() => toast.classList.remove('show'), 2800);
 };
 
+const normalizeOption = (option) => {
+  if (typeof option === 'string') {
+    return { value: option, text: option, icon: '' };
+  }
+
+  if (option && typeof option === 'object') {
+    const text = String(option.text ?? option.label ?? option.value ?? '').trim();
+    return {
+      value: String(option.value ?? text),
+      text,
+      icon: option.icon ? String(option.icon) : ''
+    };
+  }
+
+  const fallbackText = String(option ?? '').trim();
+  return { value: fallbackText, text: fallbackText, icon: '' };
+};
+
 function renderLanding() {
   const { landing } = state.config;
 
@@ -178,6 +196,7 @@ function renderQuestionInput(step) {
         ? step.options
         : [];
 
+
   const isMultiChoice = step.type === 'multiChoice';
 
   const singleChoiceClass = step.type === 'singleChoice' ? ' single-choice-mobile single-choice-options' : '';
@@ -186,23 +205,30 @@ function renderQuestionInput(step) {
     <div class="choice-grid${singleChoiceClass}">
       ${options
         .map(
-          (option) => `
+          (option) => {
+            const normalizedOption = normalizeOption(option);
+            return `
             <button
               type="button"
               class="choice-btn ${
                 isMultiChoice
-                  ? Array.isArray(value) && value.includes(option)
+                  ? Array.isArray(value) && value.includes(normalizedOption.value)
                     ? 'active'
                     : ''
-                  : value === option
+                  : value === normalizedOption.value
                     ? 'active'
                     : ''
               }"
-              data-choice="${option}"
+              data-choice="${normalizedOption.value}"
             >
-              ${option}
+              ${
+                step.type === 'singleChoice'
+                  ? `<span class="choice-icon" aria-hidden="true">${normalizedOption.icon}</span><span class="choice-text">${normalizedOption.text}</span>`
+                  : normalizedOption.text
+              }
             </button>
           `
+          }
         )
         .join('')}
     </div>
