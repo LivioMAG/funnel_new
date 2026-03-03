@@ -150,7 +150,7 @@ function renderLanding() {
 }
 
 function renderQuestionInput(step) {
-  const value = state.answers[step.fieldKey] ?? '';
+  const value = state.answers[step.fieldKey] ?? (step.type === 'multiChoice' ? [] : '');
 
   if (step.type === 'text') {
     return `
@@ -177,6 +177,8 @@ function renderQuestionInput(step) {
         ? step.options
         : [];
 
+  const isMultiChoice = step.type === 'multiChoice';
+
   return `
     <fieldset class="field">
       <legend>${step.question}</legend>
@@ -184,7 +186,19 @@ function renderQuestionInput(step) {
         ${options
           .map(
             (option) => `
-              <button type="button" class="choice-btn ${value === option ? 'active' : ''}" data-choice="${option}">
+              <button
+                type="button"
+                class="choice-btn ${
+                  isMultiChoice
+                    ? Array.isArray(value) && value.includes(option)
+                      ? 'active'
+                      : ''
+                    : value === option
+                      ? 'active'
+                      : ''
+                }"
+                data-choice="${option}"
+              >
                 ${option}
               </button>
             `
@@ -198,6 +212,14 @@ function renderQuestionInput(step) {
 function validateStep(step) {
   const currentValue = state.answers[step.fieldKey];
   if (!step.required) return { valid: true, message: '' };
+
+  if (step.type === 'multiChoice') {
+    const hasValue = Array.isArray(currentValue) && currentValue.length > 0;
+    if (!hasValue) {
+      return { valid: false, message: state.config.funnel.validation.requiredText };
+    }
+    return { valid: true, message: '' };
+  }
 
   const empty = !String(currentValue ?? '').trim();
   if (empty) {
@@ -217,7 +239,20 @@ function attachStepEvents(step, totalSteps) {
 
   document.querySelectorAll('[data-choice]').forEach((button) => {
     button.addEventListener('click', () => {
-      state.answers[step.fieldKey] = button.dataset.choice;
+      const choice = button.dataset.choice;
+
+      if (step.type === 'multiChoice') {
+        const selectedChoices = Array.isArray(state.answers[step.fieldKey])
+          ? state.answers[step.fieldKey]
+          : [];
+
+        state.answers[step.fieldKey] = selectedChoices.includes(choice)
+          ? selectedChoices.filter((item) => item !== choice)
+          : [...selectedChoices, choice];
+      } else {
+        state.answers[step.fieldKey] = choice;
+      }
+
       renderQuestionStep(state.stepIndex);
     });
   });
