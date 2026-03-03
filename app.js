@@ -145,6 +145,7 @@ const FALLBACK_CONFIG = {
 
 const state = {
   config: null,
+  landingSections: [],
   view: 'landing',
   stepIndex: 0,
   answers: {}
@@ -181,6 +182,212 @@ const setThemeVariables = (theme) => {
 const createList = (items) =>
   `<ul class="list">${items.map((item) => `<li>${item}</li>`).join('')}</ul>`;
 
+/**
+ * @typedef {'heading' | 'text' | 'list' | 'assets' | 'spacer'} SectionType
+ *
+ * @typedef {{
+ *  type: 'heading',
+ *  id: string,
+ *  enabled: boolean,
+ *  kicker?: string,
+ *  title: string,
+ *  subtitle?: string,
+ *  align?: 'left' | 'center',
+ *  size?: 'xl' | 'lg' | 'md'
+ * }} HeadingSection
+ *
+ * @typedef {{
+ *  type: 'text',
+ *  id: string,
+ *  enabled: boolean,
+ *  title?: string,
+ *  body: string,
+ *  maxWidth?: 'sm' | 'md' | 'lg'
+ * }} TextSection
+ *
+ * @typedef {{ title: string, text?: string, icon?: string }} ListItem
+ *
+ * @typedef {{
+ *  type: 'list',
+ *  id: string,
+ *  enabled: boolean,
+ *  title: string,
+ *  subtitle?: string,
+ *  layout?: 'grid' | 'stack',
+ *  columns?: 1 | 2 | 3,
+ *  items: ListItem[]
+ * }} ListSection
+ *
+ * @typedef {{ src: string, alt: string, caption?: string }} AssetItem
+ *
+ * @typedef {{
+ *  type: 'assets',
+ *  id: string,
+ *  enabled: boolean,
+ *  title?: string,
+ *  variant?: 'single' | 'gallery' | 'logos',
+ *  assets: AssetItem[]
+ * }} AssetsSection
+ *
+ * @typedef {{
+ *  type: 'spacer',
+ *  id: string,
+ *  enabled: boolean,
+ *  size?: 'sm' | 'md' | 'lg'
+ * }} SpacerSection
+ *
+ * @typedef {HeadingSection | TextSection | ListSection | AssetsSection | SpacerSection} LandingSection
+ */
+
+const escapeHtml = (value) =>
+  String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+
+const getFallbackLandingSections = (landing) => [
+  {
+    type: 'heading',
+    id: 'hero',
+    enabled: true,
+    kicker: landing.companyName,
+    title: landing.jobTitle,
+    subtitle: landing.shortPitch,
+    align: 'left',
+    size: 'xl'
+  },
+  { type: 'text', id: 'about', enabled: true, title: landing.aboutTitle, body: landing.aboutText, maxWidth: 'lg' },
+  {
+    type: 'list',
+    id: 'expectations',
+    enabled: true,
+    title: landing.expectationsTitle,
+    layout: 'stack',
+    columns: 1,
+    items: (landing.expectationsBullets ?? []).map((item) => ({ title: item }))
+  },
+  {
+    type: 'list',
+    id: 'benefits',
+    enabled: true,
+    title: landing.benefitsTitle,
+    layout: 'stack',
+    columns: 1,
+    items: (landing.benefitsBullets ?? []).map((item) => ({ title: item }))
+  }
+];
+
+function HeadingSection(section, headingLevel = 'h2') {
+  const alignmentClass = section.align === 'center' ? 'landing-align-center' : '';
+  const headingClass = section.size === 'md' ? 'section-title' : 'hero-title';
+
+  return `
+    <article class="card stack ${alignmentClass}" data-section-id="${escapeHtml(section.id)}">
+      ${section.kicker ? `<p class="copy">${escapeHtml(section.kicker)}</p>` : ''}
+      <${headingLevel} class="${headingClass}">${escapeHtml(section.title)}</${headingLevel}>
+      ${section.subtitle ? `<p class="hero-copy">${escapeHtml(section.subtitle)}</p>` : ''}
+      <div class="actions">
+        <button type="button" class="btn btn-primary" id="start-funnel">${escapeHtml(state.config.landing.primaryCtaText)}</button>
+        ${renderInfoButtons()}
+        ${
+          state.config.landing.secondaryCtaEnabled
+            ? `<button type="button" class="btn btn-secondary" id="secondary-cta">${escapeHtml(state.config.landing.secondaryCtaText)}</button>`
+            : ''
+        }
+      </div>
+    </article>
+  `;
+}
+
+function TextSection(section) {
+  const maxWidthClass = section.maxWidth ? `text-max-${section.maxWidth}` : '';
+  return `
+    <article class="card stack ${maxWidthClass}" data-section-id="${escapeHtml(section.id)}">
+      ${section.title ? `<h2 class="section-title">${escapeHtml(section.title)}</h2>` : ''}
+      <p class="copy">${escapeHtml(section.body).replaceAll('\n', '<br />')}</p>
+    </article>
+  `;
+}
+
+function ListSection(section) {
+  const layout = section.layout === 'grid' ? 'landing-list-grid' : 'landing-list-stack';
+  const columns = [1, 2, 3].includes(section.columns) ? section.columns : 1;
+
+  return `
+    <article class="card stack" data-section-id="${escapeHtml(section.id)}">
+      <h2 class="section-title">${escapeHtml(section.title)}</h2>
+      ${section.subtitle ? `<p class="copy">${escapeHtml(section.subtitle)}</p>` : ''}
+      <ul class="list ${layout} landing-list-columns-${columns}">
+        ${(Array.isArray(section.items) ? section.items : [])
+          .map(
+            (item) => `
+              <li>
+                <strong>${item.icon ? `${escapeHtml(item.icon)} ` : ''}${escapeHtml(item.title)}</strong>
+                ${item.text ? `<p class="copy">${escapeHtml(item.text)}</p>` : ''}
+              </li>
+            `
+          )
+          .join('')}
+      </ul>
+    </article>
+  `;
+}
+
+function AssetsSection(section) {
+  const variant = section.variant ?? 'gallery';
+  const variantClass = variant === 'single' ? 'landing-assets-single' : variant === 'logos' ? 'landing-assets-logos' : 'landing-assets-gallery';
+  return `
+    <article class="card stack" data-section-id="${escapeHtml(section.id)}">
+      ${section.title ? `<h2 class="section-title">${escapeHtml(section.title)}</h2>` : ''}
+      <div class="${variantClass}">
+        ${(Array.isArray(section.assets) ? section.assets : [])
+          .map(
+            (asset) => `
+              <figure class="landing-asset-item">
+                <img src="${escapeHtml(asset.src)}" alt="${escapeHtml(asset.alt)}" loading="lazy" />
+                ${asset.caption ? `<figcaption class="copy">${escapeHtml(asset.caption)}</figcaption>` : ''}
+              </figure>
+            `
+          )
+          .join('')}
+      </div>
+    </article>
+  `;
+}
+
+function SpacerSection(section) {
+  const spacerSize = section.size === 'sm' || section.size === 'lg' ? section.size : 'md';
+  return `<div class="landing-spacer landing-spacer-${spacerSize}" data-section-id="${escapeHtml(section.id)}" aria-hidden="true"></div>`;
+}
+
+function LandingSection(section, headingLevel = 'h2') {
+  if (!section || section.enabled === false || typeof section.type !== 'string' || !section.id) {
+    return '';
+  }
+
+  if (section.type === 'heading' && section.title) return HeadingSection(section, headingLevel);
+  if (section.type === 'text' && section.body) return TextSection(section);
+  if (section.type === 'list' && section.title) return ListSection(section);
+  if (section.type === 'assets' && Array.isArray(section.assets)) return AssetsSection(section);
+  if (section.type === 'spacer') return SpacerSection(section);
+
+  return '';
+}
+
+function renderInfoButtons() {
+  const infoButtons = Array.isArray(state.config?.landing?.infoButtons) ? state.config.landing.infoButtons : [];
+  return infoButtons
+    .map((button) => {
+      const href = String(button.href ?? '#');
+      const text = String(button.text ?? 'Mehr erfahren');
+      const variant = button.variant === 'ghost' ? 'btn-ghost' : 'btn-secondary';
+      return `<a class="btn ${variant}" href="${escapeHtml(href)}">${escapeHtml(text)}</a>`;
+    })
+    .join('');
+}
+
 const showToast = (message) => {
   toast.textContent = message;
   toast.classList.add('show');
@@ -206,48 +413,17 @@ const normalizeOption = (option) => {
 };
 
 function renderLanding() {
-  const { landing } = state.config;
-  const infoButtons = Array.isArray(landing.infoButtons) ? landing.infoButtons : [];
-  const infoButtonsMarkup = infoButtons
-    .map((button) => {
-      const href = String(button.href ?? '#');
-      const text = String(button.text ?? 'Mehr erfahren');
-      const variant = button.variant === 'ghost' ? 'btn-ghost' : 'btn-secondary';
-      return `<a class="btn ${variant}" href="${href}">${text}</a>`;
-    })
+  const sections = Array.isArray(state.landingSections) ? state.landingSections : [];
+  const enabledSections = sections.filter((section) => section && section.enabled !== false);
+  const firstHeadingId = enabledSections.find((section) => section.type === 'heading')?.id;
+
+  const sectionsMarkup = enabledSections
+    .map((section) => LandingSection(section, section.id === firstHeadingId ? 'h1' : 'h2'))
     .join('');
 
   app.innerHTML = `
     <section class="container stack">
-      <article class="card stack">
-        <p class="copy">${landing.companyName}</p>
-        <h1 class="hero-title">${landing.jobTitle}</h1>
-        <p class="hero-copy">${landing.shortPitch}</p>
-        <div class="actions">
-          <button type="button" class="btn btn-primary" id="start-funnel">${landing.primaryCtaText}</button>
-          ${infoButtonsMarkup}
-          ${
-            landing.secondaryCtaEnabled
-              ? `<button type="button" class="btn btn-secondary" id="secondary-cta">${landing.secondaryCtaText}</button>`
-              : ''
-          }
-        </div>
-      </article>
-
-      <article class="card stack">
-        <h2 class="section-title">${landing.aboutTitle}</h2>
-        <p class="copy">${landing.aboutText}</p>
-      </article>
-
-      <article class="card stack">
-        <h2 class="section-title">${landing.expectationsTitle}</h2>
-        ${createList(landing.expectationsBullets)}
-      </article>
-
-      <article class="card stack">
-        <h2 class="section-title">${landing.benefitsTitle}</h2>
-        ${createList(landing.benefitsBullets)}
-      </article>
+      ${sectionsMarkup}
     </section>
   `;
 
@@ -264,7 +440,20 @@ function renderLanding() {
 
   const secondaryCta = document.getElementById('secondary-cta');
   if (secondaryCta) {
-    secondaryCta.addEventListener('click', () => showToast(landing.secondaryCtaInfo));
+    secondaryCta.addEventListener('click', () => showToast(state.config.landing.secondaryCtaInfo));
+  }
+}
+
+async function loadLandingSections() {
+  try {
+    const response = await fetch('./src/content/landingpage.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    if (!Array.isArray(data?.sections)) throw new Error('sections array fehlt');
+    return data.sections;
+  } catch (error) {
+    console.warn('landingpage.json konnte nicht geladen werden, verwende Fallback aus config.landing.', error);
+    return getFallbackLandingSections(state.config?.landing ?? FALLBACK_CONFIG.landing);
   }
 }
 
@@ -728,6 +917,7 @@ async function loadConfig() {
 
 async function init() {
   state.config = await loadConfig();
+  state.landingSections = await loadLandingSections();
   setThemeVariables(state.config.theme);
 
   if (pageMode.startsWith('extended:')) {

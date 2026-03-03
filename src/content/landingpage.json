@@ -1,0 +1,89 @@
+{
+  "_comment": "Landingpage ist datengetrieben: Neue Abschnitte in der sections-Liste anlegen (oben nach unten) und via type steuern.",
+  "sections": [
+    {
+      "type": "heading",
+      "id": "hero",
+      "enabled": true,
+      "kicker": "Musterfirma AG",
+      "title": "Sales Development Representative (m/w/d)",
+      "subtitle": "Du liebst ehrliche Gespräche und willst sichtbar etwas bewegen? Bei uns baust du echte Kundenbeziehungen auf statt nur Leads abzuhaken.",
+      "align": "left",
+      "size": "xl"
+    },
+    {
+      "type": "text",
+      "id": "intro",
+      "enabled": true,
+      "title": "Über uns",
+      "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
+      "maxWidth": "lg"
+    },
+    {
+      "type": "list",
+      "id": "benefits",
+      "enabled": true,
+      "title": "Was dich bei uns erwartet",
+      "subtitle": "Unsere wichtigsten Benefits auf einen Blick.",
+      "layout": "grid",
+      "columns": 2,
+      "items": [
+        {
+          "title": "Onboarding mit Struktur",
+          "text": "Klarer Einstieg mit persönlichem Sparring.",
+          "icon": "🚀"
+        },
+        {
+          "title": "Flexibles Arbeiten",
+          "text": "Modernes Setup und kurze Entscheidungswege.",
+          "icon": "🧩"
+        },
+        {
+          "title": "Faire Vergütung",
+          "text": "Transparentes Modell plus Entwicklungspfad.",
+          "icon": "💶"
+        },
+        {
+          "title": "Feedback-Kultur",
+          "text": "Regelmäßiges Coaching für messbares Wachstum.",
+          "icon": "📈"
+        },
+        {
+          "title": "Team mit Verantwortung",
+          "text": "Du gestaltest aktiv mit statt nur auszuführen.",
+          "icon": "🤝"
+        }
+      ]
+    },
+    {
+      "type": "assets",
+      "id": "gallery",
+      "enabled": true,
+      "title": "Einblicke in unseren Alltag",
+      "variant": "gallery",
+      "assets": [
+        {
+          "src": "./dummy.jpg",
+          "alt": "Teammeeting im Büro",
+          "caption": "Wöchentliche Team-Session mit klaren Zielen."
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Arbeitsplatz mit Laptop und Notizen",
+          "caption": "Modernes Setup für fokussiertes Arbeiten."
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Kolleg:innen im Gespräch",
+          "caption": "Direkte Zusammenarbeit und schnelle Abstimmungen."
+        }
+      ]
+    },
+    {
+      "type": "spacer",
+      "id": "spacer-1",
+      "enabled": true,
+      "size": "md"
+    }
+  ]
+}
