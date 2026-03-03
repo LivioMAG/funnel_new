@@ -1,0 +1,12 @@
+.why-us-page .list {
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+}
+
+.why-us-page .list li {
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0.8rem 0.9rem;
+  background: color-mix(in srgb, var(--primary-color) 6%, white);
+  list-style-position: inside;
+}

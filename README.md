@@ -12,4 +12,9 @@ Dann im Browser `http://localhost:4173` öffnen.
 
 ## Texte austauschen
 
-Alle sichtbaren Texte liegen in `content.json` unter `meta` und `steps`.
+Alle sichtbaren Texte und Theme-Werte liegen in `config.json` (inklusive `landing`, `whyUs`, `funnel` und `theme`).
+
+
+Zusätzliche Seiten:
+- `landing.html` (Landingpage, JSON-gesteuert)
+- `warum-bei-uns.html` ("Warum bei uns arbeiten", JSON-gesteuert mit separater CSS-Datei)
