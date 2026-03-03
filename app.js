@@ -36,7 +36,8 @@ const FALLBACK_CONFIG = {
     secondaryCtaText: 'Passt das zu mir?',
     secondaryCtaInfo:
       'Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja.',
-    whyUsLinkText: 'Warum bei uns arbeiten?'
+    whyUsLinkText: 'Warum bei uns arbeiten?',
+    whoWeAreLinkText: 'Wer sind wir?'
   },
   whyUs: {
     pageTitle: 'Warum bei uns arbeiten',
@@ -54,6 +55,36 @@ const FALLBACK_CONFIG = {
     cultureText:
       'Offen, direkt und respektvoll. Wir feiern Ergebnisse, lernen aus Fehlern und treffen Entscheidungen schnell.',
     ctaText: 'Jetzt zur Bewerbung',
+    backText: 'Zur Landingpage'
+  },
+  whoWeAre: {
+    pageTitle: 'Wer sind wir',
+    heroKicker: 'Wer sind wir?',
+    heroTitle: 'Wir bauen Teams, die Wirkung schaffen',
+    heroText:
+      'Wir sind ein ambitioniertes Team aus Vertrieb, Operations und Produkt. Uns verbindet der Anspruch, Kund:innen wirklich weiterzubringen und dabei selbst jeden Monat besser zu werden.',
+    valuesTitle: 'Wofür wir stehen',
+    values: [
+      {
+        title: 'Verantwortung statt Bürokratie',
+        text: 'Wir vertrauen Menschen früh Verantwortung an und messen uns an Ergebnissen, nicht an langen Abstimmungsschleifen.'
+      },
+      {
+        title: 'Klarheit in der Zusammenarbeit',
+        text: 'Ziele, Rollen und Prioritäten sind transparent. So kann jede:r fokussiert arbeiten und schnell Entscheidungen treffen.'
+      },
+      {
+        title: 'Wachstum mit Substanz',
+        text: 'Wir investieren in Skills, Feedback und ein sauberes Setup – damit aus Performance langfristiger Erfolg wird.'
+      }
+    ],
+    factsTitle: 'Kurz & konkret',
+    facts: [
+      'B2B-Fokus mit klarer Positionierung',
+      'Moderne Tool-Landschaft und strukturierte Prozesse',
+      'Feedback-Kultur mit echtem Sparring'
+    ],
+    ctaText: 'Jetzt bewerben',
     backText: 'Zur Landingpage'
   },
   funnel: {
@@ -158,6 +189,7 @@ function renderLanding() {
         <div class="actions">
           <button type="button" class="btn btn-primary" id="start-funnel">${landing.primaryCtaText}</button>
           <a class="btn btn-secondary" href="./warum-bei-uns.html">${landing.whyUsLinkText ?? 'Warum bei uns arbeiten?'}</a>
+          <a class="btn btn-secondary" href="./wer-sind-wir.html">${landing.whoWeAreLinkText ?? 'Wer sind wir?'}</a>
           ${
             landing.secondaryCtaEnabled
               ? `<button type="button" class="btn btn-secondary" id="secondary-cta">${landing.secondaryCtaText}</button>`
@@ -198,6 +230,51 @@ function renderLanding() {
   if (secondaryCta) {
     secondaryCta.addEventListener('click', () => showToast(landing.secondaryCtaInfo));
   }
+}
+
+function renderWhoWeArePage() {
+  const { whoWeAre } = state.config;
+
+  if (whoWeAre?.pageTitle) {
+    document.title = whoWeAre.pageTitle;
+  }
+
+  const valueCards = Array.isArray(whoWeAre.values)
+    ? whoWeAre.values
+        .map(
+          (value) => `
+            <article class="who-value-card">
+              <h3>${value.title ?? ''}</h3>
+              <p>${value.text ?? ''}</p>
+            </article>
+          `
+        )
+        .join('')
+    : '';
+
+  app.innerHTML = `
+    <section class="container stack who-we-are-page">
+      <article class="card stack who-hero-card">
+        <p class="eyebrow">${whoWeAre.heroKicker ?? ''}</p>
+        <h1 class="hero-title">${whoWeAre.heroTitle ?? ''}</h1>
+        <p class="hero-copy">${whoWeAre.heroText ?? ''}</p>
+        <div class="actions">
+          <a class="btn btn-primary" href="${getFunnelStartHref()}">${whoWeAre.ctaText ?? 'Jetzt bewerben'}</a>
+          <a class="btn btn-ghost" href="./landing.html">${whoWeAre.backText ?? 'Zur Landingpage'}</a>
+        </div>
+      </article>
+
+      <article class="card stack">
+        <h2 class="section-title">${whoWeAre.valuesTitle ?? ''}</h2>
+        <div class="who-values-grid">${valueCards}</div>
+      </article>
+
+      <article class="card stack">
+        <h2 class="section-title">${whoWeAre.factsTitle ?? ''}</h2>
+        ${createList(Array.isArray(whoWeAre.facts) ? whoWeAre.facts : [])}
+      </article>
+    </section>
+  `;
 }
 
 
@@ -624,6 +701,11 @@ async function init() {
 
   if (pageMode === 'why-us') {
     renderWhyUsPage();
+    return;
+  }
+
+  if (pageMode === 'who-we-are') {
+    renderWhoWeArePage();
     return;
   }
 
