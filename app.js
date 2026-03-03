@@ -183,7 +183,7 @@ const createList = (items) =>
   `<ul class="list">${items.map((item) => `<li>${item}</li>`).join('')}</ul>`;
 
 /**
- * @typedef {'heading' | 'text' | 'list' | 'assets' | 'spacer'} SectionType
+ * @typedef {'heading' | 'text' | 'list' | 'assets' | 'spacer' | 'cta'} SectionType
  *
  * @typedef {{
  *  type: 'heading',
@@ -236,7 +236,19 @@ const createList = (items) =>
  *  size?: 'sm' | 'md' | 'lg'
  * }} SpacerSection
  *
- * @typedef {HeadingSection | TextSection | ListSection | AssetsSection | SpacerSection} LandingSection
+ * @typedef {{
+ *  type: 'cta',
+ *  id: string,
+ *  enabled: boolean,
+ *  buttonText: string,
+ *  action: 'start-funnel' | 'show-info' | 'link',
+ *  buttonVariant?: 'primary' | 'secondary' | 'ghost',
+ *  href?: string,
+ *  infoText?: string,
+ *  align?: 'left' | 'center'
+ * }} CtaSection
+ *
+ * @typedef {HeadingSection | TextSection | ListSection | AssetsSection | SpacerSection | CtaSection} LandingSection
  */
 
 const escapeHtml = (value) =>
@@ -276,7 +288,42 @@ const getFallbackLandingSections = (landing) => [
     layout: 'stack',
     columns: 1,
     items: (landing.benefitsBullets ?? []).map((item) => ({ title: item }))
-  }
+  },
+  {
+    type: 'cta',
+    id: 'cta-primary',
+    enabled: true,
+    buttonText: landing.primaryCtaText,
+    buttonVariant: 'primary',
+    action: 'start-funnel',
+    align: 'left'
+  },
+  ...(Array.isArray(landing.infoButtons)
+    ? landing.infoButtons.map((button, index) => ({
+        type: 'cta',
+        id: `cta-info-${index + 1}`,
+        enabled: true,
+        buttonText: String(button.text ?? 'Mehr erfahren'),
+        buttonVariant: button.variant === 'ghost' ? 'ghost' : 'secondary',
+        action: 'link',
+        href: String(button.href ?? '#'),
+        align: 'left'
+      }))
+    : []),
+  ...(landing.secondaryCtaEnabled
+    ? [
+        {
+          type: 'cta',
+          id: 'cta-secondary',
+          enabled: true,
+          buttonText: landing.secondaryCtaText,
+          buttonVariant: 'secondary',
+          action: 'show-info',
+          infoText: landing.secondaryCtaInfo,
+          align: 'left'
+        }
+      ]
+    : [])
 ];
 
 function HeadingSection(section, headingLevel = 'h2') {
@@ -288,15 +335,6 @@ function HeadingSection(section, headingLevel = 'h2') {
       ${section.kicker ? `<p class="copy">${escapeHtml(section.kicker)}</p>` : ''}
       <${headingLevel} class="${headingClass}">${escapeHtml(section.title)}</${headingLevel}>
       ${section.subtitle ? `<p class="hero-copy">${escapeHtml(section.subtitle)}</p>` : ''}
-      <div class="actions">
-        <button type="button" class="btn btn-primary" id="start-funnel">${escapeHtml(state.config.landing.primaryCtaText)}</button>
-        ${renderInfoButtons()}
-        ${
-          state.config.landing.secondaryCtaEnabled
-            ? `<button type="button" class="btn btn-secondary" id="secondary-cta">${escapeHtml(state.config.landing.secondaryCtaText)}</button>`
-            : ''
-        }
-      </div>
     </article>
   `;
 }
@@ -372,20 +410,30 @@ function LandingSection(section, headingLevel = 'h2') {
   if (section.type === 'list' && section.title) return ListSection(section);
   if (section.type === 'assets' && Array.isArray(section.assets)) return AssetsSection(section);
   if (section.type === 'spacer') return SpacerSection(section);
+  if (section.type === 'cta' && section.buttonText && section.action) return CtaSection(section);
 
   return '';
 }
 
-function renderInfoButtons() {
-  const infoButtons = Array.isArray(state.config?.landing?.infoButtons) ? state.config.landing.infoButtons : [];
-  return infoButtons
-    .map((button) => {
-      const href = String(button.href ?? '#');
-      const text = String(button.text ?? 'Mehr erfahren');
-      const variant = button.variant === 'ghost' ? 'btn-ghost' : 'btn-secondary';
-      return `<a class="btn ${variant}" href="${escapeHtml(href)}">${escapeHtml(text)}</a>`;
-    })
-    .join('');
+function CtaSection(section) {
+  const variantClass =
+    section.buttonVariant === 'ghost' ? 'btn-ghost' : section.buttonVariant === 'secondary' ? 'btn-secondary' : 'btn-primary';
+  const alignmentClass = section.align === 'center' ? 'landing-align-center' : '';
+  const buttonLabel = escapeHtml(section.buttonText);
+  const action = escapeHtml(section.action);
+
+  const buttonMarkup =
+    section.action === 'link'
+      ? `<a class="btn ${variantClass}" href="${escapeHtml(section.href ?? '#')}">${buttonLabel}</a>`
+      : `<button type="button" class="btn ${variantClass}" data-cta-action="${action}" data-cta-info="${escapeHtml(section.infoText ?? '')}">${buttonLabel}</button>`;
+
+  return `
+    <article class="card stack ${alignmentClass}" data-section-id="${escapeHtml(section.id)}">
+      <div class="actions">
+        ${buttonMarkup}
+      </div>
+    </article>
+  `;
 }
 
 const showToast = (message) => {
@@ -427,21 +475,25 @@ function renderLanding() {
     </section>
   `;
 
-  document.getElementById('start-funnel').addEventListener('click', () => {
-    if (pageMode === 'landing-only') {
-      window.location.href = getFunnelStartHref();
-      return;
-    }
+  document.querySelectorAll('[data-cta-action]').forEach((button) => {
+    button.addEventListener('click', () => {
+      if (button.dataset.ctaAction === 'show-info') {
+        showToast(button.dataset.ctaInfo || state.config.landing.secondaryCtaInfo);
+        return;
+      }
 
-    state.view = 'funnel';
-    state.stepIndex = 0;
-    renderQuestionStep(state.stepIndex);
+      if (button.dataset.ctaAction === 'start-funnel') {
+        if (pageMode === 'landing-only') {
+          window.location.href = getFunnelStartHref();
+          return;
+        }
+
+        state.view = 'funnel';
+        state.stepIndex = 0;
+        renderQuestionStep(state.stepIndex);
+      }
+    });
   });
-
-  const secondaryCta = document.getElementById('secondary-cta');
-  if (secondaryCta) {
-    secondaryCta.addEventListener('click', () => showToast(state.config.landing.secondaryCtaInfo));
-  }
 }
 
 async function loadLandingSections() {
