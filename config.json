@@ -33,8 +33,18 @@
     "secondaryCtaEnabled": true,
     "secondaryCtaText": "Passt das zu mir?",
     "secondaryCtaInfo": "Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja.",
-    "whyUsLinkText": "Warum bei uns arbeiten?",
-    "whoWeAreLinkText": "Wer sind wir?"
+    "infoButtons": [
+      {
+        "text": "Warum bei uns arbeiten?",
+        "href": "./extended1.html",
+        "variant": "secondary"
+      },
+      {
+        "text": "Wer sind wir?",
+        "href": "./extended2.html",
+        "variant": "secondary"
+      }
+    ]
   },
   "funnel": {
     "introText": "Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.",
@@ -135,49 +145,83 @@
     },
     "choiceImageAsset": "dummy.jpg"
   },
-  "whyUs": {
-    "pageTitle": "Warum bei uns arbeiten",
-    "heroTitle": "Warum du bei uns arbeiten solltest",
-    "heroText": "Wir verbinden Leistung mit echter Entwicklung: Du bekommst Verantwortung, Vertrauen und ein Team, das gemeinsam wachsen will.",
-    "reasonsTitle": "Deine Vorteile bei uns",
-    "reasons": [
-      "Verantwortung ab Tag 1 statt endloser Beobachterrolle.",
-      "Klare Ziele, transparente KPIs und ehrliches Feedback.",
-      "Modernes Setup mit Tools, die dir wirklich Arbeit abnehmen.",
-      "Persönliche Entwicklung durch Sparring, Training und Lernbudget."
-    ],
-    "cultureTitle": "So arbeiten wir",
-    "cultureText": "Offen, direkt und respektvoll. Wir feiern Ergebnisse, lernen aus Fehlern und treffen Entscheidungen schnell.",
-    "ctaText": "Jetzt zur Bewerbung",
-    "backText": "Zur Landingpage"
-  },
-  "whoWeAre": {
-    "pageTitle": "Wer sind wir",
-    "heroKicker": "Wer sind wir?",
-    "heroTitle": "Wir bauen Teams, die Wirkung schaffen",
-    "heroText": "Wir sind ein ambitioniertes Team aus Vertrieb, Operations und Produkt. Uns verbindet der Anspruch, Kund:innen wirklich weiterzubringen und dabei selbst jeden Monat besser zu werden.",
-    "valuesTitle": "Wofür wir stehen",
-    "values": [
-      {
-        "title": "Verantwortung statt Bürokratie",
-        "text": "Wir vertrauen Menschen früh Verantwortung an und messen uns an Ergebnissen, nicht an langen Abstimmungsschleifen."
-      },
-      {
-        "title": "Klarheit in der Zusammenarbeit",
-        "text": "Ziele, Rollen und Prioritäten sind transparent. So kann jede:r fokussiert arbeiten und schnell Entscheidungen treffen."
-      },
-      {
-        "title": "Wachstum mit Substanz",
-        "text": "Wir investieren in Skills, Feedback und ein sauberes Setup – damit aus Performance langfristiger Erfolg wird."
-      }
-    ],
-    "factsTitle": "Kurz & konkret",
-    "facts": [
-      "B2B-Fokus mit klarer Positionierung",
-      "Moderne Tool-Landschaft und strukturierte Prozesse",
-      "Feedback-Kultur mit echtem Sparring"
-    ],
-    "ctaText": "Jetzt bewerben",
-    "backText": "Zur Landingpage"
+  "extendedPages": {
+    "extended1": {
+      "pageTitle": "Warum bei uns arbeiten",
+      "heroTitle": "Warum du bei uns arbeiten solltest",
+      "heroText": "Wir verbinden Leistung mit echter Entwicklung: Du bekommst Verantwortung, Vertrauen und ein Team, das gemeinsam wachsen will.",
+      "buttons": [
+        {
+          "text": "Jetzt zur Bewerbung",
+          "href": "#funnel-start",
+          "variant": "primary"
+        },
+        {
+          "text": "Zur Landingpage",
+          "href": "./landing.html",
+          "variant": "ghost"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Deine Vorteile bei uns",
+          "list": [
+            "Verantwortung ab Tag 1 statt endloser Beobachterrolle.",
+            "Klare Ziele, transparente KPIs und ehrliches Feedback.",
+            "Modernes Setup mit Tools, die dir wirklich Arbeit abnehmen.",
+            "Persönliche Entwicklung durch Sparring, Training und Lernbudget."
+          ]
+        },
+        {
+          "title": "So arbeiten wir",
+          "text": "Offen, direkt und respektvoll. Wir feiern Ergebnisse, lernen aus Fehlern und treffen Entscheidungen schnell."
+        }
+      ]
+    },
+    "extended2": {
+      "pageTitle": "Wer sind wir",
+      "heroKicker": "Wer sind wir?",
+      "heroTitle": "Wir bauen Teams, die Wirkung schaffen",
+      "heroText": "Wir sind ein ambitioniertes Team aus Vertrieb, Operations und Produkt. Uns verbindet der Anspruch, Kund:innen wirklich weiterzubringen und dabei selbst jeden Monat besser zu werden.",
+      "buttons": [
+        {
+          "text": "Jetzt bewerben",
+          "href": "#funnel-start",
+          "variant": "primary"
+        },
+        {
+          "text": "Zur Landingpage",
+          "href": "./landing.html",
+          "variant": "ghost"
+        }
+      ],
+      "sections": [
+        {
+          "title": "Wofür wir stehen",
+          "cards": [
+            {
+              "title": "Verantwortung statt Bürokratie",
+              "text": "Wir vertrauen Menschen früh Verantwortung an und messen uns an Ergebnissen, nicht an langen Abstimmungsschleifen."
+            },
+            {
+              "title": "Klarheit in der Zusammenarbeit",
+              "text": "Ziele, Rollen und Prioritäten sind transparent. So kann jede:r fokussiert arbeiten und schnell Entscheidungen treffen."
+            },
+            {
+              "title": "Wachstum mit Substanz",
+              "text": "Wir investieren in Skills, Feedback und ein sauberes Setup – damit aus Performance langfristiger Erfolg wird."
+            }
+          ]
+        },
+        {
+          "title": "Kurz & konkret",
+          "list": [
+            "B2B-Fokus mit klarer Positionierung",
+            "Moderne Tool-Landschaft und strukturierte Prozesse",
+            "Feedback-Kultur mit echtem Sparring"
+          ]
+        }
+      ]
+    }
   }
 }

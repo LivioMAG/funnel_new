@@ -36,56 +36,84 @@ const FALLBACK_CONFIG = {
     secondaryCtaText: 'Passt das zu mir?',
     secondaryCtaInfo:
       'Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja.',
-    whyUsLinkText: 'Warum bei uns arbeiten?',
-    whoWeAreLinkText: 'Wer sind wir?'
-  },
-  whyUs: {
-    pageTitle: 'Warum bei uns arbeiten',
-    heroTitle: 'Warum du bei uns arbeiten solltest',
-    heroText:
-      'Wir verbinden Leistung mit echter Entwicklung: Du bekommst Verantwortung, Vertrauen und ein Team, das gemeinsam wachsen will.',
-    reasonsTitle: 'Deine Vorteile bei uns',
-    reasons: [
-      'Verantwortung ab Tag 1 statt endloser Beobachterrolle.',
-      'Klare Ziele, transparente KPIs und ehrliches Feedback.',
-      'Modernes Setup mit Tools, die dir wirklich Arbeit abnehmen.',
-      'Persönliche Entwicklung durch Sparring, Training und Lernbudget.'
-    ],
-    cultureTitle: 'So arbeiten wir',
-    cultureText:
-      'Offen, direkt und respektvoll. Wir feiern Ergebnisse, lernen aus Fehlern und treffen Entscheidungen schnell.',
-    ctaText: 'Jetzt zur Bewerbung',
-    backText: 'Zur Landingpage'
-  },
-  whoWeAre: {
-    pageTitle: 'Wer sind wir',
-    heroKicker: 'Wer sind wir?',
-    heroTitle: 'Wir bauen Teams, die Wirkung schaffen',
-    heroText:
-      'Wir sind ein ambitioniertes Team aus Vertrieb, Operations und Produkt. Uns verbindet der Anspruch, Kund:innen wirklich weiterzubringen und dabei selbst jeden Monat besser zu werden.',
-    valuesTitle: 'Wofür wir stehen',
-    values: [
+    infoButtons: [
       {
-        title: 'Verantwortung statt Bürokratie',
-        text: 'Wir vertrauen Menschen früh Verantwortung an und messen uns an Ergebnissen, nicht an langen Abstimmungsschleifen.'
+        text: 'Warum bei uns arbeiten?',
+        href: './extended1.html',
+        variant: 'secondary'
       },
       {
-        title: 'Klarheit in der Zusammenarbeit',
-        text: 'Ziele, Rollen und Prioritäten sind transparent. So kann jede:r fokussiert arbeiten und schnell Entscheidungen treffen.'
-      },
-      {
-        title: 'Wachstum mit Substanz',
-        text: 'Wir investieren in Skills, Feedback und ein sauberes Setup – damit aus Performance langfristiger Erfolg wird.'
+        text: 'Wer sind wir?',
+        href: './extended2.html',
+        variant: 'secondary'
       }
-    ],
-    factsTitle: 'Kurz & konkret',
-    facts: [
-      'B2B-Fokus mit klarer Positionierung',
-      'Moderne Tool-Landschaft und strukturierte Prozesse',
-      'Feedback-Kultur mit echtem Sparring'
-    ],
-    ctaText: 'Jetzt bewerben',
-    backText: 'Zur Landingpage'
+    ]
+  },
+  extendedPages: {
+    extended1: {
+      pageTitle: 'Warum bei uns arbeiten',
+      heroTitle: 'Warum du bei uns arbeiten solltest',
+      heroText:
+        'Wir verbinden Leistung mit echter Entwicklung: Du bekommst Verantwortung, Vertrauen und ein Team, das gemeinsam wachsen will.',
+      buttons: [
+        { text: 'Jetzt zur Bewerbung', href: '#funnel-start', variant: 'primary' },
+        { text: 'Zur Landingpage', href: './landing.html', variant: 'ghost' }
+      ],
+      sections: [
+        {
+          title: 'Deine Vorteile bei uns',
+          list: [
+            'Verantwortung ab Tag 1 statt endloser Beobachterrolle.',
+            'Klare Ziele, transparente KPIs und ehrliches Feedback.',
+            'Modernes Setup mit Tools, die dir wirklich Arbeit abnehmen.',
+            'Persönliche Entwicklung durch Sparring, Training und Lernbudget.'
+          ]
+        },
+        {
+          title: 'So arbeiten wir',
+          text:
+            'Offen, direkt und respektvoll. Wir feiern Ergebnisse, lernen aus Fehlern und treffen Entscheidungen schnell.'
+        }
+      ]
+    },
+    extended2: {
+      pageTitle: 'Wer sind wir',
+      heroKicker: 'Wer sind wir?',
+      heroTitle: 'Wir bauen Teams, die Wirkung schaffen',
+      heroText:
+        'Wir sind ein ambitioniertes Team aus Vertrieb, Operations und Produkt. Uns verbindet der Anspruch, Kund:innen wirklich weiterzubringen und dabei selbst jeden Monat besser zu werden.',
+      buttons: [
+        { text: 'Jetzt bewerben', href: '#funnel-start', variant: 'primary' },
+        { text: 'Zur Landingpage', href: './landing.html', variant: 'ghost' }
+      ],
+      sections: [
+        {
+          title: 'Wofür wir stehen',
+          cards: [
+            {
+              title: 'Verantwortung statt Bürokratie',
+              text: 'Wir vertrauen Menschen früh Verantwortung an und messen uns an Ergebnissen, nicht an langen Abstimmungsschleifen.'
+            },
+            {
+              title: 'Klarheit in der Zusammenarbeit',
+              text: 'Ziele, Rollen und Prioritäten sind transparent. So kann jede:r fokussiert arbeiten und schnell Entscheidungen treffen.'
+            },
+            {
+              title: 'Wachstum mit Substanz',
+              text: 'Wir investieren in Skills, Feedback und ein sauberes Setup – damit aus Performance langfristiger Erfolg wird.'
+            }
+          ]
+        },
+        {
+          title: 'Kurz & konkret',
+          list: [
+            'B2B-Fokus mit klarer Positionierung',
+            'Moderne Tool-Landschaft und strukturierte Prozesse',
+            'Feedback-Kultur mit echtem Sparring'
+          ]
+        }
+      ]
+    }
   },
   funnel: {
     introText:
@@ -179,6 +207,15 @@ const normalizeOption = (option) => {
 
 function renderLanding() {
   const { landing } = state.config;
+  const infoButtons = Array.isArray(landing.infoButtons) ? landing.infoButtons : [];
+  const infoButtonsMarkup = infoButtons
+    .map((button) => {
+      const href = String(button.href ?? '#');
+      const text = String(button.text ?? 'Mehr erfahren');
+      const variant = button.variant === 'ghost' ? 'btn-ghost' : 'btn-secondary';
+      return `<a class="btn ${variant}" href="${href}">${text}</a>`;
+    })
+    .join('');
 
   app.innerHTML = `
     <section class="container stack">
@@ -188,8 +225,7 @@ function renderLanding() {
         <p class="hero-copy">${landing.shortPitch}</p>
         <div class="actions">
           <button type="button" class="btn btn-primary" id="start-funnel">${landing.primaryCtaText}</button>
-          <a class="btn btn-secondary" href="./warum-bei-uns.html">${landing.whyUsLinkText ?? 'Warum bei uns arbeiten?'}</a>
-          <a class="btn btn-secondary" href="./wer-sind-wir.html">${landing.whoWeAreLinkText ?? 'Wer sind wir?'}</a>
+          ${infoButtonsMarkup}
           ${
             landing.secondaryCtaEnabled
               ? `<button type="button" class="btn btn-secondary" id="secondary-cta">${landing.secondaryCtaText}</button>`
@@ -232,79 +268,74 @@ function renderLanding() {
   }
 }
 
-function renderWhoWeArePage() {
-  const { whoWeAre } = state.config;
-
-  if (whoWeAre?.pageTitle) {
-    document.title = whoWeAre.pageTitle;
+function getPageButtonHref(href) {
+  if (href === '#funnel-start') {
+    return getFunnelStartHref();
   }
 
-  const valueCards = Array.isArray(whoWeAre.values)
-    ? whoWeAre.values
-        .map(
-          (value) => `
-            <article class="who-value-card">
-              <h3>${value.title ?? ''}</h3>
-              <p>${value.text ?? ''}</p>
+  return href;
+}
+
+function renderExtendedPage(pageId) {
+  const pageConfig = state.config?.extendedPages?.[pageId];
+  if (!pageConfig) {
+    app.innerHTML = '<section class="container"><article class="card">Seite nicht gefunden.</article></section>';
+    return;
+  }
+
+  if (pageConfig.pageTitle) {
+    document.title = pageConfig.pageTitle;
+  }
+
+  const buttonsMarkup = Array.isArray(pageConfig.buttons)
+    ? pageConfig.buttons
+        .map((button) => {
+          const variant = button.variant === 'ghost' ? 'btn-ghost' : button.variant === 'secondary' ? 'btn-secondary' : 'btn-primary';
+          return `<a class="btn ${variant}" href="${getPageButtonHref(String(button.href ?? '#'))}">${button.text ?? 'Weiter'}</a>`;
+        })
+        .join('')
+    : '';
+
+  const sectionsMarkup = Array.isArray(pageConfig.sections)
+    ? pageConfig.sections
+        .map((section) => {
+          const cardsMarkup = Array.isArray(section.cards)
+            ? `<div class="who-values-grid">${section.cards
+                .map(
+                  (card) => `
+                    <article class="who-value-card">
+                      <h3>${card.title ?? ''}</h3>
+                      <p>${card.text ?? ''}</p>
+                    </article>
+                  `
+                )
+                .join('')}</div>`
+            : '';
+
+          const listMarkup = Array.isArray(section.list) ? createList(section.list) : '';
+          const textMarkup = section.text ? `<p class="copy">${section.text}</p>` : '';
+
+          return `
+            <article class="card stack">
+              ${section.title ? `<h2 class="section-title">${section.title}</h2>` : ''}
+              ${textMarkup}
+              ${listMarkup}
+              ${cardsMarkup}
             </article>
-          `
-        )
+          `;
+        })
         .join('')
     : '';
 
   app.innerHTML = `
-    <section class="container stack who-we-are-page">
-      <article class="card stack who-hero-card">
-        <p class="eyebrow">${whoWeAre.heroKicker ?? ''}</p>
-        <h1 class="hero-title">${whoWeAre.heroTitle ?? ''}</h1>
-        <p class="hero-copy">${whoWeAre.heroText ?? ''}</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="${getFunnelStartHref()}">${whoWeAre.ctaText ?? 'Jetzt bewerben'}</a>
-          <a class="btn btn-ghost" href="./landing.html">${whoWeAre.backText ?? 'Zur Landingpage'}</a>
-        </div>
-      </article>
-
+    <section class="container stack">
       <article class="card stack">
-        <h2 class="section-title">${whoWeAre.valuesTitle ?? ''}</h2>
-        <div class="who-values-grid">${valueCards}</div>
+        ${pageConfig.heroKicker ? `<p class="eyebrow">${pageConfig.heroKicker}</p>` : ''}
+        <h1 class="hero-title">${pageConfig.heroTitle ?? ''}</h1>
+        <p class="hero-copy">${pageConfig.heroText ?? ''}</p>
+        ${buttonsMarkup ? `<div class="actions">${buttonsMarkup}</div>` : ''}
       </article>
-
-      <article class="card stack">
-        <h2 class="section-title">${whoWeAre.factsTitle ?? ''}</h2>
-        ${createList(Array.isArray(whoWeAre.facts) ? whoWeAre.facts : [])}
-      </article>
-    </section>
-  `;
-}
-
-
-function renderWhyUsPage() {
-  const { whyUs } = state.config;
-
-  if (whyUs?.pageTitle) {
-    document.title = whyUs.pageTitle;
-  }
-
-  app.innerHTML = `
-    <section class="container stack why-us-page">
-      <article class="card stack">
-        <h1 class="hero-title">${whyUs.heroTitle}</h1>
-        <p class="hero-copy">${whyUs.heroText}</p>
-        <div class="actions">
-          <a class="btn btn-primary" href="${getFunnelStartHref()}">${whyUs.ctaText}</a>
-          <a class="btn btn-ghost" href="./landing.html">${whyUs.backText}</a>
-        </div>
-      </article>
-
-      <article class="card stack">
-        <h2 class="section-title">${whyUs.reasonsTitle}</h2>
-        ${createList(whyUs.reasons)}
-      </article>
-
-      <article class="card stack">
-        <h2 class="section-title">${whyUs.cultureTitle}</h2>
-        <p class="copy">${whyUs.cultureText}</p>
-      </article>
+      ${sectionsMarkup}
     </section>
   `;
 }
@@ -699,13 +730,8 @@ async function init() {
   state.config = await loadConfig();
   setThemeVariables(state.config.theme);
 
-  if (pageMode === 'why-us') {
-    renderWhyUsPage();
-    return;
-  }
-
-  if (pageMode === 'who-we-are') {
-    renderWhoWeArePage();
+  if (pageMode.startsWith('extended:')) {
+    renderExtendedPage(pageMode.replace('extended:', ''));
     return;
   }
 
