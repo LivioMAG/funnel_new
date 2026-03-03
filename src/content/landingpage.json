@@ -15,22 +15,18 @@
       "type": "list",
       "id": "job-facts",
       "enabled": true,
-      "title": "Stelleninfos auf einen Blick",
       "layout": "grid",
       "columns": 3,
       "items": [
         {
-          "key": "Pensum",
           "value": "100%",
           "icon": "🕒"
         },
         {
-          "key": "Standort",
-          "value": "Standort Adligenswil, Zürich",
+          "value": "Alregenswil Zürich",
           "icon": "📍"
         },
         {
-          "key": "Start",
           "value": "ab sofort",
           "icon": "🚀"
         }
