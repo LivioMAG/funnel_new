@@ -36,7 +36,6 @@
   },
   "funnel": {
     "introText": "Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.",
-    "singleChoiceImageAsset": "dummy.jpg",
     "steps": [
       {
         "id": "q1",
@@ -80,7 +79,8 @@
         ],
         "fieldKey": "work_model",
         "required": true,
-        "helperText": "Wähle die Form, in der du am besten performst."
+        "helperText": "Wähle die Form, in der du am besten performst.",
+        "imageAsset": "dummy.jpg"
       },
       {
         "id": "q4",
@@ -88,7 +88,8 @@
         "question": "Sprichst du fliessend Deutsch?",
         "type": "yesNo",
         "fieldKey": "german_fluent",
-        "required": true
+        "required": true,
+        "imageAsset": "dummy.jpg"
       },
       {
         "id": "q5",
@@ -104,7 +105,8 @@
         ],
         "fieldKey": "sales_strengths",
         "required": true,
-        "helperText": "Du kannst mehrere Antworten auswählen."
+        "helperText": "Du kannst mehrere Antworten auswählen.",
+        "imageAsset": "dummy.jpg"
       }
     ],
     "final": {
@@ -128,6 +130,7 @@
     "validation": {
       "requiredText": "Bitte fülle dieses Feld aus.",
       "emailText": "Bitte gib eine gültige E-Mail-Adresse ein."
-    }
+    },
+    "choiceImageAsset": "dummy.jpg"
   }
 }

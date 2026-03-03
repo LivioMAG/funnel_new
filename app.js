@@ -40,7 +40,7 @@ const FALLBACK_CONFIG = {
   funnel: {
     introText:
       'Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.',
-    singleChoiceImageAsset: 'dummy.jpg',
+    choiceImageAsset: 'dummy.jpg',
     steps: [],
     final: {
       title: 'Fast geschafft',
@@ -271,7 +271,7 @@ function validateStep(step) {
 }
 
 function attachStepEvents(step, totalSteps) {
-  let isSingleChoiceAdvancing = false;
+  let isChoiceAdvancing = false;
 
   const input = document.getElementById('field-input');
   if (input) {
@@ -296,12 +296,14 @@ function attachStepEvents(step, totalSteps) {
       } else {
         state.answers[step.fieldKey] = choice;
 
-        if (step.type === 'singleChoice') {
-          if (isSingleChoiceAdvancing) {
+        const hasAutoAdvanceAnimation = ['singleChoice', 'yesNo'].includes(step.type);
+
+        if (hasAutoAdvanceAnimation) {
+          if (isChoiceAdvancing) {
             return;
           }
 
-          isSingleChoiceAdvancing = true;
+          isChoiceAdvancing = true;
           document
             .querySelectorAll('.single-choice-options .choice-btn')
             .forEach((choiceButton) => choiceButton.classList.remove('choice-btn-confirm'));
@@ -319,7 +321,7 @@ function attachStepEvents(step, totalSteps) {
           renderFinalForm();
         };
 
-        if (step.type === 'singleChoice') {
+        if (hasAutoAdvanceAnimation) {
           window.setTimeout(proceedToNext, 760);
           return;
         }
@@ -374,6 +376,7 @@ function renderQuestionStep(index) {
   const progress = ((index + 1) / total) * 100;
   const isStyledChoiceStep = ['singleChoice', 'yesNo', 'multiChoice'].includes(step.type);
   const needsManualNavigation = step.type === 'multiChoice';
+  const stepImageAsset = step.imageAsset ?? funnel.choiceImageAsset ?? funnel.singleChoiceImageAsset;
 
   app.innerHTML = isStyledChoiceStep
     ? `
@@ -400,8 +403,8 @@ function renderQuestionStep(index) {
           </div>
           <div class="single-choice-image-wrap">
             ${
-              funnel.singleChoiceImageAsset
-                ? `<img class="single-choice-image" src="./${funnel.singleChoiceImageAsset}" alt="" loading="lazy" />`
+              stepImageAsset
+                ? `<img class="single-choice-image" src="./${stepImageAsset}" alt="" loading="lazy" />`
                 : '<div class="single-choice-image-placeholder" aria-hidden="true">Bild Platzhalter</div>'
             }
           </div>
