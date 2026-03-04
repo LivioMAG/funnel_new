@@ -687,6 +687,12 @@ function initLandingSliders() {
 }
 
 
+const resolveAssetValue = (value, assetRegistry) => {
+  if (typeof value !== 'string' || !value.trim()) return value;
+  const resolved = assetRegistry[value];
+  return typeof resolved === 'string' && resolved.trim() ? resolved : value;
+};
+
 const resolveSectionAssets = (sections, assets) => {
   if (!Array.isArray(sections)) return [];
   const assetRegistry = assets && typeof assets === 'object' ? assets : {};
@@ -694,11 +700,26 @@ const resolveSectionAssets = (sections, assets) => {
   return sections.map((section) => {
     if (!section || typeof section !== 'object') return section;
 
-    if (section.type === 'logo' && !section.src && typeof section.assetKey === 'string') {
-      const resolvedAsset = assetRegistry[section.assetKey];
-      if (typeof resolvedAsset === 'string' && resolvedAsset.trim()) {
-        return { ...section, src: resolvedAsset };
+    if (section.type === 'logo') {
+      const src = section.src ?? section.assetKey;
+      if (typeof src === 'string' && src.trim()) {
+        return { ...section, src: resolveAssetValue(src, assetRegistry) };
       }
+    }
+
+    if (section.type === 'image' && typeof section.src === 'string') {
+      return { ...section, src: resolveAssetValue(section.src, assetRegistry) };
+    }
+
+    if ((section.type === 'assets' || section.type === 'slider') && Array.isArray(section.assets)) {
+      return {
+        ...section,
+        assets: section.assets.map((asset) =>
+          asset && typeof asset === 'object' && typeof asset.src === 'string'
+            ? { ...asset, src: resolveAssetValue(asset.src, assetRegistry) }
+            : asset
+        )
+      };
     }
 
     return section;

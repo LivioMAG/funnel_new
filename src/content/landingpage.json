@@ -6,8 +6,8 @@
       "id": "company-logo-top",
       "enabled": true,
       "alt": "Firmenlogo",
-      "height": 40,
-      "assetKey": "./logo.png"
+      "height": 60,
+      "src": "./logo.png"
     },
     {
       "type": "heading",
