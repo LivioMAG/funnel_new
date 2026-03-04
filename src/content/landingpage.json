@@ -143,6 +143,37 @@
       ]
     },
     {
+      "type": "image",
+      "id": "team-highlight-image",
+      "enabled": true,
+      "src": "./dummy.jpg",
+      "alt": "Team bei der Projektplanung"
+    },
+    {
+      "type": "slider",
+      "id": "team-slider",
+      "enabled": true,
+      "autoplayMs": 5000,
+      "assets": [
+        {
+          "src": "./dummy.jpg",
+          "alt": "Montagearbeiten vor Ort"
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Teammeeting mit Bauplänen"
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Projektbesprechung auf der Baustelle"
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Feininstallation im Innenbereich"
+        }
+      ]
+    },
+    {
       "type": "spacer",
       "id": "spacer-1",
       "enabled": true,
