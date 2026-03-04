@@ -183,7 +183,7 @@ const createList = (items) =>
   `<ul class="list">${items.map((item) => `<li>${item}</li>`).join('')}</ul>`;
 
 /**
- * @typedef {'heading' | 'text' | 'list' | 'assets' | 'spacer' | 'cta'} SectionType
+ * @typedef {'heading' | 'text' | 'list' | 'assets' | 'image' | 'slider' | 'spacer' | 'cta'} SectionType
  *
  * @typedef {{
  *  type: 'heading',
@@ -230,6 +230,22 @@ const createList = (items) =>
  * }} AssetsSection
  *
  * @typedef {{
+ *  type: 'image',
+ *  id: string,
+ *  enabled: boolean,
+ *  src: string,
+ *  alt: string
+ * }} ImageSection
+ *
+ * @typedef {{
+ *  type: 'slider',
+ *  id: string,
+ *  enabled: boolean,
+ *  autoplayMs?: number,
+ *  assets: AssetItem[]
+ * }} SliderSection
+ *
+ * @typedef {{
  *  type: 'spacer',
  *  id: string,
  *  enabled: boolean,
@@ -248,7 +264,7 @@ const createList = (items) =>
  *  align?: 'left' | 'center'
  * }} CtaSection
  *
- * @typedef {HeadingSection | TextSection | ListSection | AssetsSection | SpacerSection | CtaSection} LandingSection
+ * @typedef {HeadingSection | TextSection | ListSection | AssetsSection | ImageSection | SliderSection | SpacerSection | CtaSection} LandingSection
  */
 
 const escapeHtml = (value) =>
@@ -400,6 +416,54 @@ function AssetsSection(section) {
   `;
 }
 
+function ImageSection(section) {
+  return `
+    <article class="card landing-image-only" data-section-id="${escapeHtml(section.id)}">
+      <img src="${escapeHtml(section.src)}" alt="${escapeHtml(section.alt ?? '')}" loading="lazy" />
+    </article>
+  `;
+}
+
+function SliderSection(section) {
+  const autoplayMs = Math.max(2000, Number(section.autoplayMs) || 5000);
+
+  return `
+    <article class="card stack landing-slider" data-section-id="${escapeHtml(section.id)}" data-slider-autoplay-ms="${autoplayMs}">
+      <div class="landing-slider-track-wrap">
+        <div class="landing-slider-track">
+          ${(Array.isArray(section.assets) ? section.assets : [])
+            .map(
+              (asset, index) => `
+                <figure class="landing-slider-slide ${index === 0 ? 'is-active' : ''}" data-slide-index="${index}" aria-hidden="${
+                  index === 0 ? 'false' : 'true'
+                }">
+                  <img src="${escapeHtml(asset.src)}" alt="${escapeHtml(asset.alt)}" loading="lazy" />
+                </figure>
+              `
+            )
+            .join('')}
+        </div>
+      </div>
+      <div class="landing-slider-dots" role="tablist" aria-label="Bild-Slider Navigation">
+        ${(Array.isArray(section.assets) ? section.assets : [])
+          .map(
+            (asset, index) => `
+              <button
+                type="button"
+                class="landing-slider-dot ${index === 0 ? 'is-active' : ''}"
+                data-slider-dot-index="${index}"
+                role="tab"
+                aria-selected="${index === 0 ? 'true' : 'false'}"
+                aria-label="Bild ${index + 1}: ${escapeHtml(asset.alt)}"
+              ></button>
+            `
+          )
+          .join('')}
+      </div>
+    </article>
+  `;
+}
+
 function SpacerSection(section) {
   const spacerSize = section.size === 'sm' || section.size === 'lg' ? section.size : 'md';
   return `<div class="landing-spacer landing-spacer-${spacerSize}" data-section-id="${escapeHtml(section.id)}" aria-hidden="true"></div>`;
@@ -414,6 +478,8 @@ function LandingSection(section, headingLevel = 'h2') {
   if (section.type === 'text' && section.body) return TextSection(section);
   if (section.type === 'list' && Array.isArray(section.items) && section.items.length > 0) return ListSection(section);
   if (section.type === 'assets' && Array.isArray(section.assets)) return AssetsSection(section);
+  if (section.type === 'image' && section.src) return ImageSection(section);
+  if (section.type === 'slider' && Array.isArray(section.assets) && section.assets.length > 0) return SliderSection(section);
   if (section.type === 'spacer') return SpacerSection(section);
   if (section.type === 'cta' && section.buttonText && section.action) return CtaSection(section);
 
@@ -501,6 +567,62 @@ function renderLanding() {
         renderQuestionStep(state.stepIndex);
       }
     });
+  });
+
+  initLandingSliders();
+}
+
+function initLandingSliders() {
+  const sliderElements = document.querySelectorAll('.landing-slider');
+
+  sliderElements.forEach((sliderElement) => {
+    const slides = Array.from(sliderElement.querySelectorAll('.landing-slider-slide'));
+    const dots = Array.from(sliderElement.querySelectorAll('.landing-slider-dot'));
+
+    if (slides.length <= 1 || dots.length !== slides.length) {
+      return;
+    }
+
+    const autoplayMs = Math.max(2000, Number(sliderElement.dataset.sliderAutoplayMs) || 5000);
+    let activeIndex = 0;
+    let timerId;
+
+    const setActiveSlide = (nextIndex) => {
+      activeIndex = (nextIndex + slides.length) % slides.length;
+
+      slides.forEach((slide, index) => {
+        const isActive = index === activeIndex;
+        slide.classList.toggle('is-active', isActive);
+        slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+      });
+
+      dots.forEach((dot, index) => {
+        const isActive = index === activeIndex;
+        dot.classList.toggle('is-active', isActive);
+        dot.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+    };
+
+    const startAutoplay = () => {
+      window.clearInterval(timerId);
+      timerId = window.setInterval(() => {
+        setActiveSlide(activeIndex + 1);
+      }, autoplayMs);
+    };
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        setActiveSlide(index);
+        startAutoplay();
+      });
+    });
+
+    sliderElement.addEventListener('mouseenter', () => window.clearInterval(timerId));
+    sliderElement.addEventListener('mouseleave', startAutoplay);
+    sliderElement.addEventListener('focusin', () => window.clearInterval(timerId));
+    sliderElement.addEventListener('focusout', startAutoplay);
+
+    startAutoplay();
   });
 }
 
