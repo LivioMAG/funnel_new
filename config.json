@@ -1,6 +1,6 @@
 {
   "theme": {
-    "primaryColor": "##FF0000",
+    "primaryColor": "#FF0000",
     "primaryButtonTextColor": "#FFFFFF",
     "secondaryColor": "#111827",
     "backgroundColor": "#F7F8FA",
@@ -109,6 +109,5 @@
       "emailText": "Bitte gib eine gültige E-Mail-Adresse ein."
     },
     "choiceImageAsset": "dummy.jpg"
-  },
   }
 }
