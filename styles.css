@@ -642,7 +642,7 @@ textarea {
 
 .landing-slider-slide.is-entering-from-right {
   opacity: 0;
-  transform: translateX(14%);
+  transform: translateX(100%);
 }
 
 .landing-slider-slide.is-entering-from-right.is-active {
@@ -652,7 +652,7 @@ textarea {
 
 .landing-slider-slide.is-entering-from-left {
   opacity: 0;
-  transform: translateX(-14%);
+  transform: translateX(-100%);
 }
 
 .landing-slider-slide.is-entering-from-left.is-active {
@@ -662,12 +662,12 @@ textarea {
 
 .landing-slider-slide.is-leaving-to-left {
   opacity: 0;
-  transform: translateX(-14%);
+  transform: translateX(-100%);
 }
 
 .landing-slider-slide.is-leaving-to-right {
   opacity: 0;
-  transform: translateX(14%);
+  transform: translateX(100%);
 }
 
 .landing-slider-slide img {
