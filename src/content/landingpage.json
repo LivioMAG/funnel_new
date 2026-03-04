@@ -7,7 +7,7 @@
       "enabled": true,
       "alt": "Firmenlogo",
       "height": 40,
-      "src": "./logo.jpg"
+      "src": "./logo.png"
     },
     {
       "type": "heading",
