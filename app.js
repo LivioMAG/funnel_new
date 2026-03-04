@@ -443,22 +443,22 @@ function SliderSection(section) {
             )
             .join('')}
         </div>
-      </div>
-      <div class="landing-slider-dots" role="tablist" aria-label="Bild-Slider Navigation">
-        ${(Array.isArray(section.assets) ? section.assets : [])
-          .map(
-            (asset, index) => `
-              <button
-                type="button"
-                class="landing-slider-dot ${index === 0 ? 'is-active' : ''}"
-                data-slider-dot-index="${index}"
-                role="tab"
-                aria-selected="${index === 0 ? 'true' : 'false'}"
-                aria-label="Bild ${index + 1}: ${escapeHtml(asset.alt)}"
-              ></button>
-            `
-          )
-          .join('')}
+        <div class="landing-slider-dots" role="tablist" aria-label="Bild-Slider Navigation">
+          ${(Array.isArray(section.assets) ? section.assets : [])
+            .map(
+              (asset, index) => `
+                <button
+                  type="button"
+                  class="landing-slider-dot ${index === 0 ? 'is-active' : ''}"
+                  data-slider-dot-index="${index}"
+                  role="tab"
+                  aria-selected="${index === 0 ? 'true' : 'false'}"
+                  aria-label="Bild ${index + 1}: ${escapeHtml(asset.alt)}"
+                ></button>
+              `
+            )
+            .join('')}
+        </div>
       </div>
     </article>
   `;
