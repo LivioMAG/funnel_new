@@ -2,6 +2,14 @@
   "_comment": "Landingpage ist datengetrieben: Neue Abschnitte in der sections-Liste anlegen (oben nach unten) und via type steuern.",
   "sections": [
     {
+      "type": "logo",
+      "id": "company-logo-top",
+      "enabled": true,
+      "alt": "Firmenlogo",
+      "height": 40,
+      "assetKey": "companyLogo"
+    },
+    {
       "type": "heading",
       "id": "hiring-highlight",
       "enabled": true,
@@ -179,5 +187,8 @@
       "enabled": true,
       "size": "md"
     }
-  ]
+  ],
+  "assets": {
+    "companyLogo": "./logo.png"
+  }
 }
