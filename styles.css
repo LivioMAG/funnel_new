@@ -282,8 +282,8 @@ textarea {
 
 .single-choice-options .choice-btn {
   border: none;
-  background: color-mix(in srgb, var(--primary-color) 38%, #b5a86e);
-  color: #fff;
+  background: #e5e7eb;
+  color: var(--secondary-color);
   padding: 1.12rem 1rem;
   border-radius: 13px;
   font-weight: 700;
@@ -306,7 +306,7 @@ textarea {
 .choice-checkbox {
   width: 1.1rem;
   height: 1.1rem;
-  border: 2px solid color-mix(in srgb, #fff 82%, var(--primary-color));
+  border: 2px solid color-mix(in srgb, var(--secondary-color) 24%, white);
   border-radius: 0.25rem;
   background: transparent;
   display: inline-flex;
@@ -353,11 +353,11 @@ textarea {
 @keyframes single-choice-confirm {
   0% {
     transform: scale(1);
-    background: color-mix(in srgb, var(--primary-color) 38%, #b5a86e);
+    background: #e5e7eb;
   }
   32% {
     transform: scale(0.965);
-    background: color-mix(in srgb, var(--primary-color) 62%, #b5a86e);
+    background: color-mix(in srgb, var(--primary-color) 24%, #e5e7eb);
   }
   58% {
     transform: scale(1.03);
@@ -626,14 +626,14 @@ textarea {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: translateX(0) scale(1.01);
+  transform: translateX(0);
   transition: opacity 540ms ease, transform 540ms ease;
   pointer-events: none;
 }
 
 .landing-slider-slide.is-active {
   opacity: 1;
-  transform: translateX(0) scale(1);
+  transform: translateX(0);
   pointer-events: auto;
   position: relative;
 }
@@ -644,21 +644,21 @@ textarea {
 }
 
 .landing-slider-slide.is-entering-from-right {
-  transform: translateX(14%) scale(1.01);
+  transform: translateX(14%);
 }
 
 .landing-slider-slide.is-entering-from-left {
-  transform: translateX(-14%) scale(1.01);
+  transform: translateX(-14%);
 }
 
 .landing-slider-slide.is-leaving-to-left {
   opacity: 0;
-  transform: translateX(-14%) scale(0.995);
+  transform: translateX(-14%);
 }
 
 .landing-slider-slide.is-leaving-to-right {
   opacity: 0;
-  transform: translateX(14%) scale(0.995);
+  transform: translateX(14%);
 }
 
 .landing-slider-slide img {
