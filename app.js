@@ -183,7 +183,17 @@ const createList = (items) =>
   `<ul class="list">${items.map((item) => `<li>${item}</li>`).join('')}</ul>`;
 
 /**
- * @typedef {'heading' | 'text' | 'list' | 'assets' | 'image' | 'slider' | 'spacer' | 'cta'} SectionType
+ * @typedef {'logo' | 'heading' | 'text' | 'list' | 'assets' | 'image' | 'slider' | 'spacer' | 'cta'} SectionType
+ *
+ * @typedef {{
+ *  type: 'logo',
+ *  id: string,
+ *  enabled: boolean,
+ *  src?: string,
+ *  assetKey?: string,
+ *  alt: string,
+ *  height?: number
+ * }} LogoSection
  *
  * @typedef {{
  *  type: 'heading',
@@ -264,7 +274,7 @@ const createList = (items) =>
  *  align?: 'left' | 'center'
  * }} CtaSection
  *
- * @typedef {HeadingSection | TextSection | ListSection | AssetsSection | ImageSection | SliderSection | SpacerSection | CtaSection} LandingSection
+ * @typedef {LogoSection | HeadingSection | TextSection | ListSection | AssetsSection | ImageSection | SliderSection | SpacerSection | CtaSection} LandingSection
  */
 
 const escapeHtml = (value) =>
@@ -469,11 +479,21 @@ function SpacerSection(section) {
   return `<div class="landing-spacer landing-spacer-${spacerSize}" data-section-id="${escapeHtml(section.id)}" aria-hidden="true"></div>`;
 }
 
+function LogoSection(section) {
+  const logoHeight = Number.isFinite(Number(section.height)) ? Math.max(1, Number(section.height)) : 40;
+  return `
+    <section class="landing-logo-strip" data-section-id="${escapeHtml(section.id)}" style="height: ${logoHeight}px;">
+      <img src="${escapeHtml(section.src)}" alt="${escapeHtml(section.alt ?? '')}" loading="eager" />
+    </section>
+  `;
+}
+
 function LandingSection(section, headingLevel = 'h2') {
   if (!section || section.enabled === false || typeof section.type !== 'string' || !section.id) {
     return '';
   }
 
+  if (section.type === 'logo' && section.src) return LogoSection(section);
   if (section.type === 'heading' && section.title) return HeadingSection(section, headingLevel);
   if (section.type === 'text' && section.body) return TextSection(section);
   if (section.type === 'list' && Array.isArray(section.items) && section.items.length > 0) return ListSection(section);
@@ -666,13 +686,32 @@ function initLandingSliders() {
   });
 }
 
+
+const resolveSectionAssets = (sections, assets) => {
+  if (!Array.isArray(sections)) return [];
+  const assetRegistry = assets && typeof assets === 'object' ? assets : {};
+
+  return sections.map((section) => {
+    if (!section || typeof section !== 'object') return section;
+
+    if (section.type === 'logo' && !section.src && typeof section.assetKey === 'string') {
+      const resolvedAsset = assetRegistry[section.assetKey];
+      if (typeof resolvedAsset === 'string' && resolvedAsset.trim()) {
+        return { ...section, src: resolvedAsset };
+      }
+    }
+
+    return section;
+  });
+};
+
 async function loadLandingSections() {
   try {
     const response = await fetch('./src/content/landingpage.json', { cache: 'no-store' });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const data = await response.json();
     if (!Array.isArray(data?.sections)) throw new Error('sections array fehlt');
-    return data.sections;
+    return resolveSectionAssets(data.sections, data.assets);
   } catch (error) {
     console.warn('landingpage.json konnte nicht geladen werden, verwende Fallback aus config.landing.', error);
     return getFallbackLandingSections(state.config?.landing ?? FALLBACK_CONFIG.landing);
