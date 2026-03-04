@@ -64,7 +64,7 @@
         }
       ]
     },
-        {
+    {
       "type": "text",
       "id": "intro",
       "enabled": true,
@@ -72,7 +72,7 @@
       "body": "",
       "maxWidth": "lg"
     },
-        {
+    {
       "type": "cta",
       "id": "cta-apply-hero",
       "enabled": true,
@@ -82,7 +82,7 @@
       "align": "left",
       "animate": true
     },
-        {
+    {
       "type": "list",
       "id": "benefits",
       "enabled": true,
@@ -93,7 +93,7 @@
       "items": [
         {
           "title": "Ferienmodell",
-          "text": "Du kannst flexibel deine Ferien einteilen, unbezahlt möglich.",
+          "text": "Du kannst flexibel deine Ferien einteilen, **unbezahlt möglich**.",
           "icon": "🚀"
         },
         {
@@ -116,19 +116,19 @@
           "text": "Du gestaltest aktiv mit statt nur auszuführen.",
           "icon": "🤝"
         },
-                {
+        {
           "title": "Eigenverantwortung",
           "text": "Deine Meinung zählt, wir lassen dich machen",
           "icon": "🤝"
         },
-                        {
+        {
           "title": "Unsere Projekte",
           "text": "Keine 0815 Projekte, vom Hochhaus bis zur Industire wir machen alles.",
           "icon": "🤝"
         }
       ]
     },
-            {
+    {
       "type": "cta",
       "id": "cta-apply-hero",
       "enabled": true,
@@ -138,7 +138,7 @@
       "align": "left",
       "animate": true
     },
-            {
+    {
       "type": "text",
       "id": "intro",
       "enabled": true,
@@ -146,7 +146,7 @@
       "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
       "maxWidth": "lg"
     },
-        {
+    {
       "type": "assets",
       "id": "gallery",
       "enabled": true,
@@ -170,7 +170,7 @@
         }
       ]
     },
-                {
+    {
       "type": "cta",
       "id": "cta-apply-hero",
       "enabled": true,
@@ -180,7 +180,7 @@
       "align": "left",
       "animate": true
     },
-        {
+    {
       "type": "cta",
       "id": "cta-why-us",
       "enabled": true,
@@ -212,7 +212,7 @@
       "infoText": "Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja.",
       "align": "left"
     },
-        {
+    {
       "type": "text",
       "id": "intro",
       "enabled": true,
