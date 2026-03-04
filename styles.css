@@ -626,14 +626,14 @@ textarea {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: translateX(0) scale(1);
+  transform: translateX(0);
   transition: opacity 540ms ease, transform 540ms ease;
   pointer-events: none;
 }
 
 .landing-slider-slide.is-active {
   opacity: 1;
-  transform: translateX(0) scale(1);
+  transform: translateX(0);
 }
 
 .landing-slider-slide.is-entering {
@@ -642,32 +642,32 @@ textarea {
 
 .landing-slider-slide.is-entering-from-right {
   opacity: 0;
-  transform: translateX(14%) scale(1);
+  transform: translateX(14%);
 }
 
 .landing-slider-slide.is-entering-from-right.is-active {
   opacity: 1;
-  transform: translateX(0) scale(1);
+  transform: translateX(0);
 }
 
 .landing-slider-slide.is-entering-from-left {
   opacity: 0;
-  transform: translateX(-14%) scale(1);
+  transform: translateX(-14%);
 }
 
 .landing-slider-slide.is-entering-from-left.is-active {
   opacity: 1;
-  transform: translateX(0) scale(1);
+  transform: translateX(0);
 }
 
 .landing-slider-slide.is-leaving-to-left {
   opacity: 0;
-  transform: translateX(-14%) scale(1);
+  transform: translateX(-14%);
 }
 
 .landing-slider-slide.is-leaving-to-right {
   opacity: 0;
-  transform: translateX(14%) scale(1);
+  transform: translateX(14%);
 }
 
 .landing-slider-slide img {

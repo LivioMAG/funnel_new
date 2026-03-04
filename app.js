@@ -603,8 +603,8 @@ function initLandingSliders() {
       const previousSlide = slides[activeIndex];
       const nextSlide = slides[normalizedIndex];
       const isForward = requestedDirection !== 'backward';
-      const enteringClass = isForward ? 'is-entering-from-right' : 'is-entering-from-left';
-      const leavingClass = isForward ? 'is-leaving-to-left' : 'is-leaving-to-right';
+      const enteringClass = isForward ? 'is-entering-from-left' : 'is-entering-from-right';
+      const leavingClass = isForward ? 'is-leaving-to-right' : 'is-leaving-to-left';
 
       window.clearTimeout(cleanupTimeoutId);
 
