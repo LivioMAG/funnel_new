@@ -7,7 +7,7 @@
       "enabled": true,
       "alt": "Firmenlogo",
       "height": 40,
-      "assetKey": "./logo.png"
+      "src": "./logo.jpg"
     },
     {
       "type": "heading",
