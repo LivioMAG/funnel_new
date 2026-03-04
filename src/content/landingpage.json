@@ -115,6 +115,14 @@
       "maxWidth": "lg"
     },
     {
+      "type": "heading",
+      "id": "career-push",
+      "enabled": true,
+      "title": "Starte jetzt deinen nächsten Karriereschritt.",
+      "align": "center",
+      "size": "xl"
+    },
+    {
       "type": "list",
       "id": "benefits",
       "enabled": true,
