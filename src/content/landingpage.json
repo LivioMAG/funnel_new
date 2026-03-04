@@ -3,22 +3,13 @@
   "sections": [
     {
       "type": "heading",
-      "id": "hero",
-      "enabled": true,
-      "kicker": "Musterfirma AG",
-      "title": "Sales Development Representative (m/w/d)",
-      "subtitle": "Du liebst ehrliche Gespräche und willst sichtbar etwas bewegen? Bei uns baust du echte Kundenbeziehungen auf statt nur Leads abzuhaken.",
-      "align": "left",
-      "size": "xl"
-    },
-    {
-      "type": "heading",
       "id": "hiring-highlight",
       "enabled": true,
       "kicker": "Wir suchen",
-      "title": "Bauleitender\nElektroinstallateur",
+      "title": "Bauleitender Elektroinstallateur",
       "align": "center",
-      "variant": "hiring-highlight"
+      "variant": "hiring-highlight",
+      "size": "lg"
     },
     {
       "type": "list",
