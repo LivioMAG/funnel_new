@@ -532,6 +532,25 @@ textarea {
   max-width: 70ch;
 }
 
+
+.landing-logo-strip {
+  height: 40px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 4px 10px;
+}
+
+.landing-logo-strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .landing-list-grid {
   list-style: none;
   padding-left: 0;
