@@ -6,7 +6,7 @@
       "id": "company-logo-top",
       "enabled": true,
       "alt": "Firmenlogo",
-      "height": 40,
+      "height": 80,
       "src": "./logo.png"
     },
     {
