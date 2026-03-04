@@ -19,16 +19,40 @@
       "columns": 1,
       "items": [
         {
-          "value": "Region Alregenswil Zürich",
-          "icon": "📍"
+          "value": "100%",
+          "icon": "🕒"
         },
         {
           "value": "ab sofort oder nach Vereinbarung",
           "icon": "🚀"
         },
         {
-          "value": "100%",
-          "icon": "🕒"
+          "value": "Region Alregenswil Zürich",
+          "icon": "📍"
+        }
+      ]
+    },
+    {
+      "type": "slider",
+      "id": "team-slider",
+      "enabled": true,
+      "autoplayMs": 5000,
+      "assets": [
+        {
+          "src": "./dummy.jpg",
+          "alt": "Montagearbeiten vor Ort"
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Teammeeting mit Bauplänen"
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Projektbesprechung auf der Baustelle"
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Feininstallation im Innenbereich"
         }
       ]
     },
@@ -148,30 +172,6 @@
       "enabled": true,
       "src": "./dummy.jpg",
       "alt": "Team bei der Projektplanung"
-    },
-    {
-      "type": "slider",
-      "id": "team-slider",
-      "enabled": true,
-      "autoplayMs": 5000,
-      "assets": [
-        {
-          "src": "./dummy.jpg",
-          "alt": "Montagearbeiten vor Ort"
-        },
-        {
-          "src": "./dummy.jpg",
-          "alt": "Teammeeting mit Bauplänen"
-        },
-        {
-          "src": "./dummy.jpg",
-          "alt": "Projektbesprechung auf der Baustelle"
-        },
-        {
-          "src": "./dummy.jpg",
-          "alt": "Feininstallation im Innenbereich"
-        }
-      ]
     },
     {
       "type": "spacer",
