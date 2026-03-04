@@ -12,6 +12,15 @@
       "size": "xl"
     },
     {
+      "type": "heading",
+      "id": "hiring-highlight",
+      "enabled": true,
+      "kicker": "Wir suchen",
+      "title": "Bauleitender\nElektroinstallateur",
+      "align": "center",
+      "variant": "hiring-highlight"
+    },
+    {
       "type": "list",
       "id": "job-facts",
       "enabled": true,

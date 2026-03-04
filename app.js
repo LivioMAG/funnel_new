@@ -329,11 +329,14 @@ const getFallbackLandingSections = (landing) => [
 function HeadingSection(section, headingLevel = 'h2') {
   const alignmentClass = section.align === 'center' ? 'landing-align-center' : '';
   const headingClass = section.size === 'md' ? 'section-title' : 'hero-title';
+  const variantClass = typeof section.variant === 'string' ? `landing-heading-${escapeHtml(section.variant)}` : '';
+
+  const titleMarkup = escapeHtml(section.title).replaceAll('\n', '<br />');
 
   return `
-    <article class="card stack ${alignmentClass}" data-section-id="${escapeHtml(section.id)}">
+    <article class="card stack ${alignmentClass} ${variantClass}" data-section-id="${escapeHtml(section.id)}">
       ${section.kicker ? `<p class="copy">${escapeHtml(section.kicker)}</p>` : ''}
-      <${headingLevel} class="${headingClass}">${escapeHtml(section.title)}</${headingLevel}>
+      <${headingLevel} class="${headingClass}">${titleMarkup}</${headingLevel}>
       ${section.subtitle ? `<p class="hero-copy">${escapeHtml(section.subtitle)}</p>` : ''}
     </article>
   `;
