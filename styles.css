@@ -694,7 +694,7 @@ textarea {
   height: 0.38rem;
   border-radius: 999px;
   border: none;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(219, 224, 232, 0.95);
   cursor: pointer;
   transition: background-color 180ms ease;
 }
