@@ -211,7 +211,7 @@ const createList = (items) =>
  *  id: string,
  *  enabled: boolean,
  *  title?: string,
- *  body: string,
+ *  body?: string,
  *  maxWidth?: 'sm' | 'md' | 'lg'
  * }} TextSection
  *
@@ -370,10 +370,11 @@ function HeadingSection(section, headingLevel = 'h2') {
 
 function TextSection(section) {
   const maxWidthClass = section.maxWidth ? `text-max-${section.maxWidth}` : '';
+  const body = typeof section.body === 'string' ? section.body.trim() : '';
   return `
     <article class="card stack ${maxWidthClass}" data-section-id="${escapeHtml(section.id)}">
       ${section.title ? `<h2 class="section-title">${escapeHtml(section.title)}</h2>` : ''}
-      <p class="copy">${escapeHtml(section.body).replaceAll('\n', '<br />')}</p>
+      ${body ? `<p class="copy">${escapeHtml(section.body).replaceAll('\n', '<br />')}</p>` : ''}
     </article>
   `;
 }
@@ -495,7 +496,7 @@ function LandingSection(section, headingLevel = 'h2') {
 
   if (section.type === 'logo' && section.src) return LogoSection(section);
   if (section.type === 'heading' && section.title) return HeadingSection(section, headingLevel);
-  if (section.type === 'text' && section.body) return TextSection(section);
+  if (section.type === 'text') return TextSection(section);
   if (section.type === 'list' && Array.isArray(section.items) && section.items.length > 0) return ListSection(section);
   if (section.type === 'assets' && Array.isArray(section.assets)) return AssetsSection(section);
   if (section.type === 'image' && section.src) return ImageSection(section);
