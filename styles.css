@@ -534,8 +534,8 @@ textarea {
 
 
 .landing-logo-strip {
-  height: 40px;
-  border: 1px solid var(--border-color);
+  height: 80px;
+  border: 0;
   border-radius: 12px;
   background: #fff;
   display: flex;
