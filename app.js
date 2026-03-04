@@ -574,6 +574,14 @@ function renderLanding() {
 
 function initLandingSliders() {
   const sliderElements = document.querySelectorAll('.landing-slider');
+  const ANIMATION_CLASSNAMES = [
+    'is-active',
+    'is-entering',
+    'is-entering-from-right',
+    'is-entering-from-left',
+    'is-leaving-to-left',
+    'is-leaving-to-right'
+  ];
 
   sliderElements.forEach((sliderElement) => {
     const slides = Array.from(sliderElement.querySelectorAll('.landing-slider-slide'));
@@ -587,14 +595,45 @@ function initLandingSliders() {
     let activeIndex = 0;
     let timerId;
 
-    const setActiveSlide = (nextIndex) => {
-      activeIndex = (nextIndex + slides.length) % slides.length;
+    const setActiveSlide = (nextIndex, requestedDirection = null) => {
+      const normalizedIndex = (nextIndex + slides.length) % slides.length;
+      if (normalizedIndex === activeIndex) {
+        return;
+      }
+
+      const previousIndex = activeIndex;
+      const previousSlide = slides[previousIndex];
+      const nextSlide = slides[normalizedIndex];
+      const isForward =
+        requestedDirection === 'forward' || (requestedDirection !== 'backward' && normalizedIndex > previousIndex);
+      const enteringClass = isForward ? 'is-entering-from-right' : 'is-entering-from-left';
+      const leavingClass = isForward ? 'is-leaving-to-left' : 'is-leaving-to-right';
 
       slides.forEach((slide, index) => {
-        const isActive = index === activeIndex;
-        slide.classList.toggle('is-active', isActive);
-        slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+        if (index !== previousIndex && index !== normalizedIndex) {
+          slide.classList.remove(...ANIMATION_CLASSNAMES);
+          slide.setAttribute('aria-hidden', 'true');
+        }
       });
+
+      previousSlide.classList.remove(...ANIMATION_CLASSNAMES);
+      previousSlide.classList.add(leavingClass);
+      previousSlide.setAttribute('aria-hidden', 'true');
+
+      nextSlide.classList.remove(...ANIMATION_CLASSNAMES);
+      nextSlide.classList.add('is-entering', enteringClass);
+      nextSlide.setAttribute('aria-hidden', 'false');
+
+      window.requestAnimationFrame(() => {
+        nextSlide.classList.add('is-active');
+      });
+
+      window.setTimeout(() => {
+        previousSlide.classList.remove(...ANIMATION_CLASSNAMES);
+        nextSlide.classList.remove('is-entering', 'is-entering-from-right', 'is-entering-from-left');
+      }, 560);
+
+      activeIndex = normalizedIndex;
 
       dots.forEach((dot, index) => {
         const isActive = index === activeIndex;
@@ -606,13 +645,14 @@ function initLandingSliders() {
     const startAutoplay = () => {
       window.clearInterval(timerId);
       timerId = window.setInterval(() => {
-        setActiveSlide(activeIndex + 1);
+        setActiveSlide(activeIndex + 1, 'forward');
       }, autoplayMs);
     };
 
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
-        setActiveSlide(index);
+        const direction = index > activeIndex ? 'forward' : 'backward';
+        setActiveSlide(index, direction);
         startAutoplay();
       });
     });
