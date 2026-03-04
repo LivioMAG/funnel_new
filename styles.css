@@ -499,7 +499,7 @@ textarea {
 }
 
 .landing-heading-hiring-highlight {
-  background: var(--card-background-color);
+  background: #fff;
   min-height: auto;
   justify-items: center;
   align-items: center;
@@ -518,7 +518,7 @@ textarea {
 .landing-heading-hiring-highlight .hero-title {
   margin: 0;
   color: var(--text-color);
-  font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.01em;
