@@ -614,8 +614,8 @@ textarea {
 }
 
 [data-section-id="job-facts"] .landing-list-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem 1.25rem;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
 }
 
 [data-section-id="job-facts"] .list li {
@@ -627,10 +627,6 @@ textarea {
   padding: 0;
   background: transparent;
   text-align: center;
-}
-
-[data-section-id="job-facts"] .list li:first-child {
-  grid-column: 1 / -1;
 }
 
 [data-section-id="job-facts"] .list li p {

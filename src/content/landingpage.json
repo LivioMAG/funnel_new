@@ -16,12 +16,8 @@
       "id": "job-facts",
       "enabled": true,
       "layout": "grid",
-      "columns": 3,
+      "columns": 1,
       "items": [
-        {
-          "value": "100%",
-          "icon": "🕒"
-        },
         {
           "value": "Region Alregenswil Zürich",
           "icon": "📍"
@@ -29,6 +25,10 @@
         {
           "value": "ab sofort oder nach Vereinbarung",
           "icon": "🚀"
+        },
+        {
+          "value": "100%",
+          "icon": "🕒"
         }
       ]
     },
