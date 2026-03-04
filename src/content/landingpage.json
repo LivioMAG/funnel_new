@@ -64,7 +64,16 @@
         }
       ]
     },
-    {
+
+        {
+      "type": "text",
+      "id": "intro",
+      "enabled": true,
+      "title": "Starte jetzt dein nächsten Karriereschritt und werde Teil der Nato. Bei uns zählts du zu 100%",
+      "body": "",
+      "maxWidth": "lg"
+    },
+        {
       "type": "cta",
       "id": "cta-apply-hero",
       "enabled": true,
@@ -74,7 +83,7 @@
       "align": "left",
       "animate": true
     },
-    {
+        {
       "type": "cta",
       "id": "cta-why-us",
       "enabled": true,
@@ -106,21 +115,13 @@
       "infoText": "Wenn du Freude an Kommunikation, Zielklarheit und Tempo hast, ist die Chance sehr hoch: ja.",
       "align": "left"
     },
-    {
+        {
       "type": "text",
       "id": "intro",
       "enabled": true,
       "title": "Über uns",
       "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
       "maxWidth": "lg"
-    },
-    {
-      "type": "heading",
-      "id": "career-push",
-      "enabled": true,
-      "title": "Starte jetzt deinen nächsten Karriereschritt.",
-      "align": "center",
-      "size": "xl"
     },
     {
       "type": "list",
