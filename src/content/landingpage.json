@@ -64,22 +64,11 @@
         }
       ]
     },
-            {
-      "type": "cta",
-      "id": "cta-apply-hero",
-      "enabled": true,
-      "buttonText": "Jetzt bewerben",
-      "buttonVariant": "primary",
-      "action": "start-funnel",
-      "align": "left",
-      "animate": true
-    },
-
         {
       "type": "text",
       "id": "intro",
       "enabled": true,
-      "title": "Starte jetzt dein nächsten Karriereschritt und werde Teil der Nato. Bei uns zählts du zu 100%",
+      "title": "Bist du bereit, Technik, Teamspirit zu verbinden und gemeinsam Projekte zum Laufen zu bringen?",
       "body": "asdasd",
       "maxWidth": "lg"
     },
@@ -87,7 +76,105 @@
       "type": "cta",
       "id": "cta-apply-hero",
       "enabled": true,
-      "buttonText": "Jetzt bewerben",
+      "buttonText": "Ja, absolut",
+      "buttonVariant": "primary",
+      "action": "start-funnel",
+      "align": "left",
+      "animate": true
+    },
+        {
+      "type": "list",
+      "id": "benefits",
+      "enabled": true,
+      "title": "Top Gründe für deine grosse Zukunpft bei Maréchaux Elektro AG",
+      "subtitle": "",
+      "layout": "grid",
+      "columns": 2,
+      "items": [
+        {
+          "title": "Ferienmodell",
+          "text": "Du kannst flexibel deine Ferien einteilen, unbezahlt möglich.",
+          "icon": "🚀"
+        },
+        {
+          "title": "Dein Firmenauto",
+          "text": "Dein Firmenauto kannst du ohne zu zahlen auch privat nutzen",
+          "icon": "🧩"
+        },
+        {
+          "title": "Erfolgsbeteiligung",
+          "text": "Bei guten Aufträgen wirst du slbstverständlich beteiligt",
+          "icon": "💶"
+        },
+        {
+          "title": "Aus und Weiterbildung",
+          "text": "Werden von uns unterstützt.",
+          "icon": "📈"
+        },
+        {
+          "title": "Team mit Verantwortung",
+          "text": "Du gestaltest aktiv mit statt nur auszuführen.",
+          "icon": "🤝"
+        },
+                {
+          "title": "Eigenverantwortung",
+          "text": "Deine Meinung zählt, wir lassen dich machen",
+          "icon": "🤝"
+        },
+                        {
+          "title": "Unsere Projekte",
+          "text": "Keine 0815 Projekte, vom Hochhaus bis zur Industire wir machen alles.",
+          "icon": "🤝"
+        }
+      ]
+    },
+            {
+      "type": "cta",
+      "id": "cta-apply-hero",
+      "enabled": true,
+      "buttonText": "Ihr habt mich überzeugt",
+      "buttonVariant": "primary",
+      "action": "start-funnel",
+      "align": "left",
+      "animate": true
+    },
+            {
+      "type": "text",
+      "id": "intro",
+      "enabled": true,
+      "title": "Über uns",
+      "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
+      "maxWidth": "lg"
+    },
+        {
+      "type": "assets",
+      "id": "gallery",
+      "enabled": true,
+      "title": "Einblicke in dein Zukünftiger Alltag",
+      "variant": "gallery",
+      "assets": [
+        {
+          "src": "./dummy.jpg",
+          "alt": "Teammeeting im Büro",
+          "caption": "Wöchentliche Team-Session mit klaren Zielen."
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Arbeitsplatz mit Laptop und Notizen",
+          "caption": "Modernes Setup für fokussiertes Arbeiten."
+        },
+        {
+          "src": "./dummy.jpg",
+          "alt": "Kolleg:innen im Gespräch",
+          "caption": "Direkte Zusammenarbeit und schnelle Abstimmungen."
+        }
+      ]
+    },
+                {
+      "type": "cta",
+      "id": "cta-apply-hero",
+      "enabled": true,
+      "buttonText": "Das ist meine Chance",
       "buttonVariant": "primary",
       "action": "start-funnel",
       "align": "left",
