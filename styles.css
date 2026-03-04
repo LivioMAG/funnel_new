@@ -563,6 +563,33 @@ textarea {
   padding: 0.9rem;
 }
 
+[data-section-id="benefits"] .landing-list-grid li,
+[data-section-id="benefits"] .landing-list-stack li {
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+}
+
+.landing-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.landing-list-item-icon {
+  line-height: 1.4;
+}
+
+.landing-list-item-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.landing-list-item-title {
+  font-weight: 700;
+}
+
 .landing-list-stack li p,
 .landing-list-grid li p {
   margin: 0.35rem 0 0;

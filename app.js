@@ -285,6 +285,11 @@ const escapeHtml = (value) =>
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
 
+const renderInlineRichText = (value) => {
+  const escaped = escapeHtml(value);
+  return escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+};
+
 const getFallbackLandingSections = (landing) => [
   {
     type: 'heading',
@@ -384,6 +389,7 @@ function ListSection(section) {
   const columns = [1, 2, 3].includes(section.columns) ? section.columns : 1;
   const titleMarkup = section.title ? `<h2 class="section-title">${escapeHtml(section.title)}</h2>` : '';
   const subtitleMarkup = section.subtitle ? `<p class="copy">${escapeHtml(section.subtitle)}</p>` : '';
+  const isBenefitsSection = section.id === 'benefits';
 
   return `
     <article class="card stack" data-section-id="${escapeHtml(section.id)}">
@@ -392,13 +398,17 @@ function ListSection(section) {
       <ul class="list ${layout} landing-list-columns-${columns}">
         ${(Array.isArray(section.items) ? section.items : [])
           .map((item) => {
-            const mainText = escapeHtml(item.value ?? item.title ?? '');
-            const detailText = escapeHtml(item.text ?? item.key ?? '');
-            const iconMarkup = item.icon ? `<span aria-hidden="true">${escapeHtml(item.icon)}</span> ` : '';
-            const combinedText = detailText ? `<strong>${mainText}</strong> ${detailText}` : mainText;
+            const mainText = renderInlineRichText(item.value ?? item.title ?? '');
+            const detailText = renderInlineRichText(item.text ?? item.key ?? '');
+            const iconMarkup = item.icon ? `<span class="landing-list-item-icon" aria-hidden="true">${escapeHtml(item.icon)}</span>` : '';
+            const combinedText = detailText
+              ? isBenefitsSection
+                ? `<span class="landing-list-item-text">${detailText}</span>`
+                : `<span class="landing-list-item-title">${mainText}</span><span class="landing-list-item-text">${detailText}</span>`
+              : `<span class="landing-list-item-text">${mainText}</span>`;
             return `
               <li>
-                <p class="copy">${iconMarkup}${combinedText}</p>
+                <p class="copy landing-list-item">${iconMarkup}<span class="landing-list-item-content">${combinedText}</span></p>
               </li>
             `;
           })
