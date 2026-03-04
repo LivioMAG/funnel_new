@@ -64,6 +64,16 @@
         }
       ]
     },
+            {
+      "type": "cta",
+      "id": "cta-apply-hero",
+      "enabled": true,
+      "buttonText": "Jetzt bewerben",
+      "buttonVariant": "primary",
+      "action": "start-funnel",
+      "align": "left",
+      "animate": true
+    },
 
         {
       "type": "text",
