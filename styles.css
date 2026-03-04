@@ -626,16 +626,39 @@ textarea {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: scale(1.02);
-  transition: opacity 420ms ease, transform 620ms ease;
+  transform: translateX(0) scale(1.01);
+  transition: opacity 540ms ease, transform 540ms ease;
   pointer-events: none;
 }
 
 .landing-slider-slide.is-active {
   opacity: 1;
-  transform: scale(1);
+  transform: translateX(0) scale(1);
   pointer-events: auto;
   position: relative;
+}
+
+.landing-slider-slide.is-entering {
+  position: absolute;
+  pointer-events: none;
+}
+
+.landing-slider-slide.is-entering-from-right {
+  transform: translateX(14%) scale(1.01);
+}
+
+.landing-slider-slide.is-entering-from-left {
+  transform: translateX(-14%) scale(1.01);
+}
+
+.landing-slider-slide.is-leaving-to-left {
+  opacity: 0;
+  transform: translateX(-14%) scale(0.995);
+}
+
+.landing-slider-slide.is-leaving-to-right {
+  opacity: 0;
+  transform: translateX(14%) scale(0.995);
 }
 
 .landing-slider-slide img {
