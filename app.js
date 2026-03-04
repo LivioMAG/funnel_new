@@ -391,14 +391,18 @@ function ListSection(section) {
       ${subtitleMarkup}
       <ul class="list ${layout} landing-list-columns-${columns}">
         ${(Array.isArray(section.items) ? section.items : [])
-          .map(
-            (item) => `
-              <li>
-                <strong>${item.icon ? `${escapeHtml(item.icon)} ` : ''}${escapeHtml(item.value ?? item.title)}</strong>
-                ${item.key ? `<p class="copy">${escapeHtml(item.key)}</p>` : item.text ? `<p class="copy">${escapeHtml(item.text)}</p>` : ''}
+          .map((item) => {
+            const mainText = escapeHtml(item.value ?? item.title ?? '');
+            const detailText = escapeHtml(item.text ?? item.key ?? '');
+            const iconMarkup = item.icon ? `<span class="landing-list-icon" aria-hidden="true">${escapeHtml(item.icon)}</span>` : '';
+            const combinedText = detailText ? `<strong>${mainText}</strong> ${detailText}` : mainText;
+            return `
+              <li class="landing-list-item">
+                ${iconMarkup}
+                <p class="copy landing-list-text">${combinedText}</p>
               </li>
-            `
-          )
+            `;
+          })
           .join('')}
       </ul>
     </article>
