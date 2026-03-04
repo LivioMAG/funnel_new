@@ -606,7 +606,7 @@ textarea {
 }
 
 .landing-slider {
-  gap: 0.9rem;
+  gap: 0;
   padding: clamp(0.75rem, 2vw, 1rem);
 }
 
@@ -648,24 +648,27 @@ textarea {
 }
 
 .landing-slider-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
-  justify-content: center;
-  gap: 0.45rem;
+  gap: 0.3rem;
+  padding: 0.45rem;
 }
 
 .landing-slider-dot {
-  width: 0.55rem;
-  height: 0.55rem;
+  flex: 1;
+  height: 0.38rem;
   border-radius: 999px;
   border: none;
-  background: color-mix(in srgb, var(--secondary-color) 16%, white);
+  background: rgba(255, 255, 255, 0.9);
   cursor: pointer;
-  transition: transform 180ms ease, background-color 180ms ease;
+  transition: background-color 180ms ease;
 }
 
 .landing-slider-dot.is-active {
-  background: var(--primary-color);
-  transform: scale(1.18);
+  background: #111;
 }
 
 .landing-spacer {
