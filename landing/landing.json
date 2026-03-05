@@ -85,7 +85,8 @@
       "action": "start-funnel",
       "align": "left",
       "animate": true,
-      "shimmerIntervalMs": 3000
+      "shimmerIntervalMs": 3000,
+      "showStars": true
     },
     {
       "type": "list",
@@ -136,7 +137,8 @@
       "action": "start-funnel",
       "align": "left",
       "animate": true,
-      "shimmerIntervalMs": 1000
+      "shimmerIntervalMs": 1000,
+      "showStars": true
     },
     {
       "type": "text",
@@ -146,7 +148,7 @@
       "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
       "maxWidth": "lg"
     },
-            {
+    {
       "type": "list",
       "id": "list-view-section",
       "enabled": true,
@@ -219,7 +221,8 @@
       "action": "start-funnel",
       "align": "left",
       "animate": true,
-      "shimmerIntervalMs": 3000
+      "shimmerIntervalMs": 3000,
+      "showStars": true
     },
     {
       "type": "cta",
