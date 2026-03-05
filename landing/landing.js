@@ -62,30 +62,61 @@ function renderSection(s) {
   applyTheme(config);
   app.innerHTML = (data.sections || []).map(renderSection).join('');
   document.querySelectorAll('.slider').forEach((slider) => {
-    const imgs = [...slider.querySelectorAll('img')];
+    const imgs = [...slider.querySelectorAll('.slider-image')];
     const dots = [...slider.querySelectorAll('.slider-dot')];
     if (imgs.length < 2) return;
     let i = 0;
+    let isAnimating = false;
+    const dotsEl = slider.querySelector('.slider-dots');
+    const animClasses = ['enter-from-left', 'enter-from-right', 'exit-to-left', 'exit-to-right'];
+    dotsEl?.style.setProperty('--dot-count', String(dots.length));
 
-    const show = (nextIndex) => {
-      imgs[i].classList.remove('active');
+    const show = (nextIndex, forcedDirection = 0) => {
+      if (isAnimating) return;
+      const target = (nextIndex + imgs.length) % imgs.length;
+      if (target === i) return;
+
+      const current = imgs[i];
+      const next = imgs[target];
+      const direction = forcedDirection || (target > i ? 1 : -1);
+      isAnimating = true;
+
+      current.classList.remove(...animClasses);
+      next.classList.remove(...animClasses, 'active');
+      next.classList.add(direction > 0 ? 'enter-from-left' : 'enter-from-right');
+      next.getBoundingClientRect();
+
+      current.classList.add(direction > 0 ? 'exit-to-right' : 'exit-to-left');
+      next.classList.add('active');
+      next.classList.remove('enter-from-left', 'enter-from-right');
+
       dots[i]?.classList.remove('active');
-      i = (nextIndex + imgs.length) % imgs.length;
-      imgs[i].classList.add('active');
-      dots[i]?.classList.add('active');
+      dots[target]?.classList.add('active');
+      dotsEl?.style.setProperty('--active-index', String(target));
+
+      const finish = () => {
+        current.classList.remove('active', ...animClasses);
+        next.classList.remove(...animClasses);
+        i = target;
+        isAnimating = false;
+      };
+
+      next.addEventListener('transitionend', finish, { once: true });
     };
 
-    slider.querySelector('[data-dir="prev"]')?.addEventListener('click', () => show(i - 1));
-    slider.querySelector('[data-dir="next"]')?.addEventListener('click', () => show(i + 1));
+    slider.querySelector('[data-dir="prev"]')?.addEventListener('click', () => show(i - 1, -1));
+    slider.querySelector('[data-dir="next"]')?.addEventListener('click', () => show(i + 1, 1));
     dots.forEach((dot) => {
       dot.addEventListener('click', () => {
-        show(Number(dot.dataset.slide));
+        const target = Number(dot.dataset.slide);
+        const direction = target > i ? 1 : -1;
+        show(target, direction);
       });
     });
 
     const autoplayMs = Number(slider.dataset.autoplay);
     if (Number.isFinite(autoplayMs) && autoplayMs > 0) {
-      setInterval(() => show(i + 1), autoplayMs);
+      setInterval(() => show(i + 1, 1), autoplayMs);
     }
   });
 })();
