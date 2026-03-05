@@ -50,7 +50,8 @@ function renderSection(s) {
   }
   if (s.type === 'slider') {
     const imgs = (s.assets || []).map((a, i) => `<img class="slider-image ${i === 0 ? 'active' : ''}" src="${html(a.src)}" alt="${html(a.alt || '')}" data-index="${i}" />`).join('');
-    return `<section class="card slider ${alignClass(s.align)}" data-autoplay="${Number(s.autoplayMs || 4000)}"><div class="slider-stage">${imgs}</div><div class="slider-controls"><button type="button" class="slider-nav" data-dir="prev" aria-label="Vorheriges Bild">‹</button><button type="button" class="slider-nav" data-dir="next" aria-label="Nächstes Bild">›</button></div></section>`;
+    const dots = (s.assets || []).map((_, i) => `<button type="button" class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}" aria-label="Bild ${i + 1} anzeigen"></button>`).join('');
+    return `<section class="card slider ${alignClass(s.align)}" data-autoplay="${Number(s.autoplayMs || 4000)}"><div class="slider-stage">${imgs}</div><div class="slider-controls"><button type="button" class="slider-nav" data-dir="prev" aria-label="Vorheriges Bild">‹</button><button type="button" class="slider-nav" data-dir="next" aria-label="Nächstes Bild">›</button></div><div class="slider-dots" role="tablist" aria-label="Slider Navigation">${dots}</div></section>`;
   }
   if (s.type === 'cta') return `<section class="${alignClass(s.align)}"><a class="btn ${s.buttonVariant === 'secondary' ? 'secondary' : ''}" href="${html(s.href || '../funnel/index.html')}">${html(s.buttonText || 'Weiter')}</a></section>`;
   return '';
@@ -62,17 +63,25 @@ function renderSection(s) {
   app.innerHTML = (data.sections || []).map(renderSection).join('');
   document.querySelectorAll('.slider').forEach((slider) => {
     const imgs = [...slider.querySelectorAll('img')];
+    const dots = [...slider.querySelectorAll('.slider-dot')];
     if (imgs.length < 2) return;
     let i = 0;
 
     const show = (nextIndex) => {
       imgs[i].classList.remove('active');
+      dots[i]?.classList.remove('active');
       i = (nextIndex + imgs.length) % imgs.length;
       imgs[i].classList.add('active');
+      dots[i]?.classList.add('active');
     };
 
     slider.querySelector('[data-dir="prev"]')?.addEventListener('click', () => show(i - 1));
     slider.querySelector('[data-dir="next"]')?.addEventListener('click', () => show(i + 1));
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        show(Number(dot.dataset.slide));
+      });
+    });
 
     const autoplayMs = Number(slider.dataset.autoplay);
     if (Number.isFinite(autoplayMs) && autoplayMs > 0) {
