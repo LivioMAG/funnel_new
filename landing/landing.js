@@ -28,7 +28,7 @@ function renderListItem(i) {
   const icon = i.icon ? `<span class="item-icon">${html(i.icon)}</span>` : '';
   const title = i.title || i.value || i.text || '';
   const desc = i.title && i.text ? `<span>${html(i.text)}</span>` : '';
-  return `<li class="list-item">${icon}<span class="item-title">${html(title)}</span>${desc}</li>`;
+  return `<li class="list-item">${icon}<span class="item-content"><span class="item-title">${html(title)}</span>${desc}</span></li>`;
 }
 
 function renderSection(s) {
