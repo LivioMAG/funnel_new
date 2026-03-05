@@ -2,6 +2,7 @@ const app = document.getElementById('app');
 let data;
 let index = 0;
 const answers = {};
+let lastProgressValue = 0;
 
 const load = (p) => fetch(p, { cache: 'no-store' }).then((r) => r.json());
 
@@ -74,9 +75,13 @@ function attachChoiceHandlers(step) {
         render();
         return;
       }
+
+      btn.classList.add('flash');
       answers[step.fieldKey] = value;
-      index += 1;
-      render();
+      setTimeout(() => {
+        index += 1;
+        render();
+      }, 240);
     });
   });
 }
@@ -203,13 +208,28 @@ function renderFinal() {
   });
 }
 
+
+function animateProgressBar() {
+  const p = getProgress();
+  const bar = app.querySelector('.progressBar');
+  if (!bar) return;
+
+  const from = Math.min(lastProgressValue, p.value);
+  bar.style.width = `${from}%`;
+  requestAnimationFrame(() => {
+    bar.style.width = `${p.value}%`;
+  });
+  lastProgressValue = p.value;
+}
 function render() {
   if (!data) return;
   if (index < data.steps.length) {
     renderStep();
+    animateProgressBar();
     return;
   }
   renderFinal();
+  animateProgressBar();
 }
 
 (async () => {
