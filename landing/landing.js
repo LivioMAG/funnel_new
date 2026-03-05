@@ -53,7 +53,13 @@ function renderSection(s) {
     const dots = (s.assets || []).map((_, i) => `<button type="button" class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}" aria-label="Bild ${i + 1} anzeigen"></button>`).join('');
     return `<section class="card slider ${alignClass(s.align)}" data-autoplay="${Number(s.autoplayMs || 4000)}"><div class="slider-stage">${imgs}</div><div class="slider-dots" role="tablist" aria-label="Slider Navigation">${dots}</div></section>`;
   }
-  if (s.type === 'cta') return `<section class="${alignClass(s.align)}"><a class="btn ${s.buttonVariant === 'secondary' ? 'secondary' : ''}" href="${html(s.href || '../funnel/index.html')}">${html(s.buttonText || 'Weiter')}</a></section>`;
+  if (s.type === 'cta') {
+    const isSecondary = s.buttonVariant === 'secondary';
+    const classes = ['btn'];
+    if (isSecondary) classes.push('secondary');
+    if (!isSecondary) classes.push('full-width', 'animated-border');
+    return `<section class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}">${html(s.buttonText || 'Weiter')}</a></section>`;
+  }
   return '';
 }
 
