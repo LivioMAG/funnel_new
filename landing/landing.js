@@ -35,7 +35,10 @@ function renderSection(s) {
   if (s.enabled === false) return '';
   if (s.type === 'logo') return `<section class="card logo ${alignClass(s.align)}"><img src="${html(s.src)}" alt="${html(s.alt || 'Logo')}" /></section>`;
   if (s.type === 'heading') return `<section class="card ${alignClass(s.align)}"><p class="kicker">${html(s.kicker || '')}</p><h1>${html(s.title || '')}</h1><p>${html(s.subtitle || '')}</p></section>`;
-  if (s.type === 'text') return `<section class="card ${alignClass(s.align)}"><h2>${html(s.title || '')}</h2><p>${html(s.body || '')}</p></section>`;
+  if (s.type === 'text') {
+    const textAlign = alignClass(s.align || 'left');
+    return `<section class="card ${textAlign}"><h2>${html(s.title || '')}</h2><p>${html(s.body || '')}</p></section>`;
+  }
   if (s.type === 'list') {
     const cols = s.columns === 2 ? 'cols-2' : '';
     const sectionAlign = alignClass(s.align);
@@ -58,6 +61,7 @@ function renderSection(s) {
     const classes = ['btn'];
     if (isSecondary) classes.push('secondary');
     if (!isSecondary) classes.push('full-width', 'animated-border');
+    if (s.animate !== false) classes.push('animated-shimmer');
     return `<section class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}">${html(s.buttonText || 'Weiter')}</a></section>`;
   }
   return '';
