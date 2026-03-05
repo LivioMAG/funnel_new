@@ -51,7 +51,7 @@ function renderSection(s) {
   if (s.type === 'slider') {
     const imgs = (s.assets || []).map((a, i) => `<img class="slider-image ${i === 0 ? 'active' : ''}" src="${html(a.src)}" alt="${html(a.alt || '')}" data-index="${i}" />`).join('');
     const dots = (s.assets || []).map((_, i) => `<button type="button" class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}" aria-label="Bild ${i + 1} anzeigen"></button>`).join('');
-    return `<section class="card slider ${alignClass(s.align)}" data-autoplay="${Number(s.autoplayMs || 4000)}"><div class="slider-stage">${imgs}</div><div class="slider-controls"><button type="button" class="slider-nav" data-dir="prev" aria-label="Vorheriges Bild">‹</button><button type="button" class="slider-nav" data-dir="next" aria-label="Nächstes Bild">›</button></div><div class="slider-dots" role="tablist" aria-label="Slider Navigation">${dots}</div></section>`;
+    return `<section class="card slider ${alignClass(s.align)}" data-autoplay="${Number(s.autoplayMs || 4000)}"><div class="slider-stage">${imgs}</div><div class="slider-dots" role="tablist" aria-label="Slider Navigation">${dots}</div></section>`;
   }
   if (s.type === 'cta') return `<section class="${alignClass(s.align)}"><a class="btn ${s.buttonVariant === 'secondary' ? 'secondary' : ''}" href="${html(s.href || '../funnel/index.html')}">${html(s.buttonText || 'Weiter')}</a></section>`;
   return '';
@@ -104,8 +104,6 @@ function renderSection(s) {
       next.addEventListener('transitionend', finish, { once: true });
     };
 
-    slider.querySelector('[data-dir="prev"]')?.addEventListener('click', () => show(i - 1, -1));
-    slider.querySelector('[data-dir="next"]')?.addEventListener('click', () => show(i + 1, 1));
     dots.forEach((dot) => {
       dot.addEventListener('click', () => {
         const target = Number(dot.dataset.slide);
