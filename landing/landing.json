@@ -73,7 +73,8 @@
       "enabled": true,
       "title": "Bist du bereit, Technik, Teamspirit zu verbinden und gemeinsam Projekte zum Laufen zu bringen?",
       "body": "",
-      "maxWidth": "lg"
+      "maxWidth": "lg",
+      "align": "left"
     },
     {
       "type": "cta",
