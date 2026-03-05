@@ -128,7 +128,6 @@
       ],
       "itemPresentation": "vertical"
     },
-
     {
       "type": "list",
       "id": "list-view-section",
@@ -169,7 +168,7 @@
       ],
       "itemPresentation": "horizontal"
     },
-        {
+    {
       "type": "cta",
       "id": "call-to-action-section-2",
       "enabled": true,
@@ -181,13 +180,14 @@
       "shimmerIntervalMs": 5000,
       "showStars": false
     },
-        {
+    {
       "type": "text",
       "id": "text-section",
       "enabled": true,
       "title": "Über uns",
       "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
-      "maxWidth": "lg"
+      "maxWidth": "lg",
+      "align": "left"
     },
     {
       "type": "assets",
@@ -211,7 +211,8 @@
           "alt": "Kolleg:innen im Gespräch",
           "caption": "Direkte Zusammenarbeit und schnelle Abstimmungen."
         }
-      ]
+      ],
+      "imageFullWidth": true
     },
     {
       "type": "cta",
@@ -225,8 +226,6 @@
       "shimmerIntervalMs": 5000,
       "showStars": true
     }
-
-   
   ],
   "assets": {
     "companyLogo": "../assets/logo.png"
