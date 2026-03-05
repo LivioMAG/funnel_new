@@ -1,5 +1,11 @@
 {
   "introText": "Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.",
+  "hero": {
+    "badge": "🚀 Karriere-Funnel",
+    "title": "Lass uns in wenigen Schritten den perfekten Match finden",
+    "description": "Beantworte kurz die Fragen und sichere dir dein unverbindliches Erstgespräch.",
+    "image": "../assets/ref2.jpg"
+  },
   "steps": [
     {
       "id": "q1",
@@ -13,12 +19,13 @@
     },
     {
       "id": "q2",
-      "title": "Verfügbarkeit",
-      "question": "Ab wann könntest du starten?",
-      "type": "text",
-      "fieldKey": "start_date",
+      "title": "Dein Fokus",
+      "question": "Welche Themen interessieren dich aktuell am meisten?",
+      "type": "multipleChoice",
+      "fieldKey": "focus_topics",
       "required": true,
-      "placeholder": "z.B. ab sofort / 01.05.2026"
+      "helperText": "Mehrfachauswahl möglich.",
+      "options": ["Sales", "Marketing", "Kundenberatung", "Operations", "Leadership"]
     },
     {
       "id": "q3",
@@ -27,16 +34,36 @@
       "type": "singleChoice",
       "options": ["Remote", "Hybrid", "Vor Ort"],
       "fieldKey": "work_model",
-      "required": true
+      "required": true,
+      "helperText": "Wähle eine Option – wir springen direkt weiter."
+    },
+    {
+      "id": "q4",
+      "title": "Schneller Start",
+      "question": "Ab wann könntest du starten?",
+      "type": "text",
+      "fieldKey": "start_date",
+      "required": true,
+      "placeholder": "z.B. ab sofort / 01.05.2026"
+    },
+    {
+      "id": "q5",
+      "title": "Bereit für den nächsten Schritt?",
+      "question": "Möchtest du in den nächsten 14 Tagen ein Erstgespräch führen?",
+      "type": "yesNo",
+      "fieldKey": "ready_for_call",
+      "required": true,
+      "helperText": "Ja oder Nein – danach geht es direkt weiter."
     }
   ],
   "final": {
     "title": "Fast geschafft",
     "description": "Trag noch kurz deine Kontaktdaten ein, damit wir uns direkt melden können.",
-    "nameLabel": "Dein Name",
+    "nameLabel": "Name",
     "emailLabel": "E-Mail-Adresse",
-    "submitText": "Jetzt bewerben",
-    "thankYouTitle": "Danke für deine Bewerbung!",
-    "thankYouText": "Wir haben deine Angaben erhalten und melden uns in Kürze bei dir mit den nächsten Schritten."
+    "phoneLabel": "Telefonnummer",
+    "birthDateLabel": "Geburtsdatum",
+    "submitText": "Jetzt absenden",
+    "summaryTitle": "Deine Angaben auf einen Blick"
   }
 }
