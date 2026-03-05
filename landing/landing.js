@@ -81,7 +81,7 @@ function renderSection(s) {
   }
   if (s.type === 'assets') {
     const sectionAlign = alignClass(normalizeAlign(s.align, 'center'));
-    const layoutClass = s.imageFullWidth === true ? 'assets-full-width' : 'cols-2';
+    const layoutClass = 'assets-full-width';
     const items = (s.assets || []).map((a) => `<figure><img src="${html(a.src)}" alt="${html(a.alt || '')}" /><figcaption>${html(a.caption || '')}</figcaption></figure>`).join('');
     return `<section${sectionIdAttr(s)} class="card ${sectionAlign}"><h2>${html(s.title || '')}</h2><div class="grid ${layoutClass}">${items}</div></section>`;
   }

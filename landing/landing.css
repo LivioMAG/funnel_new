@@ -73,4 +73,4 @@ img{max-width:100%;border-radius:10px}.logo{display:flex;justify-content:center;
 
 .assets-full-width{grid-template-columns:1fr}
 .assets-full-width figure{margin:0}
-.assets-full-width img{width:100%;height:auto;display:block}
+.assets-full-width img{width:100%;aspect-ratio:16 / 9;object-fit:cover;display:block}
