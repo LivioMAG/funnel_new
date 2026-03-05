@@ -108,7 +108,7 @@ function renderSection(s) {
     const content = isSecondary
       ? label
       : `<span class="btn-core"><span class="btn-label">${label}</span><span class="btn-boost" aria-hidden="true">➜</span></span>${stars}`;
-    return `<section${sectionIdAttr(s)} class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}"${shimmerStyle}>${content}</a></section>`;
+    return `<section${sectionIdAttr(s)} class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html?v=20260305')}"${shimmerStyle}>${content}</a></section>`;
   }
   return '';
 }

@@ -203,27 +203,8 @@ function renderFinal() {
   });
 }
 
-function renderHero() {
-  const h = data.hero;
-  app.innerHTML = `
-    <section class="screen heroScreen">
-      <span class="badge">${h.badge}</span>
-      <h1>${h.title}</h1>
-      <p class="muted">${h.description}</p>
-      <img class="heroImage" src="${h.image}" alt="Funnel Start" />
-      <button class="btn primary large" id="start">Funnel starten</button>
-    </section>
-  `;
-  app.querySelector('#start').addEventListener('click', () => render());
-}
-
 function render() {
   if (!data) return;
-  if (!app.dataset.started) {
-    app.dataset.started = '1';
-    renderHero();
-    return;
-  }
   if (index < data.steps.length) {
     renderStep();
     return;
