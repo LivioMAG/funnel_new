@@ -127,6 +127,46 @@
       ],
       "itemPresentation": "vertical"
     },
+        {
+      "type": "list",
+      "id": "list-view-section",
+      "enabled": true,
+      "title": "Top Gründe für deine grosse Zukunpft bei Maréchaux Elektro AG",
+      "subtitle": "",
+      "layout": "grid",
+      "columns": 2,
+      "items": [
+        {
+          "text": "Du kannst flexibel deine Ferien einteilen, **unbezahlt möglich**.",
+          "icon": "🚀"
+        },
+        {
+          "text": "Dein Firmenauto kannst du ohne zu zahlen auch privat nutzen",
+          "icon": "🧩"
+        },
+        {
+          "text": "Bei guten Aufträgen wirst du slbstverständlich beteiligt",
+          "icon": "💶"
+        },
+        {
+          "text": "Werden von uns unterstützt.",
+          "icon": "📈"
+        },
+        {
+          "text": "Du gestaltest aktiv mit statt nur auszuführen.",
+          "icon": "🤝"
+        },
+        {
+          "text": "Deine Meinung zählt, wir lassen dich machen",
+          "icon": "🤝"
+        },
+        {
+          "text": "Keine 0815 Projekte, vom Hochhaus bis zur Industire wir machen alles.",
+          "icon": "🤝"
+        }
+      ],
+      "itemPresentation": "vertical"
+    },
     {
       "type": "cta",
       "id": "call-to-action-section-2",
