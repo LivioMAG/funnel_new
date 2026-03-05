@@ -3,7 +3,7 @@
   "sections": [
     {
       "type": "logo",
-      "id": "company-logo-top",
+      "id": "logo-section",
       "enabled": true,
       "alt": "Firmenlogo",
       "height": 80,
@@ -11,7 +11,7 @@
     },
     {
       "type": "heading",
-      "id": "hiring-highlight",
+      "id": "title-section",
       "enabled": true,
       "kicker": "Wir suchen",
       "title": "Bauleitender Elektroinstallateur",
@@ -21,7 +21,7 @@
     },
     {
       "type": "list",
-      "id": "job-facts",
+      "id": "stelleninfo-section",
       "enabled": true,
       "layout": "grid",
       "columns": 1,
@@ -45,7 +45,7 @@
     },
     {
       "type": "slider",
-      "id": "team-slider",
+      "id": "slider-section",
       "enabled": true,
       "autoplayMs": 5000,
       "assets": [
@@ -69,7 +69,7 @@
     },
     {
       "type": "text",
-      "id": "intro",
+      "id": "subtitle-section",
       "enabled": true,
       "title": "Bist du bereit, Technik, Teamspirit zu verbinden und gemeinsam Projekte zum Laufen zu bringen?",
       "body": "",
@@ -78,7 +78,7 @@
     },
     {
       "type": "cta",
-      "id": "cta-apply-hero",
+      "id": "call-to-action-section",
       "enabled": true,
       "buttonText": "Ja, absolut",
       "buttonVariant": "primary",
@@ -89,7 +89,7 @@
     },
     {
       "type": "list",
-      "id": "benefits",
+      "id": "list-view-section",
       "enabled": true,
       "title": "Top Gründe für deine grosse Zukunpft bei Maréchaux Elektro AG",
       "subtitle": "",
@@ -135,7 +135,7 @@
     },
     {
       "type": "cta",
-      "id": "cta-apply-hero",
+      "id": "call-to-action-section-2",
       "enabled": true,
       "buttonText": "Ihr habt mich überzeugt",
       "buttonVariant": "primary",
@@ -146,7 +146,7 @@
     },
     {
       "type": "text",
-      "id": "intro",
+      "id": "text-section",
       "enabled": true,
       "title": "Über uns",
       "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
@@ -154,7 +154,7 @@
     },
     {
       "type": "assets",
-      "id": "gallery",
+      "id": "text-image-section",
       "enabled": true,
       "title": "Einblicke in dein Zukünftiger Alltag",
       "variant": "gallery",
@@ -178,7 +178,7 @@
     },
     {
       "type": "cta",
-      "id": "cta-apply-hero",
+      "id": "call-to-action-section-3",
       "enabled": true,
       "buttonText": "Das ist meine Chance",
       "buttonVariant": "primary",
@@ -189,7 +189,7 @@
     },
     {
       "type": "cta",
-      "id": "cta-why-us",
+      "id": "call-to-action-section-4",
       "enabled": true,
       "buttonText": "Warum bei uns arbeiten?",
       "buttonVariant": "secondary",
@@ -200,7 +200,7 @@
     },
     {
       "type": "cta",
-      "id": "cta-who-we-are",
+      "id": "call-to-action-section-5",
       "enabled": true,
       "buttonText": "Wer sind wir?",
       "buttonVariant": "secondary",
@@ -211,7 +211,7 @@
     },
     {
       "type": "cta",
-      "id": "cta-fit-check",
+      "id": "call-to-action-section-6",
       "enabled": true,
       "buttonText": "Passt das zu mir?",
       "buttonVariant": "secondary",
@@ -221,7 +221,7 @@
     },
     {
       "type": "text",
-      "id": "intro",
+      "id": "text-section-2",
       "enabled": true,
       "title": "Über uns",
       "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
@@ -229,7 +229,7 @@
     },
     {
       "type": "list",
-      "id": "benefits",
+      "id": "list-view-section-2",
       "enabled": true,
       "title": "Was dich bei uns erwartet",
       "subtitle": "Unsere wichtigsten Benefits auf einen Blick.",
@@ -265,7 +265,7 @@
     },
     {
       "type": "assets",
-      "id": "gallery",
+      "id": "text-image-section-2",
       "enabled": true,
       "title": "Einblicke in unseren Alltag",
       "variant": "gallery",
@@ -289,7 +289,7 @@
     },
     {
       "type": "slider",
-      "id": "team-highlight-slider-bottom",
+      "id": "image-section",
       "enabled": true,
       "autoplayMs": 5000,
       "assets": [
@@ -309,7 +309,7 @@
     },
     {
       "type": "spacer",
-      "id": "spacer-1",
+      "id": "spacer-section",
       "enabled": true,
       "size": "md"
     }
