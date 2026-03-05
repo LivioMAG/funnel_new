@@ -22,14 +22,22 @@ const applyTheme = (cfg) => {
 
 const html = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
 const sectionIdAttr = (s) => (s?.id ? ` id="${html(s.id)}"` : '');
+const richText = (s) => html(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
 const alignClass = (align) => ({ left: 'align-left', center: 'align-center', right: 'align-right' }[align] || '');
 
-function renderListItem(i) {
+function renderListItem(i, presentation = 'default') {
   const icon = i.icon ? `<span class="item-icon">${html(i.icon)}</span>` : '';
+
+  if (presentation === 'icon-left' || presentation === 'icon-top') {
+    const text = i.text || i.value || i.title || '';
+    const itemClass = presentation === 'icon-top' ? 'list-item list-item--icon-top' : 'list-item list-item--icon-left';
+    return `<li class="${itemClass}">${icon}<span class="item-content"><span class="item-text">${richText(text)}</span></span></li>`;
+  }
+
   const title = i.title || i.value || i.text || '';
-  const desc = i.title && i.text ? `<span>${html(i.text)}</span>` : '';
-  return `<li class="list-item">${icon}<span class="item-content"><span class="item-title">${html(title)}</span>${desc}</span></li>`;
+  const desc = i.title && i.text ? `<span>${richText(i.text)}</span>` : '';
+  return `<li class="list-item">${icon}<span class="item-content"><span class="item-title">${richText(title)}</span>${desc}</span></li>`;
 }
 
 function renderSection(s) {
@@ -45,8 +53,10 @@ function renderSection(s) {
     const sectionAlign = alignClass(s.align);
     const itemAlign = alignClass(s.itemAlign || s.align);
     const weightClass = s.id === 'stelleninfo-section' ? 'normal-weight' : '';
-    const items = (s.items || []).map(renderListItem).join('');
-    return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${itemAlign}">${items}</ul></section>`;
+    const presentation = s.itemPresentation === 'icon-top' ? 'icon-top' : s.itemPresentation === 'icon-left' ? 'icon-left' : 'default';
+    const presentationClass = presentation === 'default' ? '' : `list-presentation-${presentation}`;
+    const items = (s.items || []).map((item) => renderListItem(item, presentation)).join('');
+    return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${itemAlign} ${presentationClass}">${items}</ul></section>`;
   }
   if (s.type === 'assets') {
     const items = (s.assets || []).map((a) => `<figure><img src="${html(a.src)}" alt="${html(a.alt || '')}" /><figcaption>${html(a.caption || '')}</figcaption></figure>`).join('');
