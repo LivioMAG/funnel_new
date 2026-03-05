@@ -55,9 +55,9 @@ function renderSection(s) {
   if (s.type === 'list') {
     const cols = s.columns === 2 ? 'cols-2' : '';
     const weightClass = s.id === 'stelleninfo-section' ? 'normal-weight' : '';
-    const presentation = s.itemPresentation === 'icon-top'
+    const presentation = s.itemPresentation === 'icon-top' || s.itemPresentation === 'vertical'
       ? 'icon-top'
-      : s.itemPresentation === 'icon-left'
+      : s.itemPresentation === 'icon-left' || s.itemPresentation === 'horizontal'
       ? 'icon-left'
       : s.itemPresentation === 'icon-text-vertical'
       ? 'icon-text-vertical'

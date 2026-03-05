@@ -125,7 +125,7 @@
           "icon": "🤝"
         }
       ],
-      "itemPresentation": "icon-text-vertical"
+      "itemPresentation": "vertical"
     },
     {
       "type": "cta",
