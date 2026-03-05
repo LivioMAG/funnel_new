@@ -21,6 +21,10 @@ const applyTheme = (cfg) => {
 };
 
 const html = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
+const asMs = (value) => {
+  const n = Number(value);
+  return Number.isFinite(n) && n > 0 ? `${n}ms` : null;
+};
 
 const alignClass = (align) => ({ left: 'align-left', center: 'align-center', right: 'align-right' }[align] || '');
 
@@ -62,7 +66,21 @@ function renderSection(s) {
     if (isSecondary) classes.push('secondary');
     if (!isSecondary) classes.push('full-width', 'animated-border');
     if (s.animate !== false) classes.push('animated-shimmer');
-    return `<section class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}">${html(s.buttonText || 'Weiter')}</a></section>`;
+    const styleVars = [];
+    const swipeMs = asMs(s.swipeAnimationMs ?? s.animationMs);
+    const borderMs = asMs(s.borderAnimationMs ?? s.animationMs);
+    const auraMs = asMs(s.auraAnimationMs ?? s.animationMs);
+    const floatMs = asMs(s.floatAnimationMs);
+    if (swipeMs) styleVars.push(`--cta-swipe-ms:${swipeMs}`, `--cta-spark-ms:${swipeMs}`, `--cta-text-ms:${swipeMs}`, `--cta-nudge-ms:${Math.max(500, Number(s.swipeAnimationMs ?? s.animationMs) * 0.62)}ms`);
+    if (borderMs) styleVars.push(`--cta-border-ms:${borderMs}`);
+    if (auraMs) styleVars.push(`--cta-aura-ms:${auraMs}`);
+    if (floatMs) styleVars.push(`--cta-float-ms:${floatMs}`);
+    const styleAttr = styleVars.length ? ` style="${styleVars.join(';')}"` : '';
+    const label = html(s.buttonText || 'Weiter');
+    const content = isSecondary
+      ? label
+      : `<span class="btn-core"><span class="btn-label">${label}</span><span class="btn-boost" aria-hidden="true">➜</span></span><span class="btn-spark spark-1" aria-hidden="true">✦</span><span class="btn-spark spark-2" aria-hidden="true">✦</span><span class="btn-spark spark-3" aria-hidden="true">✦</span>`;
+    return `<section class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}"${styleAttr}>${content}</a></section>`;
   }
   return '';
 }
