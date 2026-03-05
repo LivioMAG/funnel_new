@@ -7,7 +7,7 @@
       "enabled": true,
       "alt": "Firmenlogo",
       "height": 80,
-      "src": "./logo.png"
+      "src": "../assets/logo.png"
     },
     {
       "type": "heading",
@@ -47,19 +47,19 @@
       "autoplayMs": 5000,
       "assets": [
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Montagearbeiten vor Ort"
         },
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Teammeeting mit Bauplänen"
         },
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Projektbesprechung auf der Baustelle"
         },
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Feininstallation im Innenbereich"
         }
       ]
@@ -154,17 +154,17 @@
       "variant": "gallery",
       "assets": [
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Teammeeting im Büro",
           "caption": "Wöchentliche Team-Session mit klaren Zielen."
         },
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Arbeitsplatz mit Laptop und Notizen",
           "caption": "Modernes Setup für fokussiertes Arbeiten."
         },
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Kolleg:innen im Gespräch",
           "caption": "Direkte Zusammenarbeit und schnelle Abstimmungen."
         }
@@ -187,7 +187,7 @@
       "buttonText": "Warum bei uns arbeiten?",
       "buttonVariant": "secondary",
       "action": "link",
-      "href": "./extended1.html",
+      "href": "../funnel/index.html",
       "align": "left",
       "buttonStyle": "inverse"
     },
@@ -198,7 +198,7 @@
       "buttonText": "Wer sind wir?",
       "buttonVariant": "secondary",
       "action": "link",
-      "href": "./extended2.html",
+      "href": "../funnel/index.html",
       "align": "left",
       "buttonStyle": "inverse"
     },
@@ -264,17 +264,17 @@
       "variant": "gallery",
       "assets": [
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Teammeeting im Büro",
           "caption": "Wöchentliche Team-Session mit klaren Zielen."
         },
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Arbeitsplatz mit Laptop und Notizen",
           "caption": "Modernes Setup für fokussiertes Arbeiten."
         },
         {
-          "src": "./dummy.jpg",
+          "src": "../assets/dummy.jpg",
           "alt": "Kolleg:innen im Gespräch",
           "caption": "Direkte Zusammenarbeit und schnelle Abstimmungen."
         }
@@ -284,7 +284,7 @@
       "type": "image",
       "id": "team-highlight-image",
       "enabled": true,
-      "src": "./dummy.jpg",
+      "src": "../assets/dummy.jpg",
       "alt": "Team bei der Projektplanung"
     },
     {
@@ -295,6 +295,6 @@
     }
   ],
   "assets": {
-    "companyLogo": "./logo.png"
+    "companyLogo": "../assets/logo.png"
   }
 }
