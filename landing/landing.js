@@ -69,8 +69,14 @@ function renderSection(s) {
     const sectionAlign = alignClass(align);
     const listAlign = alignClass(itemAlign);
     const presentationClass = presentation === 'default' ? '' : `list-presentation-${presentation}`;
+    const titleAlignClass = presentation === 'icon-left'
+      ? 'list-title-left'
+      : presentation === 'icon-top' || presentation === 'icon-text-vertical'
+      ? 'list-title-center'
+      : '';
+    const titleClassAttr = titleAlignClass ? ` class="${titleAlignClass}"` : '';
     const items = (s.items || []).map((item) => renderListItem(item, presentation)).join('');
-    return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${listAlign} ${presentationClass}">${items}</ul></section>`;
+    return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2${titleClassAttr}>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${listAlign} ${presentationClass}">${items}</ul></section>`;
   }
   if (s.type === 'assets') {
     const items = (s.assets || []).map((a) => `<figure><img src="${html(a.src)}" alt="${html(a.alt || '')}" /><figcaption>${html(a.caption || '')}</figcaption></figure>`).join('');
