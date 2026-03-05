@@ -49,7 +49,7 @@ function renderSection(s) {
   if (s.type === 'logo') return `<section${sectionIdAttr(s)} class="card logo ${alignClass(s.align)}"><img src="${html(s.src)}" alt="${html(s.alt || 'Logo')}" /></section>`;
   if (s.type === 'heading') return `<section${sectionIdAttr(s)} class="card ${alignClass(s.align)}"><p class="kicker">${html(s.kicker || '')}</p><h1>${html(s.title || '')}</h1><p>${html(s.subtitle || '')}</p></section>`;
   if (s.type === 'text') {
-    const textAlign = alignClass(s.align || 'left');
+    const textAlign = alignClass(s.textAlign || s.align || 'left');
     return `<section${sectionIdAttr(s)} class="card ${textAlign}"><h2>${html(s.title || '')}</h2><p>${html(s.body || '')}</p></section>`;
   }
   if (s.type === 'list') {
@@ -79,8 +79,10 @@ function renderSection(s) {
     return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2${titleClassAttr}>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${listAlign} ${presentationClass}">${items}</ul></section>`;
   }
   if (s.type === 'assets') {
+    const imageFullWidthClass = s.imageFullWidth ? 'assets-image-full-width' : '';
+    const imageGridClass = s.imageFullWidth ? '' : 'cols-2';
     const items = (s.assets || []).map((a) => `<figure><img src="${html(a.src)}" alt="${html(a.alt || '')}" /><figcaption>${html(a.caption || '')}</figcaption></figure>`).join('');
-    return `<section${sectionIdAttr(s)} class="card ${alignClass(s.align)}"><h2>${html(s.title || '')}</h2><div class="grid cols-2">${items}</div></section>`;
+    return `<section${sectionIdAttr(s)} class="card ${alignClass(s.align)} ${imageFullWidthClass}"><h2>${html(s.title || '')}</h2><div class="grid ${imageGridClass}">${items}</div></section>`;
   }
   if (s.type === 'slider') {
     const imgs = (s.assets || []).map((a, i) => `<img class="slider-image ${i === 0 ? 'active' : ''}" src="${html(a.src)}" alt="${html(a.alt || '')}" data-index="${i}" />`).join('');
