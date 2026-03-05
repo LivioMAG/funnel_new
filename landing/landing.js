@@ -89,6 +89,7 @@ function renderSection(s) {
   }
   if (s.type === 'cta') {
     const isSecondary = s.buttonVariant === 'secondary';
+    const showStars = s.showStars !== false;
     const classes = ['btn'];
     if (isSecondary) classes.push('secondary');
     if (!isSecondary) classes.push('full-width', 'animated-border');
@@ -98,9 +99,12 @@ function renderSection(s) {
       ? ` style="--cta-shimmer-interval:${shimmerIntervalMs}ms"`
       : '';
     const label = html(s.buttonText || 'Weiter');
+    const stars = showStars
+      ? '<span class="btn-spark spark-1" aria-hidden="true">✦</span><span class="btn-spark spark-2" aria-hidden="true">✦</span><span class="btn-spark spark-3" aria-hidden="true">✦</span>'
+      : '';
     const content = isSecondary
       ? label
-      : `<span class="btn-core"><span class="btn-label">${label}</span><span class="btn-boost" aria-hidden="true">➜</span></span><span class="btn-spark spark-1" aria-hidden="true">✦</span><span class="btn-spark spark-2" aria-hidden="true">✦</span><span class="btn-spark spark-3" aria-hidden="true">✦</span>`;
+      : `<span class="btn-core"><span class="btn-label">${label}</span><span class="btn-boost" aria-hidden="true">➜</span></span>${stars}`;
     return `<section${sectionIdAttr(s)} class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}"${shimmerStyle}>${content}</a></section>`;
   }
   return '';
