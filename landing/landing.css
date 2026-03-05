@@ -8,14 +8,17 @@ img{max-width:100%;border-radius:10px}.logo{display:flex;justify-content:center;
 .btn{display:inline-block;background:var(--primary);color:var(--btnText);padding:.65rem 1rem;border-radius:10px;text-decoration:none;font-weight:600}
 .btn.secondary{background:#111827}
 .slider{position:relative;overflow:hidden}
-.slider-stage{position:relative;width:100%}
-.slider img{display:none;width:100%;height:auto}
-.slider img.active{display:block}
-.slider-controls{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:.5rem;pointer-events:none}
-.slider-nav{pointer-events:auto;border:0;border-radius:999px;width:2.1rem;height:2.1rem;font-size:1.2rem;line-height:1;cursor:pointer;background:rgba(17,24,39,.7);color:#fff}
-.slider-dots{display:flex;gap:.45rem;align-items:center;justify-content:stretch;padding:.75rem .35rem .2rem}
-.slider-dot{flex:1;height:.42rem;border:0;border-radius:999px;background:#cbd5e1;cursor:pointer}
-.slider-dot.active{background:#0f172a}
+.slider-stage{position:relative;width:100%;overflow:hidden}
+.slider-image{position:absolute;inset:0;width:100%;height:auto;opacity:0;transform:translateX(0);transition:transform .65s ease,opacity .65s ease;pointer-events:none}
+.slider-image.active{position:relative;opacity:1;pointer-events:auto;z-index:2}
+.slider-image.enter-from-left{opacity:0;transform:translateX(-100%);z-index:3}
+.slider-image.enter-from-right{opacity:0;transform:translateX(100%);z-index:3}
+.slider-image.exit-to-right{opacity:0;transform:translateX(100%);z-index:2}
+.slider-image.exit-to-left{opacity:0;transform:translateX(-100%);z-index:2}
+.slider-dots{--dot-gap:.45rem;--dot-count:1;--active-index:0;position:relative;display:flex;gap:var(--dot-gap);align-items:center;justify-content:stretch;padding:.75rem .35rem .2rem}
+.slider-dots::after{content:'';position:absolute;top:.75rem;left:.35rem;height:.42rem;width:calc((100% - .7rem - (var(--dot-count) - 1) * var(--dot-gap)) / var(--dot-count));border-radius:999px;background:#0f172a;transform:translateX(calc(var(--active-index) * (100% + var(--dot-gap))));transition:transform .45s ease}
+.slider-dot{position:relative;z-index:1;flex:1;height:.42rem;border:0;border-radius:999px;background:#cbd5e1;cursor:pointer}
+.slider-dot.active{background:transparent}
 
 .align-left{text-align:left;justify-items:start}
 .align-center{text-align:center;justify-items:center}
