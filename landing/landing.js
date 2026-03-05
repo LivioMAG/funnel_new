@@ -40,8 +40,9 @@ function renderSection(s) {
     const cols = s.columns === 2 ? 'cols-2' : '';
     const sectionAlign = alignClass(s.align);
     const itemAlign = alignClass(s.itemAlign || s.align);
+    const weightClass = s.id === 'job-facts' ? 'normal-weight' : '';
     const items = (s.items || []).map(renderListItem).join('');
-    return `<section class="card ${sectionAlign}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${itemAlign}">${items}</ul></section>`;
+    return `<section class="card ${sectionAlign} ${weightClass}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${itemAlign}">${items}</ul></section>`;
   }
   if (s.type === 'assets') {
     const items = (s.assets || []).map((a) => `<figure><img src="${html(a.src)}" alt="${html(a.alt || '')}" /><figcaption>${html(a.caption || '')}</figcaption></figure>`).join('');

@@ -17,3 +17,5 @@ img{max-width:100%;border-radius:10px}.logo{display:flex;justify-content:center;
 .item-icon{font-size:1.25rem;line-height:1;flex:0 0 auto}
 .item-content{display:flex;flex-direction:column;gap:.2rem}
 .item-title{font-weight:600}
+
+.normal-weight .item-title{font-weight:400}

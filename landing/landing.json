@@ -284,11 +284,24 @@
       ]
     },
     {
-      "type": "image",
-      "id": "team-highlight-image",
+      "type": "slider",
+      "id": "team-highlight-slider-bottom",
       "enabled": true,
-      "src": "../assets/dummy.jpg",
-      "alt": "Team bei der Projektplanung"
+      "autoplayMs": 5000,
+      "assets": [
+        {
+          "src": "../assets/dummy.jpg",
+          "alt": "Team bei der Projektplanung"
+        },
+        {
+          "src": "../assets/dummy.jpg",
+          "alt": "Team im Austausch auf der Baustelle"
+        },
+        {
+          "src": "../assets/dummy.jpg",
+          "alt": "Team bei der Einsatzplanung"
+        }
+      ]
     },
     {
       "type": "spacer",
