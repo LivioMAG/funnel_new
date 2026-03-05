@@ -197,17 +197,17 @@
       "variant": "gallery",
       "assets": [
         {
-          "src": "../assets/dummy.jpg",
+          "src": "../assets/ref1.jpg",
           "alt": "Teammeeting im Büro",
           "caption": "Wöchentliche Team-Session mit klaren Zielen."
         },
         {
-          "src": "../assets/dummy.jpg",
+          "src": "../assets/ref2.jpg",
           "alt": "Arbeitsplatz mit Laptop und Notizen",
           "caption": "Modernes Setup für fokussiertes Arbeiten."
         },
         {
-          "src": "../assets/dummy.jpg",
+          "src": "../assets/ref3.jpg",
           "alt": "Kolleg:innen im Gespräch",
           "caption": "Direkte Zusammenarbeit und schnelle Abstimmungen."
         }
