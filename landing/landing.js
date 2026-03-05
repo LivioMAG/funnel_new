@@ -21,6 +21,7 @@ const applyTheme = (cfg) => {
 };
 
 const html = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[c]));
+const sectionIdAttr = (s) => (s?.id ? ` id="${html(s.id)}"` : '');
 
 const alignClass = (align) => ({ left: 'align-left', center: 'align-center', right: 'align-right' }[align] || '');
 
@@ -33,28 +34,28 @@ function renderListItem(i) {
 
 function renderSection(s) {
   if (s.enabled === false) return '';
-  if (s.type === 'logo') return `<section class="card logo ${alignClass(s.align)}"><img src="${html(s.src)}" alt="${html(s.alt || 'Logo')}" /></section>`;
-  if (s.type === 'heading') return `<section class="card ${alignClass(s.align)}"><p class="kicker">${html(s.kicker || '')}</p><h1>${html(s.title || '')}</h1><p>${html(s.subtitle || '')}</p></section>`;
+  if (s.type === 'logo') return `<section${sectionIdAttr(s)} class="card logo ${alignClass(s.align)}"><img src="${html(s.src)}" alt="${html(s.alt || 'Logo')}" /></section>`;
+  if (s.type === 'heading') return `<section${sectionIdAttr(s)} class="card ${alignClass(s.align)}"><p class="kicker">${html(s.kicker || '')}</p><h1>${html(s.title || '')}</h1><p>${html(s.subtitle || '')}</p></section>`;
   if (s.type === 'text') {
     const textAlign = alignClass(s.align || 'left');
-    return `<section class="card ${textAlign}"><h2>${html(s.title || '')}</h2><p>${html(s.body || '')}</p></section>`;
+    return `<section${sectionIdAttr(s)} class="card ${textAlign}"><h2>${html(s.title || '')}</h2><p>${html(s.body || '')}</p></section>`;
   }
   if (s.type === 'list') {
     const cols = s.columns === 2 ? 'cols-2' : '';
     const sectionAlign = alignClass(s.align);
     const itemAlign = alignClass(s.itemAlign || s.align);
-    const weightClass = s.id === 'job-facts' ? 'normal-weight' : '';
+    const weightClass = s.id === 'stelleninfo-section' ? 'normal-weight' : '';
     const items = (s.items || []).map(renderListItem).join('');
-    return `<section class="card ${sectionAlign} ${weightClass}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${itemAlign}">${items}</ul></section>`;
+    return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${itemAlign}">${items}</ul></section>`;
   }
   if (s.type === 'assets') {
     const items = (s.assets || []).map((a) => `<figure><img src="${html(a.src)}" alt="${html(a.alt || '')}" /><figcaption>${html(a.caption || '')}</figcaption></figure>`).join('');
-    return `<section class="card ${alignClass(s.align)}"><h2>${html(s.title || '')}</h2><div class="grid cols-2">${items}</div></section>`;
+    return `<section${sectionIdAttr(s)} class="card ${alignClass(s.align)}"><h2>${html(s.title || '')}</h2><div class="grid cols-2">${items}</div></section>`;
   }
   if (s.type === 'slider') {
     const imgs = (s.assets || []).map((a, i) => `<img class="slider-image ${i === 0 ? 'active' : ''}" src="${html(a.src)}" alt="${html(a.alt || '')}" data-index="${i}" />`).join('');
     const dots = (s.assets || []).map((_, i) => `<button type="button" class="slider-dot ${i === 0 ? 'active' : ''}" data-slide="${i}" aria-label="Bild ${i + 1} anzeigen"></button>`).join('');
-    return `<section class="card slider ${alignClass(s.align)}" data-autoplay="${Number(s.autoplayMs || 4000)}"><div class="slider-stage">${imgs}</div><div class="slider-dots" role="tablist" aria-label="Slider Navigation">${dots}</div></section>`;
+    return `<section${sectionIdAttr(s)} class="card slider ${alignClass(s.align)}" data-autoplay="${Number(s.autoplayMs || 4000)}"><div class="slider-stage">${imgs}</div><div class="slider-dots" role="tablist" aria-label="Slider Navigation">${dots}</div></section>`;
   }
   if (s.type === 'cta') {
     const isSecondary = s.buttonVariant === 'secondary';
@@ -70,7 +71,7 @@ function renderSection(s) {
     const content = isSecondary
       ? label
       : `<span class="btn-core"><span class="btn-label">${label}</span><span class="btn-boost" aria-hidden="true">➜</span></span><span class="btn-spark spark-1" aria-hidden="true">✦</span><span class="btn-spark spark-2" aria-hidden="true">✦</span><span class="btn-spark spark-3" aria-hidden="true">✦</span>`;
-    return `<section class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}"${shimmerStyle}>${content}</a></section>`;
+    return `<section${sectionIdAttr(s)} class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}"${shimmerStyle}>${content}</a></section>`;
   }
   return '';
 }
