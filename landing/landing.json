@@ -84,7 +84,8 @@
       "buttonVariant": "primary",
       "action": "start-funnel",
       "align": "left",
-      "animate": true
+      "animate": true,
+      "shimmerIntervalMs": 3000
     },
     {
       "type": "list",
@@ -140,7 +141,8 @@
       "buttonVariant": "primary",
       "action": "start-funnel",
       "align": "left",
-      "animate": true
+      "animate": true,
+      "shimmerIntervalMs": 1000
     },
     {
       "type": "text",
@@ -182,7 +184,8 @@
       "buttonVariant": "primary",
       "action": "start-funnel",
       "align": "left",
-      "animate": true
+      "animate": true,
+      "shimmerIntervalMs": 3000
     },
     {
       "type": "cta",
