@@ -95,7 +95,7 @@ function renderSection(s) {
     const showStars = s.showStars !== false;
     const classes = ['btn'];
     if (isSecondary) classes.push('secondary');
-    if (!isSecondary) classes.push('full-width', 'animated-border');
+    if (!isSecondary) classes.push('full-width');
     if (s.animate !== false) classes.push('animated-shimmer');
     const shimmerIntervalMs = Number(s.shimmerIntervalMs);
     const shimmerStyle = !isSecondary && Number.isFinite(shimmerIntervalMs) && shimmerIntervalMs > 0
