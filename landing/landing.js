@@ -25,6 +25,7 @@ const sectionIdAttr = (s) => (s?.id ? ` id="${html(s.id)}"` : '');
 const richText = (s) => html(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
 const alignClass = (align) => ({ left: 'align-left', center: 'align-center', right: 'align-right' }[align] || '');
+const normalizeAlign = (align, fallback = 'left') => (['left', 'center', 'right'].includes(align) ? align : fallback);
 
 function renderListItem(i, presentation = 'default') {
   const icon = i.icon ? `<span class="item-icon">${html(i.icon)}</span>` : '';
@@ -49,7 +50,7 @@ function renderSection(s) {
   if (s.type === 'logo') return `<section${sectionIdAttr(s)} class="card logo ${alignClass(s.align)}"><img src="${html(s.src)}" alt="${html(s.alt || 'Logo')}" /></section>`;
   if (s.type === 'heading') return `<section${sectionIdAttr(s)} class="card ${alignClass(s.align)}"><p class="kicker">${html(s.kicker || '')}</p><h1>${html(s.title || '')}</h1><p>${html(s.subtitle || '')}</p></section>`;
   if (s.type === 'text') {
-    const textAlign = alignClass(s.align || 'left');
+    const textAlign = alignClass(normalizeAlign(s.align));
     return `<section${sectionIdAttr(s)} class="card ${textAlign}"><h2>${html(s.title || '')}</h2><p>${html(s.body || '')}</p></section>`;
   }
   if (s.type === 'list') {
@@ -79,8 +80,10 @@ function renderSection(s) {
     return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2${titleClassAttr}>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${listAlign} ${presentationClass}">${items}</ul></section>`;
   }
   if (s.type === 'assets') {
+    const sectionAlign = alignClass(normalizeAlign(s.align, 'center'));
+    const layoutClass = 'assets-full-width';
     const items = (s.assets || []).map((a) => `<figure><img src="${html(a.src)}" alt="${html(a.alt || '')}" /><figcaption>${html(a.caption || '')}</figcaption></figure>`).join('');
-    return `<section${sectionIdAttr(s)} class="card ${alignClass(s.align)}"><h2>${html(s.title || '')}</h2><div class="grid cols-2">${items}</div></section>`;
+    return `<section${sectionIdAttr(s)} class="card ${sectionAlign}"><h2>${html(s.title || '')}</h2><div class="grid ${layoutClass}">${items}</div></section>`;
   }
   if (s.type === 'slider') {
     const imgs = (s.assets || []).map((a, i) => `<img class="slider-image ${i === 0 ? 'active' : ''}" src="${html(a.src)}" alt="${html(a.alt || '')}" data-index="${i}" />`).join('');

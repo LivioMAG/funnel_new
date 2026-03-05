@@ -70,3 +70,7 @@ img{max-width:100%;border-radius:10px}.logo{display:flex;justify-content:center;
 
 .list-title-center{text-align:center}
 .list-title-left{text-align:left}
+
+.assets-full-width{grid-template-columns:1fr}
+.assets-full-width figure{margin:0}
+.assets-full-width img{width:100%;aspect-ratio:16 / 9;object-fit:cover;display:block}
