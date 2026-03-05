@@ -38,7 +38,10 @@
           "value": "Region Alregenswil Zürich",
           "icon": "📍"
         }
-      ]
+      ],
+      "align": "center",
+      "itemAlign": "center",
+      "title": ""
     },
     {
       "type": "slider",
