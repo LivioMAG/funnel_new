@@ -62,7 +62,11 @@ function renderSection(s) {
     if (isSecondary) classes.push('secondary');
     if (!isSecondary) classes.push('full-width', 'animated-border');
     if (s.animate !== false) classes.push('animated-shimmer');
-    return `<section class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}">${html(s.buttonText || 'Weiter')}</a></section>`;
+    const label = html(s.buttonText || 'Weiter');
+    const content = isSecondary
+      ? label
+      : `<span class="btn-core"><span class="btn-label">${label}</span><span class="btn-boost" aria-hidden="true">➜</span></span><span class="btn-spark spark-1" aria-hidden="true">✦</span><span class="btn-spark spark-2" aria-hidden="true">✦</span><span class="btn-spark spark-3" aria-hidden="true">✦</span>`;
+    return `<section class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html')}">${content}</a></section>`;
   }
   return '';
 }
