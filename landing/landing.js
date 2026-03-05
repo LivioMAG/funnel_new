@@ -55,9 +55,9 @@ function renderSection(s) {
   if (s.type === 'list') {
     const cols = s.columns === 2 ? 'cols-2' : '';
     const weightClass = s.id === 'stelleninfo-section' ? 'normal-weight' : '';
-    const presentation = s.itemPresentation === 'icon-top'
+    const presentation = s.itemPresentation === 'icon-top' || s.itemPresentation === 'vertical'
       ? 'icon-top'
-      : s.itemPresentation === 'icon-left'
+      : s.itemPresentation === 'icon-left' || s.itemPresentation === 'horizontal'
       ? 'icon-left'
       : s.itemPresentation === 'icon-text-vertical'
       ? 'icon-text-vertical'
@@ -68,9 +68,10 @@ function renderSection(s) {
       : (s.itemAlign || s.align);
     const sectionAlign = alignClass(align);
     const listAlign = alignClass(itemAlign);
+    const titleAlign = s.itemPresentation === 'horizontal' ? 'text-center' : '';
     const presentationClass = presentation === 'default' ? '' : `list-presentation-${presentation}`;
     const items = (s.items || []).map((item) => renderListItem(item, presentation)).join('');
-    return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${listAlign} ${presentationClass}">${items}</ul></section>`;
+    return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2 class="${titleAlign}">${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${listAlign} ${presentationClass}">${items}</ul></section>`;
   }
   if (s.type === 'assets') {
     const items = (s.assets || []).map((a) => `<figure><img src="${html(a.src)}" alt="${html(a.alt || '')}" /><figcaption>${html(a.caption || '')}</figcaption></figure>`).join('');
