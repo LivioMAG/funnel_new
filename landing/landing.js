@@ -28,9 +28,13 @@ const alignClass = (align) => ({ left: 'align-left', center: 'align-center', rig
 
 function renderListItem(i, presentation = 'default') {
   const icon = i.icon ? `<span class="item-icon">${html(i.icon)}</span>` : '';
+  const text = i.text || i.value || i.title || '';
+
+  if (presentation === 'icon-text-vertical') {
+    return `<li class="list-item list-item--icon-text-vertical">${icon}<span class="item-spacer" aria-hidden="true"></span><span class="item-content"><span class="item-text">${richText(text)}</span></span></li>`;
+  }
 
   if (presentation === 'icon-left' || presentation === 'icon-top') {
-    const text = i.text || i.value || i.title || '';
     const itemClass = presentation === 'icon-top' ? 'list-item list-item--icon-top' : 'list-item list-item--icon-left';
     return `<li class="${itemClass}">${icon}<span class="item-content"><span class="item-text">${richText(text)}</span></span></li>`;
   }
@@ -50,13 +54,23 @@ function renderSection(s) {
   }
   if (s.type === 'list') {
     const cols = s.columns === 2 ? 'cols-2' : '';
-    const sectionAlign = alignClass(s.align);
-    const itemAlign = alignClass(s.itemAlign || s.align);
     const weightClass = s.id === 'stelleninfo-section' ? 'normal-weight' : '';
-    const presentation = s.itemPresentation === 'icon-top' ? 'icon-top' : s.itemPresentation === 'icon-left' ? 'icon-left' : 'default';
+    const presentation = s.itemPresentation === 'icon-top'
+      ? 'icon-top'
+      : s.itemPresentation === 'icon-left'
+      ? 'icon-left'
+      : s.itemPresentation === 'icon-text-vertical'
+      ? 'icon-text-vertical'
+      : 'default';
+    const align = presentation === 'icon-text-vertical' ? (s.align || 'center') : s.align;
+    const itemAlign = presentation === 'icon-text-vertical'
+      ? (s.itemAlign || 'center')
+      : (s.itemAlign || s.align);
+    const sectionAlign = alignClass(align);
+    const listAlign = alignClass(itemAlign);
     const presentationClass = presentation === 'default' ? '' : `list-presentation-${presentation}`;
     const items = (s.items || []).map((item) => renderListItem(item, presentation)).join('');
-    return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${itemAlign} ${presentationClass}">${items}</ul></section>`;
+    return `<section${sectionIdAttr(s)} class="card ${sectionAlign} ${weightClass}"><h2>${html(s.title || '')}</h2><ul class="grid list-reset ${cols} ${listAlign} ${presentationClass}">${items}</ul></section>`;
   }
   if (s.type === 'assets') {
     const items = (s.assets || []).map((a) => `<figure><img src="${html(a.src)}" alt="${html(a.alt || '')}" /><figcaption>${html(a.caption || '')}</figcaption></figure>`).join('');
