@@ -127,7 +127,26 @@
       ],
       "itemPresentation": "vertical"
     },
-        {
+    {
+      "type": "cta",
+      "id": "call-to-action-section-2",
+      "enabled": true,
+      "buttonText": "Ihr habt mich überzeugt",
+      "buttonVariant": "primary",
+      "action": "start-funnel",
+      "align": "left",
+      "animate": true,
+      "shimmerIntervalMs": 1000
+    },
+    {
+      "type": "text",
+      "id": "text-section",
+      "enabled": true,
+      "title": "Über uns",
+      "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
+      "maxWidth": "lg"
+    },
+            {
       "type": "list",
       "id": "list-view-section",
       "enabled": true,
@@ -166,25 +185,6 @@
         }
       ],
       "itemPresentation": "vertical"
-    },
-    {
-      "type": "cta",
-      "id": "call-to-action-section-2",
-      "enabled": true,
-      "buttonText": "Ihr habt mich überzeugt",
-      "buttonVariant": "primary",
-      "action": "start-funnel",
-      "align": "left",
-      "animate": true,
-      "shimmerIntervalMs": 1000
-    },
-    {
-      "type": "text",
-      "id": "text-section",
-      "enabled": true,
-      "title": "Über uns",
-      "body": "Wir sind ein wachsendes B2B-Team mit Fokus auf nachhaltiges Wachstum.\nBei uns zählen klare Kommunikation, schnelle Entscheidungen und Verantwortung ab Tag eins.",
-      "maxWidth": "lg"
     },
     {
       "type": "assets",
