@@ -55,7 +55,8 @@ img{max-width:100%;border-radius:10px}.logo{display:flex;justify-content:center;
 
 .normal-weight .item-title{font-weight:400}
 
-.list-item--icon-left{display:flex;align-items:flex-start;gap:.55rem}
+.list-item--icon-left{display:flex;align-items:center;gap:.85rem}
+.list-item--icon-left .item-icon{display:inline-flex;align-items:center;justify-content:center}
 .list-item--icon-left .item-content{display:block}
 .list-item--icon-top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem}
 .list-item--icon-top .item-icon{font-size:1.5rem}
