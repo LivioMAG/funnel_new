@@ -1,113 +1,18 @@
 {
   "theme": {
-    "primaryColor": "#FF0000",
-    "primaryButtonTextColor": "#FFFFFF",
+    "primaryColor": "#ff2d55",
+    "primaryButtonTextColor": "#ffffff",
     "secondaryColor": "#111827",
-    "backgroundColor": "#F7F8FA",
-    "cardBackgroundColor": "#FFFFFF",
-    "successColor": "#16A34A",
-    "dangerColor": "#DC2626",
-    "textColor": "#0F172A",
+    "backgroundColor": "#f3f4f6",
+    "cardBackgroundColor": "#ffffff",
+    "textColor": "#0f172a",
     "mutedTextColor": "#475569",
-    "borderColor": "#DBE2EA"
+    "borderColor": "#dbe2ea"
   },
-  "funnel": {
-    "introText": "Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.",
-    "steps": [
-      {
-        "id": "q1",
-        "title": "Kurz zu dir",
-        "question": "Woran erkennst du, dass du in einem Job richtig gut bist?",
-        "type": "textarea",
-        "fieldKey": "strength_signal",
-        "required": true,
-        "helperText": "2–3 Sätze reichen.",
-        "placeholder": "Ich merke es daran, dass ..."
-      },
-      {
-        "id": "q2",
-        "title": "Verfügbarkeit",
-        "question": "Ab wann könntest du starten?",
-        "type": "text",
-        "fieldKey": "start_date",
-        "required": true,
-        "placeholder": "z.B. ab sofort / 01.05.2026"
-      },
-      {
-        "id": "q3",
-        "title": "Arbeitsmodell",
-        "question": "Wie möchtest du arbeiten?",
-        "type": "singleChoice",
-        "options": [
-          {
-            "text": "Remote",
-            "value": "Remote",
-            "icon": "🏠"
-          },
-          {
-            "text": "Hybrid",
-            "value": "Hybrid",
-            "icon": "🔁"
-          },
-          {
-            "text": "Vor Ort",
-            "value": "Vor Ort"
-          }
-        ],
-        "fieldKey": "work_model",
-        "required": true,
-        "helperText": "Wähle die Form, in der du am besten performst.",
-        "imageAsset": "dummy.jpg"
-      },
-      {
-        "id": "q4",
-        "title": "Sprachen",
-        "question": "Sprichst du fliessend Deutsch?",
-        "type": "yesNo",
-        "fieldKey": "german_fluent",
-        "required": true,
-        "imageAsset": "dummy.jpg"
-      },
-      {
-        "id": "q5",
-        "title": "Stärken im Vertrieb",
-        "question": "Welche Aufgaben machen dir am meisten Spaß?",
-        "type": "multiChoice",
-        "options": [
-          "Kaltakquise",
-          "Bedarfsanalyse",
-          "Produkt-Demos",
-          "Angebote & Verhandlung",
-          "Kundenpflege"
-        ],
-        "fieldKey": "sales_strengths",
-        "required": true,
-        "helperText": "Du kannst mehrere Antworten auswählen.",
-        "imageAsset": "dummy.jpg"
-      }
-    ],
-    "final": {
-      "title": "Fast geschafft",
-      "description": "Trag noch kurz deine Kontaktdaten ein, damit wir uns direkt melden können.",
-      "nameLabel": "Dein Name",
-      "namePlaceholder": "Vor- und Nachname",
-      "emailLabel": "E-Mail-Adresse",
-      "emailPlaceholder": "name@beispiel.de",
-      "submitText": "Jetzt bewerben",
-      "successToast": "Danke! Bewerbung wurde erfasst (Demo).",
-      "thankYouTitle": "Danke für deine Bewerbung!",
-      "thankYouText": "Wir haben deine Angaben erhalten und melden uns in Kürze bei dir mit den nächsten Schritten.",
-      "thankYouButtonText": "Zur Startseite"
-    },
-    "nav": {
-      "backText": "Zurück",
-      "nextText": "Weiter",
-      "stepLabel": "Schritt {current} von {total}"
-    },
-    "validation": {
-      "requiredText": "Bitte fülle dieses Feld aus.",
-      "emailText": "Bitte gib eine gültige E-Mail-Adresse ein."
-    },
-    "choiceImageAsset": "dummy.jpg"
+  "typography": {
+    "fontFamily": "Inter, Arial, sans-serif",
+    "baseSize": "16px",
+    "h1Size": "2.1rem",
+    "h2Size": "1.4rem"
   }
 }

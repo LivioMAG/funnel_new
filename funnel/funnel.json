@@ -1,0 +1,42 @@
+{
+  "introText": "Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.",
+  "steps": [
+    {
+      "id": "q1",
+      "title": "Kurz zu dir",
+      "question": "Woran erkennst du, dass du in einem Job richtig gut bist?",
+      "type": "textarea",
+      "fieldKey": "strength_signal",
+      "required": true,
+      "helperText": "2–3 Sätze reichen.",
+      "placeholder": "Ich merke es daran, dass ..."
+    },
+    {
+      "id": "q2",
+      "title": "Verfügbarkeit",
+      "question": "Ab wann könntest du starten?",
+      "type": "text",
+      "fieldKey": "start_date",
+      "required": true,
+      "placeholder": "z.B. ab sofort / 01.05.2026"
+    },
+    {
+      "id": "q3",
+      "title": "Arbeitsmodell",
+      "question": "Wie möchtest du arbeiten?",
+      "type": "singleChoice",
+      "options": ["Remote", "Hybrid", "Vor Ort"],
+      "fieldKey": "work_model",
+      "required": true
+    }
+  ],
+  "final": {
+    "title": "Fast geschafft",
+    "description": "Trag noch kurz deine Kontaktdaten ein, damit wir uns direkt melden können.",
+    "nameLabel": "Dein Name",
+    "emailLabel": "E-Mail-Adresse",
+    "submitText": "Jetzt bewerben",
+    "thankYouTitle": "Danke für deine Bewerbung!",
+    "thankYouText": "Wir haben deine Angaben erhalten und melden uns in Kürze bei dir mit den nächsten Schritten."
+  }
+}
