@@ -49,8 +49,9 @@ function renderSection(s) {
     return `<section class="card ${alignClass(s.align)}"><h2>${html(s.title || '')}</h2><div class="grid cols-2">${items}</div></section>`;
   }
   if (s.type === 'slider') {
-    const imgs = (s.assets || []).map((a, i) => `<img class="${i === 0 ? 'active' : ''}" src="${html(a.src)}" alt="${html(a.alt || '')}" />`).join('');
-    return `<section class="card slider ${alignClass(s.align)}" data-autoplay="${Number(s.autoplayMs || 4000)}">${imgs}</section>`;
+    const imgs = (s.assets || []).map((a, i) => `<img class="slider-image ${i === 0 ? 'active' : ''}" src="${html(a.src)}" alt="${html(a.alt || '')}" data-index="${i}" />`).join('');
+    const dots = (s.assets || []).map((_, i) => `<button type="button" class="slider-dot ${i === 0 ? 'active' : ''}" data-dot="${i}" aria-label="Bild ${i + 1}"></button>`).join('');
+    return `<section class="card slider ${alignClass(s.align)}" data-autoplay="${Number(s.autoplayMs || 4000)}"><div class="slider-stage">${imgs}</div><div class="slider-controls"><button type="button" class="slider-nav" data-dir="prev" aria-label="Vorheriges Bild">‹</button><button type="button" class="slider-nav" data-dir="next" aria-label="Nächstes Bild">›</button></div><div class="slider-dots" aria-label="Slider Navigation">${dots}</div></section>`;
   }
   if (s.type === 'cta') return `<section class="${alignClass(s.align)}"><a class="btn ${s.buttonVariant === 'secondary' ? 'secondary' : ''}" href="${html(s.href || '../funnel/index.html')}">${html(s.buttonText || 'Weiter')}</a></section>`;
   return '';
@@ -61,13 +62,28 @@ function renderSection(s) {
   applyTheme(config);
   app.innerHTML = (data.sections || []).map(renderSection).join('');
   document.querySelectorAll('.slider').forEach((slider) => {
-    const imgs = [...slider.querySelectorAll('img')];
+    const imgs = [...slider.querySelectorAll('.slider-image')];
+    const dots = [...slider.querySelectorAll('.slider-dot')];
     if (imgs.length < 2) return;
     let i = 0;
-    setInterval(() => {
+
+    const show = (nextIndex) => {
       imgs[i].classList.remove('active');
-      i = (i + 1) % imgs.length;
+      dots[i]?.classList.remove('active');
+      i = (nextIndex + imgs.length) % imgs.length;
       imgs[i].classList.add('active');
-    }, Number(slider.dataset.autoplay));
+      dots[i]?.classList.add('active');
+    };
+
+    slider.querySelector('[data-dir="prev"]')?.addEventListener('click', () => show(i - 1));
+    slider.querySelector('[data-dir="next"]')?.addEventListener('click', () => show(i + 1));
+    dots.forEach((dot, dotIndex) => {
+      dot.addEventListener('click', () => show(dotIndex));
+    });
+
+    const autoplayMs = Number(slider.dataset.autoplay);
+    if (Number.isFinite(autoplayMs) && autoplayMs > 0) {
+      setInterval(() => show(i + 1), autoplayMs);
+    }
   });
 })();
