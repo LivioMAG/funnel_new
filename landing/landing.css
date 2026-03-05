@@ -60,5 +60,10 @@ img{max-width:100%;border-radius:10px}.logo{display:flex;justify-content:center;
 .list-item--icon-left .item-content{display:block}
 .list-item--icon-top{display:flex;flex-direction:column;align-items:center;text-align:center;gap:.5rem}
 .list-item--icon-top .item-icon{font-size:1.5rem}
+.list-presentation-icon-text-vertical{display:flex;flex-direction:column;align-items:center;gap:1.6rem}
+.list-presentation-icon-text-vertical .list-item--icon-text-vertical{display:flex;flex-direction:column;align-items:center;text-align:center;gap:0}
+.list-presentation-icon-text-vertical .item-icon{font-size:1.5rem}
+.list-presentation-icon-text-vertical .item-spacer{display:block;height:.45rem}
+.list-presentation-icon-text-vertical .item-content{align-items:center}
 .item-text{font-weight:400;line-height:1.45}
 .item-text strong{font-weight:700}
