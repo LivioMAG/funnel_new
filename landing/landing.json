@@ -97,41 +97,35 @@
       "columns": 2,
       "items": [
         {
-          "title": "Ferienmodell",
           "text": "Du kannst flexibel deine Ferien einteilen, **unbezahlt möglich**.",
           "icon": "🚀"
         },
         {
-          "title": "Dein Firmenauto",
           "text": "Dein Firmenauto kannst du ohne zu zahlen auch privat nutzen",
           "icon": "🧩"
         },
         {
-          "title": "Erfolgsbeteiligung",
           "text": "Bei guten Aufträgen wirst du slbstverständlich beteiligt",
           "icon": "💶"
         },
         {
-          "title": "Aus und Weiterbildung",
           "text": "Werden von uns unterstützt.",
           "icon": "📈"
         },
         {
-          "title": "Team mit Verantwortung",
           "text": "Du gestaltest aktiv mit statt nur auszuführen.",
           "icon": "🤝"
         },
         {
-          "title": "Eigenverantwortung",
           "text": "Deine Meinung zählt, wir lassen dich machen",
           "icon": "🤝"
         },
         {
-          "title": "Unsere Projekte",
           "text": "Keine 0815 Projekte, vom Hochhaus bis zur Industire wir machen alles.",
           "icon": "🤝"
         }
-      ]
+      ],
+      "itemPresentation": "icon-left"
     },
     {
       "type": "cta",
