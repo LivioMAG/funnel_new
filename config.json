@@ -14,5 +14,24 @@
     "baseSize": "16px",
     "h1Size": "2.1rem",
     "h2Size": "1.4rem"
+  },
+  "tracking": {
+    "facebook": {
+      "enabled": true,
+      "pixelId": "",
+      "completedEvent": "Lead"
+    },
+    "google": {
+      "enabled": true,
+      "measurementId": "",
+      "conversionId": "",
+      "conversionLabel": "",
+      "completedEvent": "generate_lead"
+    },
+    "tiktok": {
+      "enabled": true,
+      "pixelId": "",
+      "completedEvent": "SubmitForm"
+    }
   }
 }

@@ -1,8 +1,10 @@
+import { initTracking, trackApplicationCompleted } from '../tracking.js';
 const app = document.getElementById('app');
 let data;
 let index = 0;
 const answers = {};
 let lastProgressValue = 0;
+let trackingConfig = {};
 
 const load = (p) => fetch(p, { cache: 'no-store' }).then((r) => r.json());
 
@@ -268,6 +270,11 @@ function renderFinal() {
       contact,
       submittedAt: new Date().toISOString(),
     };
+
+    trackApplicationCompleted({
+      email: contact.email,
+      phone: contact.phone,
+    }, trackingConfig);
     openSummaryModal(payload);
   });
 }
@@ -299,6 +306,8 @@ function render() {
 (async () => {
   const [cfg, funnel] = await Promise.all([load('../config.json'), load('./funnel.json')]);
   applyTheme(cfg);
+  trackingConfig = cfg.tracking || {};
+  initTracking(trackingConfig);
   data = funnel;
   render();
 })();
