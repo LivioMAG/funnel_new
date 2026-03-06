@@ -8,6 +8,7 @@ let trackingConfig = {};
 
 let leadSubmissionPending = false;
 const THANK_YOU_STORAGE_KEY = 'funnelThankYouPayload';
+let funnelClosedState = null;
 
 function sanitizeForQuery(value) {
   if (Array.isArray(value) || (value && typeof value === 'object')) return JSON.stringify(value);
@@ -113,6 +114,35 @@ function setStepAnswer(step, value) {
   answersByStepId[step.id] = value;
 }
 
+function normalizeChoiceOption(option) {
+  if (typeof option === 'string') {
+    return {
+      label: option,
+      closeFunnel: false,
+      closeTitle: '',
+      closeMessage: '',
+      closeWebhookUrl: '',
+      closeWebhookMethod: '',
+    };
+  }
+
+  const label = option?.label || option?.value || '';
+  return {
+    label,
+    closeFunnel: Boolean(option?.closeFunnel),
+    closeTitle: option?.closeTitle || '',
+    closeMessage: option?.closeMessage || '',
+    closeWebhookUrl: option?.closeWebhookUrl || '',
+    closeWebhookMethod: option?.closeWebhookMethod || '',
+  };
+}
+
+function findNormalizedOption(step, selectedLabel) {
+  return (step.options || [])
+    .map(normalizeChoiceOption)
+    .find((option) => option.label === selectedLabel);
+}
+
 function buildAnswersByFieldKey() {
   const grouped = {};
 
@@ -149,20 +179,21 @@ function renderChoice(options, key, mode = 'single') {
   const multiple = mode === 'multiple';
   const showIndicator = mode !== 'yesNo';
   const current = answersByStepId[key] || (multiple ? [] : '');
+  const normalizedOptions = options.map(normalizeChoiceOption);
   return `
     <div class="choiceGrid ${mode}">
       ${
-        options
+        normalizedOptions
           .map((opt) => {
-            const active = multiple ? current.includes(opt) : current === opt;
-            const icon = mode === 'yesNo' ? (opt === 'Ja' ? '✓' : '✕') : '';
-            return `<button type="button" class="choiceBtn ${active ? 'active' : ''}" data-choice="${opt}">${
+            const active = multiple ? current.includes(opt.label) : current === opt.label;
+            const icon = mode === 'yesNo' ? (opt.label === 'Ja' ? '✓' : '✕') : '';
+            return `<button type="button" class="choiceBtn ${active ? 'active' : ''}" data-choice="${opt.label}">${
               icon ? `<span class="choiceIcon" aria-hidden="true">${icon}</span>` : ''
             }${
               showIndicator
                 ? '<span class="choiceIndicator" aria-hidden="true"><span class="choiceDot"></span></span>'
                 : ''
-            }<span class="choiceLabel">${opt}</span></button>`;
+            }<span class="choiceLabel">${opt.label}</span></button>`;
           })
           .join('')
       }
@@ -218,6 +249,78 @@ async function triggerStepWebhook(step) {
   }
 }
 
+async function triggerStepDropoutWebhook(step, selectedOption) {
+  const fallbackDropoutWebhook = data?.final?.dropoutWebhook || {};
+  const webhookUrl =
+    selectedOption?.closeWebhookUrl?.trim() ||
+    step?.dropoutWebhookUrl?.trim() ||
+    fallbackDropoutWebhook.url?.trim();
+  if (!webhookUrl) return;
+
+  const webhookMethod = (
+    selectedOption?.closeWebhookMethod ||
+    step?.dropoutWebhookMethod ||
+    fallbackDropoutWebhook.method ||
+    'POST'
+  ).toUpperCase();
+
+  const payload = {
+    event: 'funnel_closed',
+    reason: 'single_choice_disqualifier',
+    stepId: step.id,
+    fieldKey: step.fieldKey,
+    question: step.question,
+    selectedOption: selectedOption.label,
+    answer: getStepAnswer(step),
+    answersByStepId,
+    answersByFieldKey: buildAnswersByFieldKey(),
+    answersList: getAnswersList(),
+    triggeredAt: new Date().toISOString(),
+  };
+
+  try {
+    if (webhookMethod === 'GET') {
+      const url = new URL(webhookUrl);
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value === undefined || value === null) return;
+        url.searchParams.set(key, sanitizeForQuery(value));
+      });
+      await fetch(url.toString(), {
+        method: 'GET',
+        keepalive: true,
+      });
+      return;
+    }
+
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    });
+  } catch (error) {
+    console.warn(`Dropout-Webhook konnte nicht ausgelöst werden (step: ${step.id})`, error);
+  }
+}
+
+function closeFunnel(step, selectedOption) {
+  const defaultClosed = data?.final?.closedFunnel || {};
+  funnelClosedState = {
+    stepId: step.id,
+    selectedOption: selectedOption.label,
+    title:
+      selectedOption?.closeTitle?.trim() ||
+      defaultClosed?.title ||
+      'Sorry, wir passen leider nicht zusammen.',
+    message:
+      selectedOption?.closeMessage?.trim() ||
+      defaultClosed?.message ||
+      'Danke für deine Ehrlichkeit. Mit dieser Auswahl können wir dich aktuell nicht weiter im Funnel berücksichtigen.',
+  };
+}
+
 function renderStepAsset(step) {
   const asset = step?.asset?.trim();
   if (!asset) return '';
@@ -248,6 +351,13 @@ function attachChoiceHandlers(step) {
       setStepAnswer(step, value);
       autoAdvancePending = true;
       setTimeout(async () => {
+        const selectedOption = findNormalizedOption(step, value) || normalizeChoiceOption(value);
+        if (step.type === 'singleChoice' && selectedOption.closeFunnel) {
+          await triggerStepDropoutWebhook(step, selectedOption);
+          closeFunnel(step, selectedOption);
+          render();
+          return;
+        }
         await triggerStepWebhook(step);
         index += 1;
         render();
@@ -418,6 +528,26 @@ function renderFinal() {
   });
 }
 
+function renderClosedFunnel() {
+  const fallbackImage = data?.hero?.image || '';
+  const image = data?.final?.closedFunnel?.image?.trim() || fallbackImage;
+  const title = funnelClosedState?.title || 'Sorry, wir passen leider nicht zusammen.';
+  const message =
+    funnelClosedState?.message ||
+    'Danke für dein Interesse. Aktuell können wir dich an dieser Stelle leider nicht weiter im Prozess führen.';
+
+  app.innerHTML = `
+    <section class="screen">
+      ${stepHeader()}
+      <article class="questionCard">
+        <h2>${title}</h2>
+        <p class="muted">${message}</p>
+      </article>
+      ${image ? `<img class="heroImage" src="${image}" alt="Funnel geschlossen" />` : ''}
+    </section>
+  `;
+}
+
 
 function animateProgressBar() {
   const p = getProgress();
@@ -433,6 +563,11 @@ function animateProgressBar() {
 }
 function render() {
   if (!data) return;
+  if (funnelClosedState) {
+    renderClosedFunnel();
+    animateProgressBar();
+    return;
+  }
   if (index < data.steps.length) {
     renderStep();
     animateProgressBar();

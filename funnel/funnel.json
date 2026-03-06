@@ -63,14 +63,29 @@
       "question": "Wie möchtest du arbeiten?",
       "type": "singleChoice",
       "options": [
-        "Remote",
-        "Hybrid",
-        "Vor Ort"
+        {
+          "label": "Remote",
+          "closeFunnel": false
+        },
+        {
+          "label": "Hybrid",
+          "closeFunnel": false
+        },
+        {
+          "label": "Vor Ort",
+          "closeFunnel": true,
+          "closeTitle": "Sorry, wir passen leider nicht zusammen.",
+          "closeMessage": "Aktuell suchen wir ausschließlich Kandidat:innen mit Wunsch nach Remote oder Hybrid.",
+          "closeWebhookUrl": "",
+          "closeWebhookMethod": "POST"
+        }
       ],
       "fieldKey": "work_model",
       "required": true,
       "helperText": "Wähle eine Option – wir springen direkt weiter.",
       "webhookUrl": "",
+      "dropoutWebhookUrl": "",
+      "dropoutWebhookMethod": "POST",
       "asset": "../assets/ref3.jpg"
     },
     {
@@ -108,6 +123,15 @@
     "leadWebhook": {
       "url": "https://n8n.srv1019917.hstgr.cloud/webhook-test/624d7886-2625-48f7-a210-e0e4f15920ae",
       "method": "GET"
+    },
+    "dropoutWebhook": {
+      "url": "",
+      "method": "POST"
+    },
+    "closedFunnel": {
+      "title": "Sorry, wir passen leider nicht zusammen.",
+      "message": "Danke für deine Angaben. Mit deiner Auswahl können wir den Funnel leider nicht fortführen.",
+      "image": "../assets/dummy.jpg"
     },
     "thankYou": {
       "title": "Danke für deine Eintragung!",
