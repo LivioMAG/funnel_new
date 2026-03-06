@@ -1,10 +1,53 @@
-import { initTracking, trackApplicationCompleted } from '../tracking.js';
+import { initTracking, trackApplicationCompleted, trackThankYouPage } from '../tracking.js';
 const app = document.getElementById('app');
 let data;
 let index = 0;
 const answersByStepId = {};
 let lastProgressValue = 0;
 let trackingConfig = {};
+
+let leadSubmissionPending = false;
+
+function sanitizeForQuery(value) {
+  if (Array.isArray(value) || (value && typeof value === 'object')) return JSON.stringify(value);
+  return String(value ?? '');
+}
+
+async function triggerLeadWebhook(payload) {
+  const leadWebhook = data?.final?.leadWebhook || {};
+  const webhookUrl = leadWebhook.url?.trim();
+  if (!webhookUrl) return;
+
+  const webhookMethod = (leadWebhook.method || 'POST').toUpperCase();
+
+  try {
+    if (webhookMethod === 'GET') {
+      const url = new URL(webhookUrl);
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value === undefined || value === null) return;
+        url.searchParams.set(key, sanitizeForQuery(value));
+      });
+
+      await fetch(url.toString(), {
+        method: 'GET',
+        keepalive: true,
+      });
+      return;
+    }
+
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    });
+  } catch (error) {
+    console.warn('Lead-Webhook konnte nicht ausgelöst werden', error);
+  }
+}
+
 
 const load = (p) => fetch(p, { cache: 'no-store' }).then((r) => r.json());
 
@@ -220,19 +263,31 @@ function validateContact(form) {
   return true;
 }
 
-function openSummaryModal(payload) {
-  const modal = document.createElement('div');
-  modal.className = 'modalOverlay';
-  modal.innerHTML = `
-    <div class="modalCard">
-      <h2>${data.final.summaryTitle}</h2>
-      <p class="muted">Vielen Dank! Wir haben folgende Daten erfasst:</p>
-      <pre>${JSON.stringify(payload, null, 2)}</pre>
-      <button class="btn primary" id="closeSummary">Schliessen</button>
-    </div>
+function renderThankYouScreen(payload) {
+  const thankYou = data?.final?.thankYou || {};
+  const title = thankYou.title || 'Vielen Dank für deine Anfrage!';
+  const message = thankYou.message || 'Wir haben deine Daten erhalten und melden uns zeitnah bei dir.';
+
+  app.innerHTML = `
+    <section class="screen">
+      ${stepHeader()}
+      <article class="questionCard">
+        <h2>${title}</h2>
+        <p class="muted">${message}</p>
+      </article>
+      <img class="heroImage" src="${data.hero.image}" alt="Danke" />
+    </section>
   `;
-  document.body.appendChild(modal);
-  modal.querySelector('#closeSummary').addEventListener('click', () => modal.remove());
+
+  animateProgressBar();
+  trackThankYouPage(
+    {
+      email: payload.contact?.email,
+      phone: payload.contact?.phone,
+      leadCreated: true,
+    },
+    trackingConfig
+  );
 }
 
 function renderStep() {
@@ -321,7 +376,9 @@ function renderFinal() {
     </section>
   `;
 
-  app.querySelector('#submit').addEventListener('click', () => {
+  app.querySelector('#submit').addEventListener('click', async () => {
+    if (leadSubmissionPending) return;
+
     const contact = {
       name: app.querySelector('#name').value,
       email: app.querySelector('#email').value,
@@ -342,11 +399,24 @@ function renderFinal() {
       submittedAt: new Date().toISOString(),
     };
 
-    trackApplicationCompleted({
-      email: contact.email,
-      phone: contact.phone,
-    }, trackingConfig);
-    openSummaryModal(payload);
+    leadSubmissionPending = true;
+    const submitBtn = app.querySelector('#submit');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Wird gesendet...';
+    }
+
+    await triggerLeadWebhook(payload);
+
+    trackApplicationCompleted(
+      {
+        email: contact.email,
+        phone: contact.phone,
+      },
+      trackingConfig
+    );
+
+    renderThankYouScreen(payload);
   });
 }
 
