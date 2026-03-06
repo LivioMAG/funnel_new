@@ -7,6 +7,7 @@ let lastProgressValue = 0;
 let trackingConfig = {};
 
 let leadSubmissionPending = false;
+const THANK_YOU_STORAGE_KEY = 'funnelThankYouPayload';
 
 function sanitizeForQuery(value) {
   if (Array.isArray(value) || (value && typeof value === 'object')) return JSON.stringify(value);
@@ -263,23 +264,18 @@ function validateContact(form) {
   return true;
 }
 
-function renderThankYouScreen(payload) {
-  const thankYou = data?.final?.thankYou || {};
-  const title = thankYou.title || 'Vielen Dank für deine Anfrage!';
-  const message = thankYou.message || 'Wir haben deine Daten erhalten und melden uns zeitnah bei dir.';
+function redirectToThankYouPage(payload) {
+  const thankYouPayload = {
+    contact: payload.contact || {},
+    submittedAt: payload.submittedAt || new Date().toISOString(),
+  };
 
-  app.innerHTML = `
-    <section class="screen">
-      ${stepHeader()}
-      <article class="questionCard">
-        <h2>${title}</h2>
-        <p class="muted">${message}</p>
-      </article>
-      <img class="heroImage" src="${data.hero.image}" alt="Danke" />
-    </section>
-  `;
+  try {
+    sessionStorage.setItem(THANK_YOU_STORAGE_KEY, JSON.stringify(thankYouPayload));
+  } catch (error) {
+    console.warn('Danke-Seiten-Payload konnte nicht gespeichert werden.', error);
+  }
 
-  animateProgressBar();
   trackThankYouPage(
     {
       email: payload.contact?.email,
@@ -288,6 +284,8 @@ function renderThankYouScreen(payload) {
     },
     trackingConfig
   );
+
+  window.location.href = './thank-you.html';
 }
 
 function renderStep() {
@@ -416,7 +414,7 @@ function renderFinal() {
       trackingConfig
     );
 
-    renderThankYouScreen(payload);
+    redirectToThankYouPage(payload);
   });
 }
 
