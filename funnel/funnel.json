@@ -38,7 +38,8 @@
         "Leadership"
       ],
       "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/ee81d97b-8a8e-43ae-8eed-fd15a238755c",
-      "asset": "../assets/ref1.jpg"
+      "asset": "../assets/ref1.jpg",
+      "webhookMethod": "GET"
     },
     {
       "id": "q3",
@@ -55,7 +56,8 @@
         "xD",
         "Was lauft"
       ],
-      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/f1f5a96f-d542-4fa3-bf07-518314d01298"
+      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/f1f5a96f-d542-4fa3-bf07-518314d01298",
+      "webhookMethod": "GET"
     },
     {
       "id": "q4",
@@ -77,7 +79,7 @@
           "closeTitle": "Sorry, wir passen leider nicht zusammen.",
           "closeMessage": "Aktuell suchen wir ausschließlich Kandidat:innen mit Wunsch nach Remote oder Hybrid.",
           "closeWebhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/7ce304b0-ba07-42dd-a208-786833b46e28",
-          "closeWebhookMethod": "POST"
+          "closeWebhookMethod": "GET"
         }
       ],
       "fieldKey": "work_model",
@@ -85,7 +87,7 @@
       "helperText": "Wähle eine Option – wir springen direkt weiter.",
       "webhookUrl": "",
       "dropoutWebhookUrl": "",
-      "dropoutWebhookMethod": "POST",
+      "dropoutWebhookMethod": "GET",
       "asset": "../assets/ref3.jpg"
     },
     {
@@ -97,7 +99,8 @@
       "required": true,
       "placeholder": "z.B. ab sofort / 01.05.2026",
       "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/ec1e0fd8-bdbd-4f5b-aa99-f04bc91d3df5",
-      "asset": "../assets/dummy2.jpg"
+      "asset": "../assets/dummy2.jpg",
+      "webhookMethod": "GET"
     },
     {
       "id": "q6",
@@ -108,7 +111,8 @@
       "required": true,
       "helperText": "Ja oder Nein – danach geht es direkt weiter.",
       "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/d234ab33-ca95-4903-84a2-9bf3ce04f8d8",
-      "asset": "../assets/dummy3.jpg"
+      "asset": "../assets/dummy3.jpg",
+      "webhookMethod": "GET"
     }
   ],
   "final": {
@@ -126,7 +130,7 @@
     },
     "dropoutWebhook": {
       "url": "",
-      "method": "POST"
+      "method": "GET"
     },
     "closedFunnel": {
       "title": "Sorry, wir passen leider nicht zusammen.",
