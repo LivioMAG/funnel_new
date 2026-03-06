@@ -15,7 +15,8 @@
       "fieldKey": "strength_signal",
       "required": true,
       "helperText": "2–3 Sätze reichen.",
-      "placeholder": "Ich merke es daran, dass ..."
+      "placeholder": "Ich merke es daran, dass ...",
+      "webhookUrl": ""
     },
     {
       "id": "q2",
@@ -25,17 +26,29 @@
       "fieldKey": "focus_topics",
       "required": true,
       "helperText": "Mehrfachauswahl möglich.",
-      "options": ["Sales", "Marketing", "Kundenberatung", "Operations", "Leadership"]
+      "options": [
+        "Sales",
+        "Marketing",
+        "Kundenberatung",
+        "Operations",
+        "Leadership"
+      ],
+      "webhookUrl": ""
     },
     {
       "id": "q3",
       "title": "Arbeitsmodell",
       "question": "Wie möchtest du arbeiten?",
       "type": "singleChoice",
-      "options": ["Remote", "Hybrid", "Vor Ort"],
+      "options": [
+        "Remote",
+        "Hybrid",
+        "Vor Ort"
+      ],
       "fieldKey": "work_model",
       "required": true,
-      "helperText": "Wähle eine Option – wir springen direkt weiter."
+      "helperText": "Wähle eine Option – wir springen direkt weiter.",
+      "webhookUrl": ""
     },
     {
       "id": "q4",
@@ -44,7 +57,8 @@
       "type": "text",
       "fieldKey": "start_date",
       "required": true,
-      "placeholder": "z.B. ab sofort / 01.05.2026"
+      "placeholder": "z.B. ab sofort / 01.05.2026",
+      "webhookUrl": ""
     },
     {
       "id": "q5",
@@ -53,7 +67,8 @@
       "type": "yesNo",
       "fieldKey": "ready_for_call",
       "required": true,
-      "helperText": "Ja oder Nein – danach geht es direkt weiter."
+      "helperText": "Ja oder Nein – danach geht es direkt weiter.",
+      "webhookUrl": ""
     }
   ],
   "final": {

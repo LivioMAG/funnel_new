@@ -84,6 +84,32 @@ function syncNextButton(step) {
   nextBtn.classList.toggle('isHidden', !hasStepValue(step));
 }
 
+async function triggerStepWebhook(step) {
+  const webhookUrl = step?.webhookUrl?.trim();
+  if (!webhookUrl) return;
+
+  const payload = {
+    stepId: step.id,
+    fieldKey: step.fieldKey,
+    answer: answers[step.fieldKey],
+    answers,
+    triggeredAt: new Date().toISOString(),
+  };
+
+  try {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    });
+  } catch (error) {
+    console.warn(`Webhook konnte nicht ausgelöst werden (step: ${step.id})`, error);
+  }
+}
+
 function attachChoiceHandlers(step) {
   const buttons = app.querySelectorAll('[data-choice]');
   let autoAdvancePending = false;
@@ -107,7 +133,8 @@ function attachChoiceHandlers(step) {
       btn.classList.add('flash');
       answers[step.fieldKey] = value;
       autoAdvancePending = true;
-      setTimeout(() => {
+      setTimeout(async () => {
+        await triggerStepWebhook(step);
         index += 1;
         render();
       }, 500);
@@ -181,7 +208,7 @@ function renderStep() {
     }
   });
 
-  app.querySelector('#next')?.addEventListener('click', () => {
+  app.querySelector('#next')?.addEventListener('click', async () => {
     let value = app.querySelector('#value')?.value?.trim();
     if (step.type === 'multipleChoice') value = answers[step.fieldKey] || [];
     if (!value || (Array.isArray(value) && value.length === 0)) {
@@ -189,6 +216,7 @@ function renderStep() {
       return;
     }
     answers[step.fieldKey] = value;
+    await triggerStepWebhook(step);
     index += 1;
     render();
   });
