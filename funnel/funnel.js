@@ -225,10 +225,10 @@ async function triggerStepWebhook(step) {
   try {
     if (webhookMethod === 'GET') {
       const url = new URL(webhookUrl);
-      url.searchParams.set('stepId', step.id);
-      url.searchParams.set('fieldKey', step.fieldKey);
-      url.searchParams.set('answer', JSON.stringify(getStepAnswer(step)));
-      url.searchParams.set('triggeredAt', payload.triggeredAt);
+      Object.entries(payload).forEach(([key, value]) => {
+        if (value === undefined || value === null) return;
+        url.searchParams.set(key, sanitizeForQuery(value));
+      });
       await fetch(url.toString(), {
         method: 'GET',
         keepalive: true,
@@ -249,7 +249,7 @@ async function triggerStepWebhook(step) {
   }
 }
 
-async function triggerStepDropoutWebhook(step, selectedOption) {
+async function triggerStepDropoutWebhook(step, selectedOption, reason = 'single_choice_disqualifier') {
   const fallbackDropoutWebhook = data?.final?.dropoutWebhook || {};
   const webhookUrl =
     selectedOption?.closeWebhookUrl?.trim() ||
@@ -266,7 +266,7 @@ async function triggerStepDropoutWebhook(step, selectedOption) {
 
   const payload = {
     event: 'funnel_closed',
-    reason: 'single_choice_disqualifier',
+    reason,
     stepId: step.id,
     fieldKey: step.fieldKey,
     question: step.question,
@@ -310,6 +310,8 @@ function closeFunnel(step, selectedOption) {
   funnelClosedState = {
     stepId: step.id,
     selectedOption: selectedOption.label,
+    selectedOptionConfig: selectedOption,
+    webhookSent: false,
     title:
       selectedOption?.closeTitle?.trim() ||
       defaultClosed?.title ||
@@ -352,13 +354,12 @@ function attachChoiceHandlers(step) {
       autoAdvancePending = true;
       setTimeout(async () => {
         const selectedOption = findNormalizedOption(step, value) || normalizeChoiceOption(value);
+        await triggerStepWebhook(step);
         if (step.type === 'singleChoice' && selectedOption.closeFunnel) {
-          await triggerStepDropoutWebhook(step, selectedOption);
           closeFunnel(step, selectedOption);
           render();
           return;
         }
-        await triggerStepWebhook(step);
         index += 1;
         render();
       }, 500);
@@ -528,7 +529,19 @@ function renderFinal() {
   });
 }
 
+async function triggerClosedFunnelWebhookIfNeeded() {
+  if (!funnelClosedState || funnelClosedState.webhookSent) return;
+
+  const step = data.steps.find((entry) => entry.id === funnelClosedState.stepId);
+  if (!step) return;
+
+  funnelClosedState.webhookSent = true;
+  await triggerStepDropoutWebhook(step, funnelClosedState.selectedOptionConfig, 'single_choice_disqualifier');
+}
+
 function renderClosedFunnel() {
+  void triggerClosedFunnelWebhookIfNeeded();
+
   const fallbackImage = data?.hero?.image || '';
   const image = data?.final?.closedFunnel?.image?.trim() || fallbackImage;
   const title = funnelClosedState?.title || 'Sorry, wir passen leider nicht zusammen.';
