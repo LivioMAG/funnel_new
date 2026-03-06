@@ -55,6 +55,7 @@ function hasStepValue(step) {
 
 function renderChoice(options, key, mode = 'single') {
   const multiple = mode === 'multiple';
+  const showIndicator = mode !== 'yesNo';
   const current = answers[key] || (multiple ? [] : '');
   return `
     <div class="choiceGrid ${mode}">
@@ -65,7 +66,11 @@ function renderChoice(options, key, mode = 'single') {
             const icon = mode === 'yesNo' ? (opt === 'Ja' ? '✓' : '✕') : '';
             return `<button type="button" class="choiceBtn ${active ? 'active' : ''}" data-choice="${opt}">${
               icon ? `<span class="choiceIcon" aria-hidden="true">${icon}</span>` : ''
-            }<span class="choiceIndicator" aria-hidden="true"><span class="choiceDot"></span></span><span class="choiceLabel">${opt}</span></button>`;
+            }${
+              showIndicator
+                ? '<span class="choiceIndicator" aria-hidden="true"><span class="choiceDot"></span></span>'
+                : ''
+            }<span class="choiceLabel">${opt}</span></button>`;
           })
           .join('')
       }
@@ -81,8 +86,11 @@ function syncNextButton(step) {
 
 function attachChoiceHandlers(step) {
   const buttons = app.querySelectorAll('[data-choice]');
+  let autoAdvancePending = false;
+
   buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
+      if (autoAdvancePending) return;
       const value = btn.dataset.choice;
       if (step.type === 'multipleChoice') {
         const selected = new Set(answers[step.fieldKey] || []);
@@ -93,8 +101,12 @@ function attachChoiceHandlers(step) {
         return;
       }
 
+      buttons.forEach((button) => {
+        button.classList.toggle('active', button === btn);
+      });
       btn.classList.add('flash');
       answers[step.fieldKey] = value;
+      autoAdvancePending = true;
       setTimeout(() => {
         index += 1;
         render();
