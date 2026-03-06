@@ -28,6 +28,22 @@ const richText = (s) => html(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
 const alignClass = (align) => ({ left: 'align-left', center: 'align-center', right: 'align-right' }[align] || '');
 const normalizeAlign = (align, fallback = 'left') => (['left', 'center', 'right'].includes(align) ? align : fallback);
 
+async function triggerLandingWebhook(webhookUrl, payload) {
+  if (!webhookUrl) return;
+  try {
+    await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+      keepalive: true,
+    });
+  } catch (error) {
+    console.warn('CTA-Webhook konnte nicht ausgelöst werden.', error);
+  }
+}
+
 function renderListItem(i, presentation = 'default') {
   const icon = i.icon ? `<span class="item-icon">${html(i.icon)}</span>` : '';
   const text = i.text || i.value || i.title || '';
@@ -109,7 +125,9 @@ function renderSection(s) {
     const content = isSecondary
       ? label
       : `<span class="btn-core"><span class="btn-label">${label}</span><span class="btn-boost" aria-hidden="true">➜</span></span>${stars}`;
-    return `<section${sectionIdAttr(s)} class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')}" href="${html(s.href || '../funnel/index.html?v=20260305')}"${shimmerStyle}>${content}</a></section>`;
+    const targetHref = html(s.href || '../funnel/index.html?v=20260305');
+    const webhookUrl = html(s.webhookUrl || '');
+    return `<section${sectionIdAttr(s)} class="cta-row ${alignClass(s.align)}"><a class="${classes.join(' ')} cta-link" href="${targetHref}" data-cta-id="${html(s.id || '')}" data-webhook-url="${webhookUrl}"${shimmerStyle}>${content}</a></section>`;
   }
   return '';
 }
@@ -119,6 +137,31 @@ function renderSection(s) {
   applyTheme(config);
   initTracking(config.tracking);
   app.innerHTML = (data.sections || []).map(renderSection).join('');
+  document.querySelectorAll('.cta-link').forEach((cta) => {
+    cta.addEventListener('click', async (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      const href = cta.getAttribute('href') || '../funnel/index.html?v=20260305';
+      const webhookUrl = cta.dataset.webhookUrl?.trim();
+      const payload = {
+        event: 'landing_cta_click',
+        sectionId: cta.dataset.ctaId || null,
+        buttonText: cta.textContent?.trim() || null,
+        targetHref: href,
+        pagePath: window.location.pathname,
+        pageUrl: window.location.href,
+        triggeredAt: new Date().toISOString(),
+      };
+
+      await Promise.race([
+        triggerLandingWebhook(webhookUrl, payload),
+        new Promise((resolve) => setTimeout(resolve, 400)),
+      ]);
+
+      window.location.href = href;
+    });
+  });
+
   document.querySelectorAll('.slider').forEach((slider) => {
     const imgs = [...slider.querySelectorAll('.slider-image')];
     const dots = [...slider.querySelectorAll('.slider-dot')];
