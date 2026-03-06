@@ -21,5 +21,12 @@
         <a href="./funnel/index.html?v=20260305">Funnel direkt öffnen</a>
       </div>
     </main>
+    <script type="module">
+      import { initTracking } from './tracking.js';
+      fetch('./config.json', { cache: 'no-store' })
+        .then((res) => res.json())
+        .then((cfg) => initTracking(cfg.tracking || {}))
+        .catch((err) => console.warn('Tracking-Konfiguration konnte nicht geladen werden.', err));
+    </script>
   </body>
 </html>

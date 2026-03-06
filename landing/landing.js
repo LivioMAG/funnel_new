@@ -1,3 +1,4 @@
+import { initTracking } from '../tracking.js';
 const app = document.getElementById('app');
 const load = (p) => fetch(p, { cache: 'no-store' }).then((r) => r.json());
 
@@ -116,6 +117,7 @@ function renderSection(s) {
 (async () => {
   const [config, data] = await Promise.all([load('../config.json'), load('./landing.json')]);
   applyTheme(config);
+  initTracking(config.tracking);
   app.innerHTML = (data.sections || []).map(renderSection).join('');
   document.querySelectorAll('.slider').forEach((slider) => {
     const imgs = [...slider.querySelectorAll('.slider-image')];
