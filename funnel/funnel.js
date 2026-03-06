@@ -129,6 +129,7 @@ function syncNextButton(step) {
 async function triggerStepWebhook(step) {
   const webhookUrl = step?.webhookUrl?.trim();
   if (!webhookUrl) return;
+  const webhookMethod = (step?.webhookMethod || 'POST').toUpperCase();
 
   const payload = {
     stepId: step.id,
@@ -141,6 +142,19 @@ async function triggerStepWebhook(step) {
   };
 
   try {
+    if (webhookMethod === 'GET') {
+      const url = new URL(webhookUrl);
+      url.searchParams.set('stepId', step.id);
+      url.searchParams.set('fieldKey', step.fieldKey);
+      url.searchParams.set('answer', JSON.stringify(getStepAnswer(step)));
+      url.searchParams.set('triggeredAt', payload.triggeredAt);
+      await fetch(url.toString(), {
+        method: 'GET',
+        keepalive: true,
+      });
+      return;
+    }
+
     await fetch(webhookUrl, {
       method: 'POST',
       headers: {
@@ -152,6 +166,12 @@ async function triggerStepWebhook(step) {
   } catch (error) {
     console.warn(`Webhook konnte nicht ausgelöst werden (step: ${step.id})`, error);
   }
+}
+
+function renderStepAsset(step) {
+  const asset = step?.asset?.trim();
+  if (!asset) return '';
+  return `<img class="heroImage" src="${asset}" alt="Funnel Visual für ${step.title}" />`;
 }
 
 function attachChoiceHandlers(step) {
@@ -239,7 +259,7 @@ function renderStep() {
         <button class="btn ghost" id="back" ${index === 0 ? 'disabled' : ''}>Zurück</button>
         ${showNext ? `<button class="btn primary ${hasStepValue(step) ? '' : 'isHidden'}" id="next">Weiter</button>` : ''}
       </div>
-      <img class="heroImage" src="${data.hero.image}" alt="Funnel Visual" />
+      ${renderStepAsset(step)}
     </section>
   `;
 
