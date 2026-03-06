@@ -16,7 +16,7 @@
       "required": true,
       "helperText": "2–3 Sätze reichen.",
       "placeholder": "Ich merke es daran, dass ...",
-      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook-test/599d025f-e821-47aa-8094-504c4e09014e",
+      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/599d025f-e821-47aa-8094-504c4e09014e",
       "asset": "../assets/ref2.jpg",
       "webhookMethod": "GET",
       "belowNavText": "Optionaler Hinweis (freiwillig) – diesen Text kannst du pro Frage setzen oder leer lassen.",
@@ -37,7 +37,7 @@
         "Operations",
         "Leadership"
       ],
-      "webhookUrl": "",
+      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/ee81d97b-8a8e-43ae-8eed-fd15a238755c",
       "asset": "../assets/ref1.jpg"
     },
     {
@@ -55,7 +55,7 @@
         "xD",
         "Was lauft"
       ],
-      "webhookUrl": ""
+      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/f1f5a96f-d542-4fa3-bf07-518314d01298"
     },
     {
       "id": "q4",
@@ -76,7 +76,7 @@
           "closeFunnel": true,
           "closeTitle": "Sorry, wir passen leider nicht zusammen.",
           "closeMessage": "Aktuell suchen wir ausschließlich Kandidat:innen mit Wunsch nach Remote oder Hybrid.",
-          "closeWebhookUrl": "",
+          "closeWebhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/7ce304b0-ba07-42dd-a208-786833b46e28",
           "closeWebhookMethod": "POST"
         }
       ],
@@ -96,7 +96,7 @@
       "fieldKey": "start_date",
       "required": true,
       "placeholder": "z.B. ab sofort / 01.05.2026",
-      "webhookUrl": "",
+      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/ec1e0fd8-bdbd-4f5b-aa99-f04bc91d3df5",
       "asset": "../assets/dummy2.jpg"
     },
     {
@@ -107,7 +107,7 @@
       "fieldKey": "ready_for_call",
       "required": true,
       "helperText": "Ja oder Nein – danach geht es direkt weiter.",
-      "webhookUrl": "",
+      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook/d234ab33-ca95-4903-84a2-9bf3ce04f8d8",
       "asset": "../assets/dummy3.jpg"
     }
   ],
@@ -121,7 +121,7 @@
     "submitText": "Jetzt absenden",
     "summaryTitle": "Deine Angaben auf einen Blick",
     "leadWebhook": {
-      "url": "https://n8n.srv1019917.hstgr.cloud/webhook-test/624d7886-2625-48f7-a210-e0e4f15920ae",
+      "url": "https://n8n.srv1019917.hstgr.cloud/webhook/624d7886-2625-48f7-a210-e0e4f15920ae",
       "method": "GET"
     },
     "dropoutWebhook": {
