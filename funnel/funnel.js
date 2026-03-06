@@ -47,20 +47,36 @@ function stepHeader(title) {
   `;
 }
 
-function renderChoice(options, key, multiple = false) {
+function hasStepValue(step) {
+  const value = answers[step.fieldKey];
+  if (Array.isArray(value)) return value.length > 0;
+  return typeof value === 'string' ? value.trim().length > 0 : Boolean(value);
+}
+
+function renderChoice(options, key, mode = 'single') {
+  const multiple = mode === 'multiple';
   const current = answers[key] || (multiple ? [] : '');
   return `
-    <div class="choiceGrid ${multiple ? 'multiple' : ''}">
+    <div class="choiceGrid ${mode}">
       ${
         options
           .map((opt) => {
             const active = multiple ? current.includes(opt) : current === opt;
-            return `<button type="button" class="choiceBtn ${active ? 'active' : ''}" data-choice="${opt}">${opt}</button>`;
+            const icon = mode === 'yesNo' ? (opt === 'Ja' ? '✓' : '✕') : '';
+            return `<button type="button" class="choiceBtn ${active ? 'active' : ''}" data-choice="${opt}">${
+              icon ? `<span class="choiceIcon" aria-hidden="true">${icon}</span>` : ''
+            }<span class="choiceIndicator" aria-hidden="true"><span class="choiceDot"></span></span><span class="choiceLabel">${opt}</span></button>`;
           })
           .join('')
       }
     </div>
   `;
+}
+
+function syncNextButton(step) {
+  const nextBtn = app.querySelector('#next');
+  if (!nextBtn) return;
+  nextBtn.classList.toggle('isHidden', !hasStepValue(step));
 }
 
 function attachChoiceHandlers(step) {
@@ -72,7 +88,8 @@ function attachChoiceHandlers(step) {
         const selected = new Set(answers[step.fieldKey] || []);
         selected.has(value) ? selected.delete(value) : selected.add(value);
         answers[step.fieldKey] = Array.from(selected);
-        render();
+        btn.classList.toggle('active', selected.has(value));
+        syncNextButton(step);
         return;
       }
 
@@ -81,7 +98,7 @@ function attachChoiceHandlers(step) {
       setTimeout(() => {
         index += 1;
         render();
-      }, 240);
+      }, 500);
     });
   });
 }
@@ -119,11 +136,11 @@ function renderStep() {
   } else if (step.type === 'text') {
     field = `<input id="value" value="${answers[step.fieldKey] || ''}" placeholder="${step.placeholder || ''}" />`;
   } else if (step.type === 'singleChoice') {
-    field = renderChoice(step.options || [], step.fieldKey);
+    field = renderChoice(step.options || [], step.fieldKey, 'single');
   } else if (step.type === 'multipleChoice') {
-    field = renderChoice(step.options || [], step.fieldKey, true);
+    field = renderChoice(step.options || [], step.fieldKey, 'multiple');
   } else if (step.type === 'yesNo') {
-    field = renderChoice(['Ja', 'Nein'], step.fieldKey);
+    field = renderChoice(['Ja', 'Nein'], step.fieldKey, 'yesNo');
   }
 
   const showNext = ['textarea', 'text', 'multipleChoice'].includes(step.type);
@@ -137,7 +154,7 @@ function renderStep() {
       </article>
       <div class="actions">
         <button class="btn ghost" id="back" ${index === 0 ? 'disabled' : ''}>Zurück</button>
-        ${showNext ? '<button class="btn primary" id="next">Weiter</button>' : ''}
+        ${showNext ? `<button class="btn primary ${hasStepValue(step) ? '' : 'isHidden'}" id="next">Weiter</button>` : ''}
       </div>
       <img class="heroImage" src="${data.hero.image}" alt="Funnel Visual" />
     </section>
@@ -163,6 +180,13 @@ function renderStep() {
     index += 1;
     render();
   });
+
+  if (['textarea', 'text'].includes(step.type)) {
+    app.querySelector('#value')?.addEventListener('input', (event) => {
+      answers[step.fieldKey] = event.target.value;
+      syncNextButton(step);
+    });
+  }
 }
 
 function renderFinal() {
