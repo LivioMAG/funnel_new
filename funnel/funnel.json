@@ -16,7 +16,9 @@
       "required": true,
       "helperText": "2–3 Sätze reichen.",
       "placeholder": "Ich merke es daran, dass ...",
-      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook-test/599d025f-e821-47aa-8094-504c4e09014e"
+      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook-test/599d025f-e821-47aa-8094-504c4e09014e",
+      "asset": "../assets/ref2.jpg",
+      "webhookMethod": "GET"
     },
     {
       "id": "q2",
@@ -33,9 +35,10 @@
         "Operations",
         "Leadership"
       ],
-      "webhookUrl": ""
+      "webhookUrl": "",
+      "asset": "../assets/ref1.jpg"
     },
-        {
+    {
       "id": "q3",
       "title": "Dein Fokus",
       "question": "Welche Themen interessieren dich aktuell am meisten?",
@@ -65,7 +68,8 @@
       "fieldKey": "work_model",
       "required": true,
       "helperText": "Wähle eine Option – wir springen direkt weiter.",
-      "webhookUrl": ""
+      "webhookUrl": "",
+      "asset": "../assets/ref3.jpg"
     },
     {
       "id": "q5",
@@ -75,7 +79,8 @@
       "fieldKey": "start_date",
       "required": true,
       "placeholder": "z.B. ab sofort / 01.05.2026",
-      "webhookUrl": ""
+      "webhookUrl": "",
+      "asset": "../assets/dummy2.jpg"
     },
     {
       "id": "q6",
@@ -85,7 +90,8 @@
       "fieldKey": "ready_for_call",
       "required": true,
       "helperText": "Ja oder Nein – danach geht es direkt weiter.",
-      "webhookUrl": ""
+      "webhookUrl": "",
+      "asset": "../assets/dummy3.jpg"
     }
   ],
   "final": {
