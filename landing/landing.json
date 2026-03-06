@@ -86,7 +86,9 @@
       "align": "left",
       "animate": true,
       "shimmerIntervalMs": 3000,
-      "showStars": true
+      "showStars": true,
+      "href": "../funnel/index.html?v=20260305",
+      "webhookUrl": "https://example.com/webhooks/landing-cta-click"
     },
     {
       "type": "list",
@@ -178,7 +180,9 @@
       "align": "left",
       "animate": false,
       "shimmerIntervalMs": 5000,
-      "showStars": false
+      "showStars": false,
+      "href": "../funnel/index.html?v=20260305",
+      "webhookUrl": "https://example.com/webhooks/landing-cta-click"
     },
     {
       "type": "text",
@@ -223,7 +227,9 @@
       "align": "left",
       "animate": true,
       "shimmerIntervalMs": 5000,
-      "showStars": true
+      "showStars": true,
+      "href": "../funnel/index.html?v=20260305",
+      "webhookUrl": "https://example.com/webhooks/landing-cta-click"
     }
   ],
   "assets": {
