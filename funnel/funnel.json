@@ -16,7 +16,7 @@
       "required": true,
       "helperText": "2–3 Sätze reichen.",
       "placeholder": "Ich merke es daran, dass ...",
-      "webhookUrl": ""
+      "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook-test/599d025f-e821-47aa-8094-504c4e09014e"
     },
     {
       "id": "q2",
