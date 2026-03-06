@@ -34,7 +34,7 @@ function getProgress() {
   return { total, active, value: Math.round((active / total) * 100) };
 }
 
-function stepHeader(title) {
+function stepHeader() {
   const p = getProgress();
   return `
     <div class="progressWrap">
@@ -44,9 +44,15 @@ function stepHeader(title) {
       </div>
       <div class="progressTrack"><div class="progressBar" style="width:${p.value}%"></div></div>
     </div>
-    <h1>${title}</h1>
-    <p class="muted">${data.introText}</p>
   `;
+}
+
+function renderBelowNavText(step) {
+  const text = step?.belowNavText?.trim();
+  if (!text) return '';
+
+  const align = step?.belowNavTextAlign === 'left' ? 'left' : 'center';
+  return `<p class="belowNavText ${align}">${text}</p>`;
 }
 
 function hasStepValue(step) {
@@ -249,7 +255,7 @@ function renderStep() {
   const showNext = ['textarea', 'text', 'multipleChoice'].includes(step.type);
   app.innerHTML = `
     <section class="screen">
-      ${stepHeader(step.title)}
+      ${stepHeader()}
       <article class="questionCard">
         <h2>${step.question}</h2>
         ${helper}
@@ -259,6 +265,7 @@ function renderStep() {
         <button class="btn ghost" id="back" ${index === 0 ? 'disabled' : ''}>Zurück</button>
         ${showNext ? `<button class="btn primary ${hasStepValue(step) ? '' : 'isHidden'}" id="next">Weiter</button>` : ''}
       </div>
+      ${renderBelowNavText(step)}
       ${renderStepAsset(step)}
     </section>
   `;
@@ -297,7 +304,7 @@ function renderFinal() {
   const f = data.final;
   app.innerHTML = `
     <section class="screen">
-      ${stepHeader(f.title)}
+      ${stepHeader()}
       <article class="questionCard">
         <h2>${f.description}</h2>
         <div class="formGrid">

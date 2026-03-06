@@ -1,5 +1,5 @@
 {
-  "introText": "Der Bewerbungsprozess dauert ca. 2 Minuten. Je klarer deine Antworten, desto besser können wir dich einordnen.",
+  "introText": "",
   "hero": {
     "badge": "🚀 Karriere-Funnel",
     "title": "Lass uns in wenigen Schritten den perfekten Match finden",
@@ -18,7 +18,9 @@
       "placeholder": "Ich merke es daran, dass ...",
       "webhookUrl": "https://n8n.srv1019917.hstgr.cloud/webhook-test/599d025f-e821-47aa-8094-504c4e09014e",
       "asset": "../assets/ref2.jpg",
-      "webhookMethod": "GET"
+      "webhookMethod": "GET",
+      "belowNavText": "Optionaler Hinweis (freiwillig) – diesen Text kannst du pro Frage setzen oder leer lassen.",
+      "belowNavTextAlign": "center"
     },
     {
       "id": "q2",
