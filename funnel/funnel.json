@@ -104,6 +104,14 @@
     "phoneLabel": "Telefonnummer",
     "birthDateLabel": "Geburtsdatum",
     "submitText": "Jetzt absenden",
-    "summaryTitle": "Deine Angaben auf einen Blick"
+    "summaryTitle": "Deine Angaben auf einen Blick",
+    "leadWebhook": {
+      "url": "https://n8n.srv1019917.hstgr.cloud/webhook-test/funnel-lead",
+      "method": "POST"
+    },
+    "thankYou": {
+      "title": "Danke für deine Eintragung!",
+      "message": "Deine Daten wurden erfolgreich übermittelt. Wir melden uns schnellstmöglich bei dir."
+    }
   }
 }

@@ -144,3 +144,29 @@ export function trackApplicationCompleted(payload = {}, trackingConfig = {}) {
     });
   }
 }
+
+export function trackThankYouPage(payload = {}, trackingConfig = {}) {
+  const tracking = normalizeTrackingConfig(trackingConfig);
+
+  if (tracking.facebook.enabled !== false && typeof window.fbq === 'function') {
+    window.fbq('trackCustom', 'ThankYouPageView', {
+      page_name: 'thank_you',
+      ...payload,
+    });
+  }
+
+  if (tracking.google.enabled !== false && typeof window.gtag === 'function') {
+    window.gtag('event', 'thank_you_page_view', {
+      event_category: 'funnel',
+      event_label: 'thank_you',
+      ...payload,
+    });
+  }
+
+  if (tracking.tiktok.enabled !== false && window.ttq && typeof window.ttq.track === 'function') {
+    window.ttq.track('ViewContent', {
+      content_name: 'Danke-Seite',
+      ...payload,
+    });
+  }
+}
