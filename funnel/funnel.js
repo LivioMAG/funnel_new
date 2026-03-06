@@ -2,7 +2,7 @@ import { initTracking, trackApplicationCompleted } from '../tracking.js';
 const app = document.getElementById('app');
 let data;
 let index = 0;
-const answers = {};
+const answersByStepId = {};
 let lastProgressValue = 0;
 let trackingConfig = {};
 
@@ -50,15 +50,55 @@ function stepHeader(title) {
 }
 
 function hasStepValue(step) {
-  const value = answers[step.fieldKey];
+  const value = getStepAnswer(step);
   if (Array.isArray(value)) return value.length > 0;
   return typeof value === 'string' ? value.trim().length > 0 : Boolean(value);
+}
+
+function getStepAnswer(step) {
+  return answersByStepId[step.id];
+}
+
+function setStepAnswer(step, value) {
+  answersByStepId[step.id] = value;
+}
+
+function buildAnswersByFieldKey() {
+  const grouped = {};
+
+  data.steps.forEach((step) => {
+    if (!(step.id in answersByStepId)) return;
+
+    const value = answersByStepId[step.id];
+    if (!(step.fieldKey in grouped)) {
+      grouped[step.fieldKey] = value;
+      return;
+    }
+
+    if (!Array.isArray(grouped[step.fieldKey])) {
+      grouped[step.fieldKey] = [grouped[step.fieldKey]];
+    }
+    grouped[step.fieldKey].push(value);
+  });
+
+  return grouped;
+}
+
+function getAnswersList() {
+  return data.steps
+    .filter((step) => step.id in answersByStepId)
+    .map((step) => ({
+      stepId: step.id,
+      fieldKey: step.fieldKey,
+      question: step.question,
+      answer: answersByStepId[step.id],
+    }));
 }
 
 function renderChoice(options, key, mode = 'single') {
   const multiple = mode === 'multiple';
   const showIndicator = mode !== 'yesNo';
-  const current = answers[key] || (multiple ? [] : '');
+  const current = answersByStepId[key] || (multiple ? [] : '');
   return `
     <div class="choiceGrid ${mode}">
       ${
@@ -93,8 +133,10 @@ async function triggerStepWebhook(step) {
   const payload = {
     stepId: step.id,
     fieldKey: step.fieldKey,
-    answer: answers[step.fieldKey],
-    answers,
+    answer: getStepAnswer(step),
+    answersByStepId,
+    answersByFieldKey: buildAnswersByFieldKey(),
+    answersList: getAnswersList(),
     triggeredAt: new Date().toISOString(),
   };
 
@@ -121,9 +163,9 @@ function attachChoiceHandlers(step) {
       if (autoAdvancePending) return;
       const value = btn.dataset.choice;
       if (step.type === 'multipleChoice') {
-        const selected = new Set(answers[step.fieldKey] || []);
+        const selected = new Set(getStepAnswer(step) || []);
         selected.has(value) ? selected.delete(value) : selected.add(value);
-        answers[step.fieldKey] = Array.from(selected);
+        setStepAnswer(step, Array.from(selected));
         btn.classList.toggle('active', selected.has(value));
         syncNextButton(step);
         return;
@@ -133,7 +175,7 @@ function attachChoiceHandlers(step) {
         button.classList.toggle('active', button === btn);
       });
       btn.classList.add('flash');
-      answers[step.fieldKey] = value;
+      setStepAnswer(step, value);
       autoAdvancePending = true;
       setTimeout(async () => {
         await triggerStepWebhook(step);
@@ -173,15 +215,15 @@ function renderStep() {
 
   let field = '';
   if (step.type === 'textarea') {
-    field = `<textarea id="value" placeholder="${step.placeholder || ''}">${answers[step.fieldKey] || ''}</textarea>`;
+    field = `<textarea id="value" placeholder="${step.placeholder || ''}">${getStepAnswer(step) || ''}</textarea>`;
   } else if (step.type === 'text') {
-    field = `<input id="value" value="${answers[step.fieldKey] || ''}" placeholder="${step.placeholder || ''}" />`;
+    field = `<input id="value" value="${getStepAnswer(step) || ''}" placeholder="${step.placeholder || ''}" />`;
   } else if (step.type === 'singleChoice') {
-    field = renderChoice(step.options || [], step.fieldKey, 'single');
+    field = renderChoice(step.options || [], step.id, 'single');
   } else if (step.type === 'multipleChoice') {
-    field = renderChoice(step.options || [], step.fieldKey, 'multiple');
+    field = renderChoice(step.options || [], step.id, 'multiple');
   } else if (step.type === 'yesNo') {
-    field = renderChoice(['Ja', 'Nein'], step.fieldKey, 'yesNo');
+    field = renderChoice(['Ja', 'Nein'], step.id, 'yesNo');
   }
 
   const showNext = ['textarea', 'text', 'multipleChoice'].includes(step.type);
@@ -212,12 +254,12 @@ function renderStep() {
 
   app.querySelector('#next')?.addEventListener('click', async () => {
     let value = app.querySelector('#value')?.value?.trim();
-    if (step.type === 'multipleChoice') value = answers[step.fieldKey] || [];
+    if (step.type === 'multipleChoice') value = getStepAnswer(step) || [];
     if (!value || (Array.isArray(value) && value.length === 0)) {
       alert('Bitte beantworte die Frage, bevor du fortfährst.');
       return;
     }
-    answers[step.fieldKey] = value;
+    setStepAnswer(step, value);
     await triggerStepWebhook(step);
     index += 1;
     render();
@@ -225,7 +267,7 @@ function renderStep() {
 
   if (['textarea', 'text'].includes(step.type)) {
     app.querySelector('#value')?.addEventListener('input', (event) => {
-      answers[step.fieldKey] = event.target.value;
+      setStepAnswer(step, event.target.value);
       syncNextButton(step);
     });
   }
@@ -266,7 +308,9 @@ function renderFinal() {
     }
 
     const payload = {
-      answers,
+      answersByStepId,
+      answersByFieldKey: buildAnswersByFieldKey(),
+      answersList: getAnswersList(),
       contact,
       submittedAt: new Date().toISOString(),
     };
