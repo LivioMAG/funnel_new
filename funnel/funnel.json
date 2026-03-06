@@ -35,8 +35,25 @@
       ],
       "webhookUrl": ""
     },
-    {
+        {
       "id": "q3",
+      "title": "Dein Fokus",
+      "question": "Welche Themen interessieren dich aktuell am meisten?",
+      "type": "multipleChoice",
+      "fieldKey": "focus_topics",
+      "required": true,
+      "helperText": "Mehrfachauswahl möglich.",
+      "options": [
+        "Lala",
+        "Hurensohn",
+        "Spasst",
+        "xD",
+        "Was lauft"
+      ],
+      "webhookUrl": ""
+    },
+    {
+      "id": "q4",
       "title": "Arbeitsmodell",
       "question": "Wie möchtest du arbeiten?",
       "type": "singleChoice",
@@ -51,7 +68,7 @@
       "webhookUrl": ""
     },
     {
-      "id": "q4",
+      "id": "q5",
       "title": "Schneller Start",
       "question": "Ab wann könntest du starten?",
       "type": "text",
@@ -61,7 +78,7 @@
       "webhookUrl": ""
     },
     {
-      "id": "q5",
+      "id": "q6",
       "title": "Bereit für den nächsten Schritt?",
       "question": "Möchtest du in den nächsten 14 Tagen ein Erstgespräch führen?",
       "type": "yesNo",
